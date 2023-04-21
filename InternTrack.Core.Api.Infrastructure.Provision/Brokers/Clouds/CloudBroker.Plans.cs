@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using OperatingSystem = Microsoft.Azure.Management.AppService.Fluent.OperatingSystem;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
-    public class CloudBroker
+    public partial class CloudBroker
     {
+        public async ValueTask<IAppServicePlan> CreatePlanAsync(string planName, IResourceGroup resourceGroup)
+        {
+            return await azure.AppServices.AppServicePlans
+                .Define(planName)
+                .WithRegion(Region.USWest2)
+                .WithExistingResourceGroup(resourceGroup)
+                .WithPricingTier(PricingTier.StandardS1)
+                .WithOperatingSystem(OperatingSystem.Windows)
+                .CreateAsync();
+        }
     }
 }

@@ -10,9 +10,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker
     {
-        public async ValueTask<bool> CheckResourceGroupExistAsync(string resourceGroupName) =>       
+        public async ValueTask<bool> CheckResourceGroupExistAsync(string resourceGroupName) =>
            await azure.ResourceGroups.ContainAsync(resourceGroupName);
-        
+
 
         public async ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName) =>
             await azure.ResourceGroups

@@ -3,7 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
@@ -15,6 +14,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
         private readonly string clientId;
         private readonly string clientSecret;
         private readonly string tenantId;
+        private readonly string adminName;
+        private readonly string adminAccess;
         private readonly IAzure azure;
 
         public CloudBroker()
@@ -22,12 +23,14 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             clientId = Environment.GetEnvironmentVariable("AzureClientId");
             clientSecret = Environment.GetEnvironmentVariable("AzureClientSecrect");
             tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
+            adminName = Environment.GetEnvironmentVariable("AzureAdminName");
+            adminAccess = Environment.GetEnvironmentVariable("AzureAdminAccess");
             azure = AuthenticateAzure();
-        }        
+        }
 
         private IAzure AuthenticateAzure()
         {
-            AzureCredentials credentials = 
+            AzureCredentials credentials =
                 SdkContext.AzureCredentialsFactory
                 .FromServicePrincipal(
                     clientId: clientId,

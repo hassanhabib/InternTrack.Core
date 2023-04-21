@@ -3,16 +3,21 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial interface ICloudBroker
     {
-        ValueTask<IAppServicePlan> CreatePlanAsync(
-                string planName,
+        ValueTask<ISqlServer> CreateSqlServerAsync(
+                string sqlServerName,
                 IResourceGroup resourceGroup
+            );
+
+        ValueTask<ISqlServer> CreateSqlDataBaseAsync(
+                string sqlDatabaseName,
+                ISqlServer sqlServer
             );
     }
 }

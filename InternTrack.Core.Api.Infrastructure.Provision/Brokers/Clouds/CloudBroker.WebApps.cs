@@ -12,9 +12,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial class CloudBroker
     {
         public async ValueTask<IWebApp> CreateWebAppAsync(
-            string webAppName, 
-            string databaseConnectionString, 
-            IAppServicePlan plan, 
+            string webAppName,
+            string databaseConnectionString,
+            IAppServicePlan plan,
             IResourceGroup resourceGroup)
         {
             return await azure.AppServices.WebApps
