@@ -22,8 +22,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             clientSecret = Environment.GetEnvironmentVariable("AzureClientSecrect");
             tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
             azure = AuthenticateAzure();
-        }
-        
+        }        
+
         private IAzure AuthenticateAzure()
         {
             AzureCredentials credentials = 

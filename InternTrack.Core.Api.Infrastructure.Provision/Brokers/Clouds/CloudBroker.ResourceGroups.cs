@@ -4,6 +4,7 @@
 // -------------------------------------------------------
 
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
@@ -13,14 +14,13 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
            await azure.ResourceGroups.ContainAsync(resourceGroupName);
         
 
-        public ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
-        {
-            throw new NotImplementedException();
-        }
+        public async ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName) =>
+            await azure.ResourceGroups
+            .Define(name: resourceGroupName)
+            .WithRegion(region: Region.USWest2)
+            .CreateAsync();
 
-        public ValueTask<IResourceGroup> DeleteResourceGroupAsync(string reresourceGroupName)
-        {
-            throw new NotImplementedException();
-        }
+        public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName) =>
+            await azure.ResourceGroups.DeleteByNameAsync(reresourceGroupName);
     }
 }
