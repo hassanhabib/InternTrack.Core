@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
@@ -13,16 +13,25 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     {
         private readonly string clientId;
         private readonly string clientSecret;
-        private readonly string clientTenantId;
+        private readonly string tenantId;
+        private readonly IAzure azure;
 
-       private IAzure AuthenticateAzure()
+        public CloudBroker()
+        {
+            clientId = Environment.GetEnvironmentVariable("AzureClientId");
+            clientSecret = Environment.GetEnvironmentVariable("AzureClientSecrect");
+            tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
+            azure = AuthenticateAzure();
+        }
+        
+        private IAzure AuthenticateAzure()
         {
             AzureCredentials credentials = 
                 SdkContext.AzureCredentialsFactory
                 .FromServicePrincipal(
-                    clientId: null,
-                    clientSecret: null,
-                    tenantId: null,
+                    clientId: clientId,
+                    clientSecret: clientSecret,
+                    tenantId: tenantId,
                     environment: AzureEnvironment.AzureGlobalCloud
                 );
 
