@@ -7,6 +7,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Models.Configurations
 {
     public class CloudAction
     {
-        public List<string> Enviornments { get; set; }        
+        public List<string> Environments { get; set; }        
     }
 }
