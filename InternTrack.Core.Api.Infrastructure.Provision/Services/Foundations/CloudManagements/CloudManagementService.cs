@@ -104,6 +104,30 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             };
         }
 
+        public async ValueTask<IWebApp> ProvisionWebAppAsync(
+            string projectName,
+            string environment,
+            string databaseConnectionString,
+            IResourceGroup resourceGroup,
+            IAppServicePlan appServicePlan)
+        {
+            string webAppName = $"{projectName}-{environment}".ToLower();
+
+            LoggingBroker.LogActivity(message: $"Provisioning {webAppName}");
+
+            IWebApp webApp =
+                await CloudBroker.CreateWebAppAsync(
+                        webAppName,
+                        databaseConnectionString,
+                        appServicePlan,
+                        resourceGroup
+                    );
+
+            LoggingBroker.LogActivity(message: $"{webAppName} Provisioned");
+
+            return webApp;
+        }
+
         private string GenerateConnectionString(ISqlDatabase sqlDatabase)
         {
             SqlDatabaseAccess sqlDatabaseAccess =
@@ -112,8 +136,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return $"Server=tcp:{sqlDatabase.SqlServerName}.database.windows.net,1433;" +
                 $"Initial Catalog={sqlDatabase.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
-                $"Password={sqlDatabaseAccess.AdminAccess}"
-                ;
+                $"Password={sqlDatabaseAccess.AdminAccess}";
         }
     }
 }

@@ -34,5 +34,13 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 string environment,
                 ISqlServer sqlServer
             );
+
+        ValueTask<IWebApp> ProvisionWebAppAsync(
+                string projectName,
+                string environment,
+                string databaseConnectionString,
+                IResourceGroup resourceGroup,
+                IAppServicePlan appServicePlan
+            );
     }
 }
