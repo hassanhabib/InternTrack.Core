@@ -42,5 +42,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 IResourceGroup resourceGroup,
                 IAppServicePlan appServicePlan
             );
+
+        ValueTask DeprovisionResourceGroupAsync(
+                string projectName,
+                string environment
+            );
     }
 }

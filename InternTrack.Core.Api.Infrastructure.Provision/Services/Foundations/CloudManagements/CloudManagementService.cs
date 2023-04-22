@@ -18,12 +18,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         private readonly ICloudBroker CloudBroker;
         private readonly ILoggingBroker LoggingBroker;
 
-        public CloudManagementService(
-            ICloudBroker cloudBroker, 
-            ILoggingBroker loggingBroker)
+        public CloudManagementService()
         {
-            CloudBroker = cloudBroker;
-            LoggingBroker = loggingBroker;
+            CloudBroker = new CloudBroker();
+            LoggingBroker = new LoggingBroker();
         }
 
         public async ValueTask<IResourceGroup> ProvisionResourceGroupAsync(
@@ -128,6 +126,32 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return webApp;
         }
 
+        public async ValueTask DeprovisionResourceGroupAsync(string projectName, string environment)
+        {
+            string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
+            bool isResourceGroupExist =
+                await CloudBroker.CheckResourceGroupExistAsync(
+                    resourceGroupName);
+
+            if ( isResourceGroupExist )
+            {
+                LoggingBroker.LogActivity(
+                    message: $"Deprovisioning {resourceGroupName}...");
+
+                await CloudBroker.DeleteResourceGroupAsync(
+                    resourceGroupName
+                );
+
+                LoggingBroker.LogActivity(
+                    message: $"{resourceGroupName} Deprovisioned");
+            }
+            else
+            {
+                LoggingBroker.LogActivity(
+                    message: $"Resource group name {resourceGroupName} doesn't exist.");
+            }
+        }
+
         private string GenerateConnectionString(ISqlDatabase sqlDatabase)
         {
             SqlDatabaseAccess sqlDatabaseAccess =
@@ -137,6 +161,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 $"Initial Catalog={sqlDatabase.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
-        }
+        }        
     }
 }
