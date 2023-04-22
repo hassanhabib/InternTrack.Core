@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.CloudManagements
 {
-    internal interface ICloudManagementProcessingService
+    public interface ICloudManagementProcessingService
     {
+        ValueTask ProcessAsync();
     }
 }

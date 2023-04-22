@@ -25,7 +25,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<IResourceGroup> ProvisionResourceGroupAsync(
-            string projectName, 
+            string projectName,
             string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
@@ -42,8 +42,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<IAppServicePlan> ProvisionPlanAsync(
-            string projectName, 
-            string environment, 
+            string projectName,
+            string environment,
             IResourceGroup resourceGroup)
         {
             string planName = $"{projectName}-PLAN-{environment}".ToUpper();
@@ -61,17 +61,17 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<ISqlServer> ProvisionSqlServerAsync(
-            string projectName, 
-            string environment, 
+            string projectName,
+            string environment,
             IResourceGroup resourceGroup)
         {
             string sqlServerName = $"{projectName}-dbserver-{environment}".ToLower();
-            
+
             LoggingBroker.LogActivity(message: $"Provisioning {sqlServerName}...");
 
-            ISqlServer sqlServer = 
-                await CloudBroker.CreateSqlServerAsync( 
-                    sqlServerName, 
+            ISqlServer sqlServer =
+                await CloudBroker.CreateSqlServerAsync(
+                    sqlServerName,
                     resourceGroup);
 
             LoggingBroker.LogActivity(message: $"{sqlServer} Provisioned)");
@@ -80,8 +80,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
-            string projectName, 
-            string environment, 
+            string projectName,
+            string environment,
             ISqlServer sqlServer)
         {
             string sqlDatabaseName = $"{projectName}-db-{environment}".ToLower();
@@ -96,7 +96,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
             LoggingBroker.LogActivity(message: $"{sqlDatabaseName} Provisioned");
 
-            return new SqlDatabase { 
+            return new SqlDatabase
+            {
                 Database = sqlDatabase,
                 ConnectionString = GenerateConnectionString(sqlDatabase)
             };
@@ -133,7 +134,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 await CloudBroker.CheckResourceGroupExistAsync(
                     resourceGroupName);
 
-            if ( isResourceGroupExist )
+            if (isResourceGroupExist)
             {
                 LoggingBroker.LogActivity(
                     message: $"Deprovisioning {resourceGroupName}...");
@@ -161,6 +162,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 $"Initial Catalog={sqlDatabase.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
-        }        
+        }
     }
 }
