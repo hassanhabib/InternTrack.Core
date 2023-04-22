@@ -3,7 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Models.Storages;
+using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Sql.Fluent;

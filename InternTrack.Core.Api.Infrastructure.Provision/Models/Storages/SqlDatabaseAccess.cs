@@ -3,10 +3,11 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
+namespace InternTrack.Core.Api.Infrastructure.Provision.Models.Storages
 {
-    public interface ILoggingBroker
+    public class SqlDatabaseAccess
     {
-        void LogActivity(string message);
+        public string AdminName { get; set; }
+        public string AdminAccess { get; set; }
     }
 }

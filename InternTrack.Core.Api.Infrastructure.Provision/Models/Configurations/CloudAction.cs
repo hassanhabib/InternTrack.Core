@@ -3,11 +3,10 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Models.Storages
+namespace InternTrack.Core.Api.Infrastructure.Provision.Models.Configurations
 {
-    public class SqlDatabaseAccess
+    public class CloudAction
     {
-        public string AdminName { get; set; }
-        public string AdminAccess { get; set; }
+        public List<string> Enviornments { get; set; }        
     }
 }
