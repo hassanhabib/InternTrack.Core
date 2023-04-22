@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Models.Storages;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 
@@ -15,9 +16,11 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 IResourceGroup resourceGroup
             );
 
-        ValueTask<ISqlServer> CreateSqlDataBaseAsync(
+        ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
                 string sqlDatabaseName,
                 ISqlServer sqlServer
             );
+
+        SqlDatabaseAccess GetAdminAccess();
     }
 }
