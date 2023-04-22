@@ -6,6 +6,7 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
@@ -40,7 +41,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 );
 
             return Azure.Configure()
-                .WithLogLevel(Microsoft.Azure.Management.ResourceManager.Fluent.Core.HttpLoggingDelegatingHandler.Level.Basic)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
                 .Authenticate(credentials)
                 .WithDefaultSubscription();
         }
