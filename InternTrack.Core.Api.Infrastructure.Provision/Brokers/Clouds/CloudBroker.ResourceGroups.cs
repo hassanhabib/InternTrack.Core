@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
         public async ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName) =>
             await azure.ResourceGroups
             .Define(name: resourceGroupName)
-            .WithRegion(region: Region.USWest2)
+            .WithRegion(region: Region.USWest3)
             .CreateAsync();
 
         public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName) =>

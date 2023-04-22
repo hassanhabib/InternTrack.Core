@@ -26,7 +26,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
         {
             return await azure.SqlServers
                 .Define(name: sqlServerName)
-                .WithRegion(region: Region.USWest2)
+                .WithRegion(region: Region.USWest3)
                 .WithExistingResourceGroup(resourceGroup)
                 .WithAdministratorLogin(adminName)
                 .WithAdministratorPassword(adminAccess)
