@@ -6,6 +6,7 @@
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Configurations;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Configurations;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
+using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements;
 using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -18,10 +19,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
         private readonly ICloudManagementService CloudManagementService;
         private readonly IConfigurationBroker ConfigurationBroker;
 
-        public CloudManagementProcessingService(ICloudManagementService cloudManagementService, IConfigurationBroker configurationBroker)
+        public CloudManagementProcessingService()
         {
-            CloudManagementService = cloudManagementService;
-            ConfigurationBroker = configurationBroker;
+            CloudManagementService = new CloudManagementService();
+            ConfigurationBroker = new ConfigurationBroker();
         }
 
         public async ValueTask ProcessAsync()
