@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
@@ -28,7 +29,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 IResourceGroup resourceGroup
             );
 
-        ValueTask<ISqlDatabase> ProvisionSqlDatabaseAsync(
+        ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
                 string projectName,
                 string environment,
                 ISqlServer sqlServer
