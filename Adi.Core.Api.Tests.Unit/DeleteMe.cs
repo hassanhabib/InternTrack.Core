@@ -1,11 +1,15 @@
+// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
+
+using Xunit;
 namespace Adi.Core.Api.Tests.Unit
 {
-    public class UnitTest1
+    public class DeleteMe
     {
         [Fact]
-        public void Test1()
-        {
+        public void ShouldBeTrue()=>Assert .True(true);
 
-        }
+       
     }
 }
