@@ -11,7 +11,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker
     {
-        public async ValueTask<IAppServicePlan> CreatePlanAsync(string planName, IResourceGroup resourceGroup)
+        public async ValueTask<IAppServicePlan> CreatePlanAsync(
+            string planName, 
+            IResourceGroup resourceGroup)
         {
             return await azure.AppServices.AppServicePlans
                 .Define(planName)
