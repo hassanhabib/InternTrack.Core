@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
+using Microsoft.AspNetCore.Mvc.Testing;
 using RESTFulSense.Clients;
 
 
@@ -9,7 +12,6 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Brokers
         private readonly WebApplicationFactory<Startup> webApplicationFactory;
         private readonly HttpClient httpClient;
         private readonly IRESTFulApiFactoryClient apiFactoryClient;
-
         public InternTrackApiBroker()
         {
             this.webApplicationFactory = new WebApplicationFactory<Startup>();
