@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 .Define(planName)
                 .WithRegion(Region.USWest3)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithPricingTier(PricingTier.StandardS1)
+                .WithPricingTier(PricingTier.StandardS1) 
                 .WithOperatingSystem(OperatingSystem.Windows)
                 .CreateAsync();
         }
