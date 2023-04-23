@@ -43,9 +43,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
                 string projectName,
                 CloudAction cloudAction)
         {
-            List<string> environment = RetrieveEnvironments(cloudAction);
+            List<string> environments = RetrieveEnvironments(cloudAction);
 
-            foreach (string environmentName in environment)
+            foreach (string environmentName in environments)
             {
                 IResourceGroup resourceGroup = await CloudManagementService
                     .ProvisionResourceGroupAsync(

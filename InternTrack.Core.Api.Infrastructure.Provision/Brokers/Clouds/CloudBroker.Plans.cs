@@ -3,10 +3,10 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using OperatingSystem = Microsoft.Azure.Management.AppService.Fluent.OperatingSystem;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 .WithRegion(Region.USWest3)
                 .WithExistingResourceGroup(resourceGroup)
                 .WithPricingTier(PricingTier.StandardS1)
-                .WithOperatingSystem(OperatingSystem.Windows)
+                .WithOperatingSystem(Microsoft.Azure.Management.AppService.Fluent.OperatingSystem.Windows)
                 .CreateAsync();
         }
     }
