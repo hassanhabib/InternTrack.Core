@@ -3,7 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
 {
     public class LoggingBroker : ILoggingBroker

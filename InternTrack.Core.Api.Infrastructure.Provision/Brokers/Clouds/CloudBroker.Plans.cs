@@ -18,7 +18,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 .WithRegion(Region.USWest3)
                 .WithExistingResourceGroup(resourceGroup)
                 .WithPricingTier(PricingTier.StandardS1)
-                .WithOperatingSystem(Microsoft.Azure.Management.AppService.Fluent.OperatingSystem.Windows)
+                .WithOperatingSystem(OperatingSystem.Windows)
                 .CreateAsync();
         }
     }

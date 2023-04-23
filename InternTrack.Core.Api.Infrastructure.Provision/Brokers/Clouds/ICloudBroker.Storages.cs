@@ -13,13 +13,11 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     {
         ValueTask<ISqlServer> CreateSqlServerAsync(
                 string sqlServerName,
-                IResourceGroup resourceGroup
-            );
+                IResourceGroup resourceGroup);
 
         ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
                 string sqlDatabaseName,
-                ISqlServer sqlServer
-            );
+                ISqlServer sqlServer);
 
         SqlDatabaseAccess GetAdminAccess();
     }

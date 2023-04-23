@@ -2,7 +2,7 @@
 // Copyright (c) Coalition of the Good-Hearted Engineers
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
-//
+
 using InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.CloudManagements;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision

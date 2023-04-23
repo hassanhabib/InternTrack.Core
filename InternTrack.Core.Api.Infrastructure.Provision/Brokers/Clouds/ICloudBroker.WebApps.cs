@@ -14,7 +14,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 string webAppName,
                 string databaseConnectionString,
                 IAppServicePlan plan,
-                IResourceGroup resourceGroup
-            );
+                IResourceGroup resourceGroup);
     }
 }

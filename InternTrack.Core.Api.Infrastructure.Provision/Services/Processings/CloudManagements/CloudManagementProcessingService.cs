@@ -31,12 +31,12 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
                 ConfigurationBroker.GetConfigurations();
 
             await ProvisionAsync(
-                    projectName: cloudMangamentConfiguration.ProjectName,
-                    cloudAction: cloudMangamentConfiguration.Up);
+                projectName: cloudMangamentConfiguration.ProjectName,
+                cloudAction: cloudMangamentConfiguration.Up);
 
             await DeprovisionAsync(
-                    projectName: cloudMangamentConfiguration.ProjectName,
-                    cloudAction: cloudMangamentConfiguration.Down);
+                projectName: cloudMangamentConfiguration.ProjectName,
+                cloudAction: cloudMangamentConfiguration.Down);
         }
 
         private async ValueTask ProvisionAsync(

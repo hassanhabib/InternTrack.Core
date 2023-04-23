@@ -3,7 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds

@@ -29,7 +29,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
-
             LoggingBroker.LogActivity(message: $"Provisioning {resourceGroupName}...");
 
             IResourceGroup resourceGroup =
@@ -47,13 +46,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             IResourceGroup resourceGroup)
         {
             string planName = $"{projectName}-PLAN-{environment}".ToUpper();
-
             LoggingBroker.LogActivity(message: $"Provisiong {planName}...");
 
             IAppServicePlan plan =
-                await CloudBroker.CreatePlanAsync(
-                    planName,
-                    resourceGroup);
+                await CloudBroker.CreatePlanAsync(planName, resourceGroup);
 
             LoggingBroker.LogActivity(message: $"{plan} Provisioned");
 
@@ -66,7 +62,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             IResourceGroup resourceGroup)
         {
             string sqlServerName = $"{projectName}-dbserver-{environment}".ToLower();
-
             LoggingBroker.LogActivity(message: $"Provisioning {sqlServerName}...");
 
             ISqlServer sqlServer =
@@ -85,14 +80,12 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             ISqlServer sqlServer)
         {
             string sqlDatabaseName = $"{projectName}-db-{environment}".ToLower();
-
             LoggingBroker.LogActivity(message: $"Provisioning {sqlDatabaseName}");
 
             ISqlDatabase sqlDatabase =
                 await CloudBroker.CreateSqlDataBaseAsync(
                     sqlDatabaseName,
-                    sqlServer
-                    );
+                    sqlServer);
 
             LoggingBroker.LogActivity(message: $"{sqlDatabaseName} Provisioned");
 
@@ -111,7 +104,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             IAppServicePlan appServicePlan)
         {
             string webAppName = $"{projectName}-{environment}".ToLower();
-
             LoggingBroker.LogActivity(message: $"Provisioning {webAppName}");
 
             IWebApp webApp =
@@ -119,8 +111,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                         webAppName,
                         databaseConnectionString,
                         appServicePlan,
-                        resourceGroup
-                    );
+                        resourceGroup);
 
             LoggingBroker.LogActivity(message: $"{webAppName} Provisioned");
 
@@ -136,15 +127,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
             if (isResourceGroupExist)
             {
-                LoggingBroker.LogActivity(
-                    message: $"Deprovisioning {resourceGroupName}...");
-
-                await CloudBroker.DeleteResourceGroupAsync(
-                    resourceGroupName
-                );
-
-                LoggingBroker.LogActivity(
-                    message: $"{resourceGroupName} Deprovisioned");
+                LoggingBroker.LogActivity(message: $"Deprovisioning {resourceGroupName}...");
+                await CloudBroker.DeleteResourceGroupAsync(resourceGroupName);
+                LoggingBroker.LogActivity(message: $"{resourceGroupName} Deprovisioned");
             }
             else
             {

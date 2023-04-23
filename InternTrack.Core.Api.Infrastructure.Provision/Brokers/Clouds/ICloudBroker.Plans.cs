@@ -11,8 +11,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial interface ICloudBroker
     {
         ValueTask<IAppServicePlan> CreatePlanAsync(
-                string planName,
-                IResourceGroup resourceGroup
-            );
+            string planName,
+            IResourceGroup resourceGroup);
     }
 }

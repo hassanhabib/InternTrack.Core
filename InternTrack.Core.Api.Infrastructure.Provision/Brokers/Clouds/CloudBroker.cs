@@ -37,8 +37,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                     clientId: clientId,
                     clientSecret: clientSecret,
                     tenantId: tenantId,
-                    environment: AzureEnvironment.AzureGlobalCloud
-                );
+                    environment: AzureEnvironment.AzureGlobalCloud);
 
             return Azure.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
