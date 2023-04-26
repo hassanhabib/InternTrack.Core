@@ -12,12 +12,12 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial interface ICloudBroker
     {
         ValueTask<ISqlServer> CreateSqlServerAsync(
-                string sqlServerName,
-                IResourceGroup resourceGroup);
+            string sqlServerName,
+            IResourceGroup resourceGroup);
 
         ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
-                string sqlDatabaseName,
-                ISqlServer sqlServer);
+            string sqlDatabaseName,
+            ISqlServer sqlServer);
 
         SqlDatabaseAccess GetAdminAccess();
     }

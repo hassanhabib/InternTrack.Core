@@ -32,8 +32,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
         private IAzure AuthenticateAzure()
         {
             AzureCredentials credentials =
-                SdkContext.AzureCredentialsFactory
-                .FromServicePrincipal(
+                SdkContext.AzureCredentialsFactory.FromServicePrincipal(
                     clientId: clientId,
                     clientSecret: clientSecret,
                     tenantId: tenantId,
