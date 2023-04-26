@@ -21,12 +21,12 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 
         public CloudBroker()
         {
-            clientId = Environment.GetEnvironmentVariable("AzureClientId");
-            clientSecret = Environment.GetEnvironmentVariable("AzureClientSecrect");
-            tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
-            adminName = Environment.GetEnvironmentVariable("AzureAdminName");
-            adminAccess = Environment.GetEnvironmentVariable("AzureAdminAccess");
-            azure = AuthenticateAzure();
+            this.clientId = Environment.GetEnvironmentVariable("AzureClientId");
+            this.clientSecret = Environment.GetEnvironmentVariable("AzureClientSecrect");
+            this.tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
+            this.adminName = Environment.GetEnvironmentVariable("AzureAdminName");
+            this.adminAccess = Environment.GetEnvironmentVariable("AzureAdminAccess");
+            this.azure = AuthenticateAzure();
         }
 
         private IAzure AuthenticateAzure()

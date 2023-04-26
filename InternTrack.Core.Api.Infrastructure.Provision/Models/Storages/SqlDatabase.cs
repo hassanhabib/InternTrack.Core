@@ -3,7 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-
 using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Models.Storages

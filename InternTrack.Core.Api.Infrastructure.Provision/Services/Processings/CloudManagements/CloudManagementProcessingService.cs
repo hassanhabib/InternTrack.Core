@@ -16,19 +16,19 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
 {
     public class CloudManagementProcessingService : ICloudManagementProcessingService
     {
-        private readonly ICloudManagementService CloudManagementService;
-        private readonly IConfigurationBroker ConfigurationBroker;
+        private readonly ICloudManagementService cloudManagementService;
+        private readonly IConfigurationBroker configurationBroker;
 
         public CloudManagementProcessingService()
         {
-            CloudManagementService = new CloudManagementService();
-            ConfigurationBroker = new ConfigurationBroker();
+            this.cloudManagementService = new CloudManagementService();
+            configurationBroker = new ConfigurationBroker();
         }
 
         public async ValueTask ProcessAsync()
         {
             CloudMangamentConfiguration cloudMangamentConfiguration =
-                ConfigurationBroker.GetConfigurations();
+                configurationBroker.GetConfigurations();
 
             await ProvisionAsync(
                 projectName: cloudMangamentConfiguration.ProjectName,
@@ -47,30 +47,30 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
 
             foreach (string environmentName in environments)
             {
-                IResourceGroup resourceGroup = await CloudManagementService
+                IResourceGroup resourceGroup = await cloudManagementService
                     .ProvisionResourceGroupAsync(
                         projectName,
                         environmentName);
 
-                IAppServicePlan appServicePlan = await CloudManagementService
+                IAppServicePlan appServicePlan = await cloudManagementService
                     .ProvisionPlanAsync(
                         projectName,
                         environmentName,
                         resourceGroup);
 
-                ISqlServer sqlServer = await CloudManagementService
+                ISqlServer sqlServer = await cloudManagementService
                     .ProvisionSqlServerAsync(
                         projectName,
                         environmentName,
                         resourceGroup);
 
-                SqlDatabase sqlDatabase = await CloudManagementService
+                SqlDatabase sqlDatabase = await cloudManagementService
                     .ProvisionSqlDatabaseAsync(
                         projectName,
                         environmentName,
                         sqlServer);
 
-                IWebApp webApp = await CloudManagementService
+                IWebApp webApp = await cloudManagementService
                     .ProvisionWebAppAsync(
                         projectName,
                         environmentName,
@@ -89,7 +89,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
 
             foreach (string environmentName in environments)
             {
-                await CloudManagementService.DeprovisionResourceGroupAsync(projectName, environmentName);
+                await cloudManagementService.DeprovisionResourceGroupAsync(projectName, environmentName);
             }
         }
 
