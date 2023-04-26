@@ -22,7 +22,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
         public CloudManagementProcessingService()
         {
             this.cloudManagementService = new CloudManagementService();
-            configurationBroker = new ConfigurationBroker();
+            this.configurationBroker = new ConfigurationBroker();
         }
 
         public async ValueTask ProcessAsync()
