@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "dWNoMNEPOMndSb/BqLvJxUdkfeoeaAvk+6T1Hpu7ZZdPPqOxbhJJjw2ZVwSVD+unO/Mpo0oalD33u7zcLzz9BQ==",
+  "success": true,
+  "projectFilePath": "/Users/rejordon/Projects/InternTrack.Core/internTrack.Core.Build/internTrack.Core.Build.csproj",
+  "expectedPackageFiles": [
+    "/Users/rejordon/.nuget/packages/adotnet/2.1.2/adotnet.2.1.2.nupkg.sha512",
+    "/Users/rejordon/.nuget/packages/fluentassertions/6.2.0/fluentassertions.6.2.0.nupkg.sha512",
+    "/Users/rejordon/.nuget/packages/system.configuration.configurationmanager/4.4.0/system.configuration.configurationmanager.4.4.0.nupkg.sha512",
+    "/Users/rejordon/.nuget/packages/system.security.cryptography.protecteddata/4.4.0/system.security.cryptography.protecteddata.4.4.0.nupkg.sha512",
+    "/Users/rejordon/.nuget/packages/xeption/1.7.0/xeption.1.7.0.nupkg.sha512",
+    "/Users/rejordon/.nuget/packages/yamldotnet/11.2.1/yamldotnet.11.2.1.nupkg.sha512"
+  ],
+  "logs": []
+}

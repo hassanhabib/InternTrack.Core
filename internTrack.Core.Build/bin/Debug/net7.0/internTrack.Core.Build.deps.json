@@ -1,0 +1,137 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "internTrack.Core.Build/1.0.0": {
+        "dependencies": {
+          "ADotNet": "2.1.2"
+        },
+        "runtime": {
+          "internTrack.Core.Build.dll": {}
+        }
+      },
+      "ADotNet/2.1.2": {
+        "dependencies": {
+          "Xeption": "1.7.0",
+          "YamlDotNet": "11.2.1"
+        },
+        "runtime": {
+          "lib/net7.0/ADotNet.dll": {
+            "assemblyVersion": "2.1.2.0",
+            "fileVersion": "2.1.2.0"
+          }
+        }
+      },
+      "FluentAssertions/6.2.0": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.4.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/FluentAssertions.dll": {
+            "assemblyVersion": "6.2.0.0",
+            "fileVersion": "6.2.0.0"
+          }
+        }
+      },
+      "System.Configuration.ConfigurationManager/4.4.0": {
+        "dependencies": {
+          "System.Security.Cryptography.ProtectedData": "4.4.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/4.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
+      "Xeption/1.7.0": {
+        "dependencies": {
+          "FluentAssertions": "6.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Xeption.dll": {
+            "assemblyVersion": "1.7.0.0",
+            "fileVersion": "1.7.0.0"
+          }
+        }
+      },
+      "YamlDotNet/11.2.1": {
+        "runtime": {
+          "lib/netstandard2.1/YamlDotNet.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.2.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "internTrack.Core.Build/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ADotNet/2.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+ROrrgpcxBcV8Z5/UFTPkNDlhMoUxB2GWIoQHATCmV+I9dtDliA4k+LTVob2gxaqAkK+/NFnu3HwnKb5E/pkoA==",
+      "path": "adotnet/2.1.2",
+      "hashPath": "adotnet.2.1.2.nupkg.sha512"
+    },
+    "FluentAssertions/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5YOZLB0Tay1bw+wEYZTAZlPThQ/Yntk1HSPJYluMd5PW/Xg9E8I1mRC03AKRsnuANBR0kYaHq0NX1fg7RgrGNA==",
+      "path": "fluentassertions/6.2.0",
+      "hashPath": "fluentassertions.6.2.0.nupkg.sha512"
+    },
+    "System.Configuration.ConfigurationManager/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gWwQv/Ug1qWJmHCmN17nAbxJYmQBM/E94QxKLksvUiiKB1Ld3Sc/eK1lgmbSjDFxkQhVuayI/cGFZhpBSodLrg==",
+      "path": "system.configuration.configurationmanager/4.4.0",
+      "hashPath": "system.configuration.configurationmanager.4.4.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.ProtectedData/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cJV7ScGW7EhatRsjehfvvYVBvtiSMKgN8bOVI0bQhnF5bU7vnHVIsH49Kva7i7GWaWYvmEzkYVk1TC+gZYBEog==",
+      "path": "system.security.cryptography.protecteddata/4.4.0",
+      "hashPath": "system.security.cryptography.protecteddata.4.4.0.nupkg.sha512"
+    },
+    "Xeption/1.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qjOTJ+hKhQJoADlCxgCAb9tocVPYBE1KhFuRB2Qe0Iiy7KljYTe67xaarpOnZUi+hRJQI1eP2CsgCrAL+mBGZw==",
+      "path": "xeption/1.7.0",
+      "hashPath": "xeption.1.7.0.nupkg.sha512"
+    },
+    "YamlDotNet/11.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tBt8K+korVfrjH9wyDEhiLKxbs8qoLCLIFwvYgkSUuMC9//w3z0cFQ8LQAI/5MCKq+BMil0cfRTRvPeE7eXhQw==",
+      "path": "yamldotnet/11.2.1",
+      "hashPath": "yamldotnet.11.2.1.nupkg.sha512"
+    }
+  }
+}
