@@ -49,7 +49,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             loggingBroker.LogActivity(message: $"Provisiong {planName}...");
 
             IAppServicePlan plan =
-                await cloudBroker.CreatePlanAsync(planName, resourceGroup);
+                await cloudBroker.CreatePlanAsync(
+                    planName, 
+                    resourceGroup);
 
             loggingBroker.LogActivity(message: $"{plan} Provisioned");
 
@@ -108,10 +110,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
             IWebApp webApp =
                 await cloudBroker.CreateWebAppAsync(
-                        webAppName,
-                        databaseConnectionString,
-                        appServicePlan,
-                        resourceGroup);
+                    webAppName,
+                    databaseConnectionString,
+                    appServicePlan,
+                    resourceGroup);
 
             loggingBroker.LogActivity(message: $"{webAppName} Provisioned");
 
@@ -121,6 +123,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         public async ValueTask DeprovisionResourceGroupAsync(string projectName, string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
+
             bool isResourceGroupExist =
                 await cloudBroker.CheckResourceGroupExistAsync(
                     resourceGroupName);
