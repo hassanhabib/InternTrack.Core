@@ -3,7 +3,6 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-
 namespace InternTrack.Core.Api.Controllers
 {
     [Route("api/[controller]")]

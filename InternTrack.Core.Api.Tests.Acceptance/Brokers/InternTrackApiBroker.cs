@@ -1,10 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------- 
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
+
 using Microsoft.AspNetCore.Mvc.Testing;
 using RESTFulSense.Clients;
-
-
 namespace InternTrack.Core.Api.Tests.Acceptance.Brokers
 {
     public partial class InternTrackApiBroker
