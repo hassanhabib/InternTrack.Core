@@ -120,7 +120,9 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return webApp;
         }
 
-        public async ValueTask DeprovisionResourceGroupAsync(string projectName, string environment)
+        public async ValueTask DeprovisionResourceGroupAsync(
+            string projectName, 
+            string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
 

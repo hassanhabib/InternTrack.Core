@@ -17,29 +17,29 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             string environment);
 
         ValueTask<IAppServicePlan> ProvisionPlanAsync(
-                string projectName,
-                string environment,
-                IResourceGroup resourceGroup);
+            string projectName,
+            string environment,
+            IResourceGroup resourceGroup);
 
         ValueTask<ISqlServer> ProvisionSqlServerAsync(
-                string projectName,
-                string environment,
-                IResourceGroup resourceGroup);
+            string projectName,
+            string environment,
+            IResourceGroup resourceGroup);
 
         ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
-                string projectName,
-                string environment,
-                ISqlServer sqlServer);
+            string projectName,
+            string environment,
+            ISqlServer sqlServer);
 
         ValueTask<IWebApp> ProvisionWebAppAsync(
-                string projectName,
-                string environment,
-                string databaseConnectionString,
-                IResourceGroup resourceGroup,
-                IAppServicePlan appServicePlan);
+            string projectName,
+            string environment,
+            string databaseConnectionString,
+            IResourceGroup resourceGroup,
+            IAppServicePlan appServicePlan);
 
         ValueTask DeprovisionResourceGroupAsync(
-                string projectName,
-                string environment);
+            string projectName,
+            string environment);
     }
 }

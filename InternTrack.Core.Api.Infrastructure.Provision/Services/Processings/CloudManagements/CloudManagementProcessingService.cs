@@ -40,8 +40,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
         }
 
         private async ValueTask ProvisionAsync(
-                string projectName,
-                CloudAction cloudAction)
+            string projectName,
+            CloudAction cloudAction)
         {
             List<string> environments = RetrieveEnvironments(cloudAction);
 
@@ -81,8 +81,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
         }
 
         private async ValueTask DeprovisionAsync(
-                string projectName,
-                CloudAction cloudAction)
+            string projectName,
+            CloudAction cloudAction)
         {
             List<string> environments = RetrieveEnvironments(cloudAction);
 
