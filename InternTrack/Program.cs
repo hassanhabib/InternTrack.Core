@@ -1,4 +1,4 @@
-﻿using ADotNet.Clients;
+using ADotNet.Clients;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
@@ -38,7 +38,7 @@ var githubPipeline = new GithubPipeline
 
                 TargetDotNetVersion = new TargetDotNetVersion
                 {
-                    DotNetVersion = "",
+                    DotNetVersion = "7.0.203",
                     IncludePrerelease = true,
                 }
 
@@ -55,7 +55,7 @@ var githubPipeline = new GithubPipeline
 
                  new TestTask
                  {
-
+                     Name = "Running Tests"
                  }
 
             },
@@ -65,6 +65,7 @@ var githubPipeline = new GithubPipeline
 };
 
 var client = new ADotNetClient();
+
 client.SerializeAndWriteToFile(
    adoPipeline: githubPipeline,
-   path: "../../../../.github/InternTrackCoreApi/dotnet.yml");
+   path: "../.internTrackCoreApi/dotnet.yml");
