@@ -1,4 +1,8 @@
-﻿
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
 using ADotNet.Clients;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
@@ -13,7 +17,7 @@ namespace InternTrack.Core.Infrastructure.Build
         {
             var githubPipeline = new GithubPipeline
             {
-                Name = "Sofee Core Build Pipeline",
+                Name = "Intern Track Core Build Pipeline",
 
                 OnEvents = new Events
                 {
