@@ -1,6 +1,10 @@
-﻿namespace InternTrack.Core.Api.Brokers.DateTimes
+﻿using System;
+
+namespace InternTrack.Core.Api.Brokers.DateTimes
 {
-    public class DateTimeBroker
+    public class DateTimeBroker : IDateTimeBroker
     {
+        public DateTimeOffset GetCurrentDateTimeOffset() =>
+            DateTimeOffset.UtcNow;
     }
 }
