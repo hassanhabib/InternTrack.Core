@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using InternTrack.Core.Api.Brokers.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,7 @@ namespace InternTrack.Core.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) =>
+        public Startup(IConfiguration configuration) => 
             Configuration = configuration;
 
         public IConfiguration Configuration { get; }
@@ -21,7 +22,9 @@ namespace InternTrack.Core.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddDbContext<StorageBroker>();
+            services.AddTransient<IStorageBroker, StorageBroker> ();    
+           
             services.AddSwaggerGen(options =>
             {
                 var openApiInfo = new OpenApiInfo
