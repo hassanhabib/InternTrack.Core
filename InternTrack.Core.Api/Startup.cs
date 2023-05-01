@@ -24,13 +24,15 @@ namespace InternTrack.Core.Api
 
             services.AddSwaggerGen(options =>
             {
+                var openApiInfo = new OpenApiInfo
+                {
+                    Title = "InternTrack.Core.Api",
+                    Version = "v1"
+                };
+
                 options.SwaggerDoc(
                     name: "v1",
-                    info: new OpenApiInfo
-                    {
-                        Title = "InternTrack.Core.Api",
-                        Version = "v1"
-                    });
+                    info: openApiInfo);      
             });
         }
 
