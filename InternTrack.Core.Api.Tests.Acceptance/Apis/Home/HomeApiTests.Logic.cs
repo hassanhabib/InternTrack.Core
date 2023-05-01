@@ -2,8 +2,10 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
+
 namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Home
 {
     public partial class HomeApiTests
@@ -11,13 +13,15 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Home
         [Fact]
         public async Task ShouldReturnHomeMessageAsync()
         {
-            // Given
+            // given
             string expectedMessage = 
                 "Thank you, Mario. But the princess is in another castle!";
-            // When
+            
+            // when
             string actualMessage = 
                 await this.internTrackApiBroker.GetHomeMessageAsync();
-            // Then
+            
+            // then
             actualMessage.Should().BeEquivalentTo(expectedMessage);
         }
     }

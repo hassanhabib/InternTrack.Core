@@ -4,6 +4,7 @@
 
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Xunit;
+
 namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Home
 {
     [Collection(nameof(ApiTestCollection))]
