@@ -39,38 +39,38 @@ namespace InternTrack.Core.Infrastructure.Build
                         RunsOn = BuildMachines.Windows2022,
 
                         Steps = new List<GithubTask>
-            {
-                new CheckoutTaskV2
-                {
-                    Name = "Checking Out Code"
-                },
+                        {
+                            new CheckoutTaskV2
+                            {
+                                Name = "Checking Out Code"
+                            },
 
-                new SetupDotNetTaskV1
-                {
-                    Name = "Installing .NET",
+                            new SetupDotNetTaskV1
+                            {
+                                Name = "Installing .NET",
 
-                    TargetDotNetVersion = new TargetDotNetVersion
-                    {
-                        DotNetVersion = "7.0.203",
-                        IncludePrerelease = true
-                    }
-                },
+                                TargetDotNetVersion = new TargetDotNetVersion
+                                {
+                                    DotNetVersion = "7.0.203",
+                                    IncludePrerelease = true
+                                }
+                            },
 
-                new RestoreTask
-                {
-                    Name = "Restoring Nuget Packages"
-                },
+                            new RestoreTask
+                            {
+                                Name = "Restoring Nuget Packages"
+                            },
 
-                new DotNetBuildTask
-                {
-                    Name = "Building Project"
-                },
+                            new DotNetBuildTask
+                            {
+                                Name = "Building Project"
+                            },
 
-                new TestTask
-                {
-                    Name = "Running Tests"
-                }
-            },
+                            new TestTask
+                            {
+                                Name = "Running Tests"
+                            }
+                        },
                     }
                 }
             };
