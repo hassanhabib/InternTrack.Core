@@ -6,6 +6,7 @@
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using  OperatingSystem = Microsoft.Azure.Management.AppService.Fluent.OperatingSystem;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
