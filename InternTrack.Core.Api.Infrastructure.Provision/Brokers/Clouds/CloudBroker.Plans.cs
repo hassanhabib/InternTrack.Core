@@ -12,14 +12,14 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial class CloudBroker
     {
         public async ValueTask<IAppServicePlan> CreatePlanAsync(
-            string planName, 
+            string planName,
             IResourceGroup resourceGroup)
         {
             return await azure.AppServices.AppServicePlans
                 .Define(planName)
                 .WithRegion(Region.USWest3)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithPricingTier(PricingTier.StandardS1) 
+                .WithPricingTier(PricingTier.StandardS1)
                 .WithOperatingSystem(OperatingSystem.Windows)
                 .CreateAsync();
         }

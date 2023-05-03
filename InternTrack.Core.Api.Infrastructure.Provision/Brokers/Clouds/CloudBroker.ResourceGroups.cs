@@ -20,7 +20,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 .WithRegion(region: Region.USWest3)
                 .CreateAsync();
         }
-        
+
         public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName) =>
             await azure.ResourceGroups.DeleteByNameAsync(reresourceGroupName);
     }

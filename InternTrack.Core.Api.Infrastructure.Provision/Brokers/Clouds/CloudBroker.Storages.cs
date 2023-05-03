@@ -13,7 +13,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial class CloudBroker
     {
         public async ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
-            string sqlDatabaseName, 
+            string sqlDatabaseName,
             ISqlServer sqlServer)
         {
             return await azure.SqlServers.Databases

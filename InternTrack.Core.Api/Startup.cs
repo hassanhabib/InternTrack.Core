@@ -14,7 +14,7 @@ namespace InternTrack.Core.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) => 
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
 
         public IConfiguration Configuration { get; }
@@ -23,8 +23,8 @@ namespace InternTrack.Core.Api
         {
             services.AddControllers();
             services.AddDbContext<StorageBroker>();
-            services.AddTransient<IStorageBroker, StorageBroker> ();    
-           
+            services.AddTransient<IStorageBroker, StorageBroker>();
+
             services.AddSwaggerGen(options =>
             {
                 var openApiInfo = new OpenApiInfo
@@ -35,7 +35,7 @@ namespace InternTrack.Core.Api
 
                 options.SwaggerDoc(
                     name: "v1",
-                    info: openApiInfo);      
+                    info: openApiInfo);
             });
         }
 
