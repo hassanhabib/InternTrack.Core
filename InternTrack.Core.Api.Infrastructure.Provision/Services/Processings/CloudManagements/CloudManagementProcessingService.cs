@@ -89,7 +89,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
             foreach (string environmentName in environments)
             {
                 await cloudManagementService.DeprovisionResourceGroupAsync(
-                    projectName, 
+                    projectName,
                     environmentName);
             }
         }

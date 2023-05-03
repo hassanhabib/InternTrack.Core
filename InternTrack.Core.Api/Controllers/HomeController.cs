@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InternTrack.Core.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : ControllerBase
     {
         [HttpGet]

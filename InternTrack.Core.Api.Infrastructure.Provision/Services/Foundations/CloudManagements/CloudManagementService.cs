@@ -50,7 +50,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
             IAppServicePlan plan =
                 await cloudBroker.CreatePlanAsync(
-                    planName, 
+                    planName,
                     resourceGroup);
 
             loggingBroker.LogActivity(message: $"{plan} Provisioned");
@@ -121,7 +121,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask DeprovisionResourceGroupAsync(
-            string projectName, 
+            string projectName,
             string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
