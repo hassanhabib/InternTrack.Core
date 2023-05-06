@@ -3,13 +3,13 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments;
-using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements
 {
@@ -24,14 +24,14 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             this.loggingBroker = new LoggingBroker();
         }
 
-        public async ValueTask<IResourceGroup> ProvisionResourceGroupAsync(
+        public async ValueTask<ResourceGroupResource> ProvisionResourceGroupAsync(
             string projectName,
             string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
             loggingBroker.LogActivity(message: $"Provisioning {resourceGroupName}...");
 
-            IResourceGroup resourceGroup =
+            ResourceGroupResource resourceGroup =
                 await cloudBroker.CreateResourceGroupAsync(
                     resourceGroupName);
 
@@ -40,15 +40,15 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return resourceGroup;
         }
 
-        public async ValueTask<IAppServicePlan> ProvisionPlanAsync(
+        public async ValueTask<AppServicePlanResource> ProvisionPlanAsync(
             string projectName,
             string environment,
-            IResourceGroup resourceGroup)
+            ResourceGroupResource resourceGroup)
         {
             string planName = $"{projectName}-PLAN-{environment}".ToUpper();
             loggingBroker.LogActivity(message: $"Provisiong {planName}...");
 
-            IAppServicePlan plan =
+            AppServicePlanResource plan =
                 await cloudBroker.CreatePlanAsync(
                     planName,
                     resourceGroup);
@@ -58,15 +58,15 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return plan;
         }
 
-        public async ValueTask<ISqlServer> ProvisionSqlServerAsync(
+        public async ValueTask<SqlServerResource> ProvisionSqlServerAsync(
             string projectName,
             string environment,
-            IResourceGroup resourceGroup)
+            ResourceGroupResource resourceGroup)
         {
             string sqlServerName = $"{projectName}-dbserver-{environment}".ToLower();
             loggingBroker.LogActivity(message: $"Provisioning {sqlServerName}...");
 
-            ISqlServer sqlServer =
+            SqlServerResource sqlServer =
                 await cloudBroker.CreateSqlServerAsync(
                     sqlServerName,
                     resourceGroup);
@@ -79,12 +79,12 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         public async ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
             string projectName,
             string environment,
-            ISqlServer sqlServer)
+            SqlServerResource sqlServer)
         {
             string sqlDatabaseName = $"{projectName}-db-{environment}".ToLower();
             loggingBroker.LogActivity(message: $"Provisioning {sqlDatabaseName}");
 
-            ISqlDatabase sqlDatabase =
+            SqlDatabaseResource sqlDatabase =
                 await cloudBroker.CreateSqlDataBaseAsync(
                     sqlDatabaseName,
                     sqlServer);
@@ -94,21 +94,21 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             return new SqlDatabase
             {
                 Database = sqlDatabase,
-                ConnectionString = GenerateConnectionString(sqlDatabase)
+                ConnectionString = GenerateConnectionString(sqlDatabase, sqlServer)
             };
         }
 
-        public async ValueTask<IWebApp> ProvisionWebAppAsync(
+        public async ValueTask<WebSiteResource> ProvisionWebAppAsync(
             string projectName,
             string environment,
             string databaseConnectionString,
-            IResourceGroup resourceGroup,
-            IAppServicePlan appServicePlan)
+            ResourceGroupResource resourceGroup,
+            AppServicePlanResource appServicePlan)
         {
             string webAppName = $"{projectName}-{environment}".ToLower();
             loggingBroker.LogActivity(message: $"Provisioning {webAppName}");
 
-            IWebApp webApp =
+            WebSiteResource webApp =
                 await cloudBroker.CreateWebAppAsync(
                     webAppName,
                     databaseConnectionString,
@@ -122,7 +122,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
         public async ValueTask DeprovisionResourceGroupAsync(
             string projectName,
-            string environment)
+            string environment,
+            ResourceGroupResource resourceGroup)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
 
@@ -133,7 +134,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             if (isResourceGroupExist)
             {
                 loggingBroker.LogActivity(message: $"Deprovisioning {resourceGroupName}...");
-                await cloudBroker.DeleteResourceGroupAsync(resourceGroupName);
+                await cloudBroker.DeleteResourceGroupAsync(resourceGroup);
                 loggingBroker.LogActivity(message: $"{resourceGroupName} Deprovisioned");
             }
             else
@@ -143,13 +144,15 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             }
         }
 
-        private string GenerateConnectionString(ISqlDatabase sqlDatabase)
+        private string GenerateConnectionString(
+            SqlDatabaseResource sqlDatabase, 
+            SqlServerResource sqlServer)
         {
             SqlDatabaseAccess sqlDatabaseAccess =
                 cloudBroker.GetAdminAccess();
 
-            return $"Server=tcp:{sqlDatabase.SqlServerName}.database.windows.net,1433;" +
-                $"Initial Catalog={sqlDatabase.Name}" +
+            return $"Server=tcp:{sqlDatabase.Data.Name}.database.windows.net,1433;" +
+                $"Initial Catalog={sqlServer.Data.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
         }

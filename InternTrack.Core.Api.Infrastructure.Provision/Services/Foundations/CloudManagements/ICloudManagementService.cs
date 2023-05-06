@@ -3,6 +3,9 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -12,34 +15,35 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 {
     public interface ICloudManagementService
     {
-        ValueTask<IResourceGroup> ProvisionResourceGroupAsync(
+        ValueTask<ResourceGroupResource> ProvisionResourceGroupAsync(
             string projectName,
             string environment);
 
-        ValueTask<IAppServicePlan> ProvisionPlanAsync(
+        ValueTask<AppServicePlanResource> ProvisionPlanAsync(
             string projectName,
             string environment,
-            IResourceGroup resourceGroup);
+            ResourceGroupResource resourceGroup);
 
-        ValueTask<ISqlServer> ProvisionSqlServerAsync(
+        ValueTask<SqlServerResource> ProvisionSqlServerAsync(
             string projectName,
             string environment,
-            IResourceGroup resourceGroup);
+            ResourceGroupResource resourceGroup);
 
-        ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
+        ValueTask<SqlDatabaseResource> ProvisionSqlDatabaseAsync(
             string projectName,
             string environment,
             ISqlServer sqlServer);
 
-        ValueTask<IWebApp> ProvisionWebAppAsync(
+        ValueTask<WebSiteResource> ProvisionWebAppAsync(
             string projectName,
             string environment,
             string databaseConnectionString,
-            IResourceGroup resourceGroup,
+            ResourceGroupResource resourceGroup,
             IAppServicePlan appServicePlan);
 
         ValueTask DeprovisionResourceGroupAsync(
             string projectName,
-            string environment);
+            string environment,
+            ResourceGroupResource resourceGroup);
     }
 }
