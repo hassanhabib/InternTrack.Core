@@ -5,7 +5,7 @@
 
 using System;
 
-namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
+namespace InternTrack.Core.Api.Logging
 {
     public interface ILoggingBroker
     {
