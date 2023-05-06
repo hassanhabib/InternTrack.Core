@@ -36,23 +36,21 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
         public async ValueTask<bool> CheckResourceGroupExistAsync(
             string resourceGroupName)
         {
-            SubscriptionResource subscription = await client
-                .GetDefaultSubscriptionAsync();
-
-            return await subscription
+            return await client.GetDefaultSubscriptionAsync()
+                .GetAwaiter()
+                .GetResult()
                 .GetResourceGroups()
                 .ExistsAsync(resourceGroupName);
         }
 
         public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName)
         {
-            SubscriptionResource subscription = await client
-                .GetDefaultSubscriptionAsync();
-
-            ResourceGroupResource resourceGroups = subscription
-                .GetResourceGroup(reresourceGroupName);
-
-            await resourceGroups.DeleteAsync(WaitUntil.Completed);
+            await client.GetDefaultSubscriptionAsync()
+                .GetAwaiter()
+                .GetResult()
+                .GetResourceGroup(reresourceGroupName)
+                .Value
+                .DeleteAsync(WaitUntil.Completed);
         }
     }
 }
