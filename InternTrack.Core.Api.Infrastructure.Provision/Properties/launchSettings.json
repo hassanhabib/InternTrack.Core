@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "InternTrack.Core.Api.Infrastructure.Provision": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AZURE_CLIENT_ID": "f9448c53-fc77-452a-8671-c6dc30e91074",
+        "AZURE_CLIENT_SECRET": "53f8Q~BNo62nh0aNwqKJDcmlgiwMyY2OlRJcec3d",
+        "AZURE_TENANT_ID": "ebf2a41f-f65f-4bdb-8ce6-cc1b36518344",
+        "AZURE_ADMIN_NAME": "pwongchaiya",
+        "AZURE_ADMIN_Password": "reallyawesomepassword1234123@$asdfadsfsdfQ"
+      }
+    }
+  }
+}
