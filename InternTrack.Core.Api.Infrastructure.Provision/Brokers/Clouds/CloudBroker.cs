@@ -14,6 +14,7 @@ AZURE_TENANT_ID
 AZURE_ADMIN_NAME
 AZURE_ADMIN_Password
  */
+
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker : ICloudBroker
