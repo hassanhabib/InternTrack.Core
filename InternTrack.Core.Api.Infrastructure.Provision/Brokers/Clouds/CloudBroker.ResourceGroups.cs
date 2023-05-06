@@ -3,25 +3,50 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
+using Azure;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker
     {
-        public async ValueTask<bool> CheckResourceGroupExistAsync(string resourceGroupName) =>
-           await azure.ResourceGroups.ContainAsync(resourceGroupName);
-
-        public async ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
+        public async ValueTask<ResourceGroupResource> CreateResourceGroupAsync(
+            string resourceGroupName)
         {
-            return await azure.ResourceGroups
-                .Define(name: resourceGroupName)
-                .WithRegion(region: Region.USWest3)
-                .CreateAsync();
+            SubscriptionResource subscription = await client
+                .GetDefaultSubscriptionAsync();
+
+            ResourceGroupCollection resourceGroups = subscription
+                .GetResourceGroups();
+
+            ResourceGroupData resourceGroupData = new ResourceGroupData(
+                AzureLocation.WestUS3);
+
+            ArmOperation<ResourceGroupResource> operation = await resourceGroups
+                .CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    resourceGroupName,
+                    resourceGroupData);
+
+            return operation.Value;
         }
 
-        public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName) =>
-            await azure.ResourceGroups.DeleteByNameAsync(reresourceGroupName);
+        public async ValueTask<bool> CheckResourceGroupExistAsync(
+            string resourceGroupName)
+        {
+            SubscriptionResource subscription = await client
+                .GetDefaultSubscriptionAsync();
+
+            return await subscription
+                .GetResourceGroups()
+                .ExistsAsync(resourceGroupName);
+        }
+
+        public async ValueTask DeleteResourceGroupAsync(ResourceGroupResource reresourceGroupName) =>
+            await client
+                .GetResourceGroupResource(reresourceGroupName.Id)
+                .DeleteAsync(WaitUntil.Completed);
     }
 }

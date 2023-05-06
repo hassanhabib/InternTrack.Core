@@ -3,14 +3,14 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Azure.ResourceManager.Resources;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial interface ICloudBroker
     {
-        ValueTask<IResourceGroup> CreateResourceGroupAsync(string resourceGroupName);
-        ValueTask DeleteResourceGroupAsync(string reresourceGroupName);
+        ValueTask<ResourceGroupResource> CreateResourceGroupAsync(string resourceGroupName);
+        ValueTask DeleteResourceGroupAsync(ResourceGroupResource reresourceGroupName);
         ValueTask<bool> CheckResourceGroupExistAsync(string resourceGroupName);
     }
 }
