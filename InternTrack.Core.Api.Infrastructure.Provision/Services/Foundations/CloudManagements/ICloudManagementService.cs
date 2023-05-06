@@ -7,9 +7,6 @@ using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
-using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments
 {
@@ -29,17 +26,17 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             string environment,
             ResourceGroupResource resourceGroup);
 
-        ValueTask<SqlDatabaseResource> ProvisionSqlDatabaseAsync(
+        ValueTask<SqlDatabase> ProvisionSqlDatabaseAsync(
             string projectName,
             string environment,
-            ISqlServer sqlServer);
+            SqlServerResource sqlServer);
 
         ValueTask<WebSiteResource> ProvisionWebAppAsync(
             string projectName,
             string environment,
             string databaseConnectionString,
             ResourceGroupResource resourceGroup,
-            IAppServicePlan appServicePlan);
+            AppServicePlanResource appServicePlan);
 
         ValueTask DeprovisionResourceGroupAsync(
             string projectName,

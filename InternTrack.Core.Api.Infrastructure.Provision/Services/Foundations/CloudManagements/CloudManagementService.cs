@@ -155,6 +155,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 $"Initial Catalog={sqlServer.Data.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
-        }
+        }       
     }
 }
