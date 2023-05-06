@@ -3,6 +3,9 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Configurations;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Configurations;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
@@ -47,18 +50,18 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
 
             foreach (string environmentName in environments)
             {
-                IResourceGroup resourceGroup = await cloudManagementService
+                ResourceGroupResource resourceGroup = await cloudManagementService
                     .ProvisionResourceGroupAsync(
                         projectName,
                         environmentName);
 
-                IAppServicePlan appServicePlan = await cloudManagementService
+                AppServicePlanResource appServicePlan = await cloudManagementService
                     .ProvisionPlanAsync(
                         projectName,
                         environmentName,
                         resourceGroup);
 
-                ISqlServer sqlServer = await cloudManagementService
+                SqlServerResource sqlServer = await cloudManagementService
                     .ProvisionSqlServerAsync(
                         projectName,
                         environmentName,
@@ -70,7 +73,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
                         environmentName,
                         sqlServer);
 
-                IWebApp webApp = await cloudManagementService
+                WebSiteResource webApp = await cloudManagementService
                     .ProvisionWebAppAsync(
                         projectName,
                         environmentName,

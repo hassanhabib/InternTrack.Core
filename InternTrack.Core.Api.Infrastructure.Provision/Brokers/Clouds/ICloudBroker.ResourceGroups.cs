@@ -10,7 +10,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
     public partial interface ICloudBroker
     {
         ValueTask<ResourceGroupResource> CreateResourceGroupAsync(string resourceGroupName);
-        ValueTask DeleteResourceGroupAsync(ResourceGroupResource reresourceGroupName);
+        ValueTask DeleteResourceGroupAsync(string reresourceGroupName);
         ValueTask<bool> CheckResourceGroupExistAsync(string resourceGroupName);
     }
 }

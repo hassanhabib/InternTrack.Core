@@ -40,7 +40,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
         ValueTask DeprovisionResourceGroupAsync(
             string projectName,
-            string environment,
-            ResourceGroupResource resourceGroup);
+            string environment);
     }
 }

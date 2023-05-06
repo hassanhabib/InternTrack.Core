@@ -3,10 +3,10 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager;
 using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
@@ -44,9 +44,15 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                 .ExistsAsync(resourceGroupName);
         }
 
-        public async ValueTask DeleteResourceGroupAsync(ResourceGroupResource reresourceGroupName) =>
-            await client
-                .GetResourceGroupResource(reresourceGroupName.Id)
-                .DeleteAsync(WaitUntil.Completed);
+        public async ValueTask DeleteResourceGroupAsync(string reresourceGroupName)
+        {
+            SubscriptionResource subscription = await client
+                .GetDefaultSubscriptionAsync();
+
+            ResourceGroupResource resourceGroups = subscription
+                .GetResourceGroup(reresourceGroupName);
+
+            await resourceGroups.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }

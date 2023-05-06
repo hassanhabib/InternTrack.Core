@@ -3,12 +3,12 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql.Models;
-using Azure.ResourceManager.Sql;
-using Azure.ResourceManager;
 using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
+using Azure.ResourceManager.Sql.Models;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds

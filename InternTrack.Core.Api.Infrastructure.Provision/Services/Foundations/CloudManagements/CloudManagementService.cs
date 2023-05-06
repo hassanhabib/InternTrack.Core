@@ -122,8 +122,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
 
         public async ValueTask DeprovisionResourceGroupAsync(
             string projectName,
-            string environment,
-            ResourceGroupResource resourceGroup)
+            string environment)
         {
             string resourceGroupName = $"{projectName}-RESOURCE-{environment}".ToUpper();
 
@@ -134,7 +133,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             if (isResourceGroupExist)
             {
                 loggingBroker.LogActivity(message: $"Deprovisioning {resourceGroupName}...");
-                await cloudBroker.DeleteResourceGroupAsync(resourceGroup);
+                await cloudBroker.DeleteResourceGroupAsync(resourceGroupName);
                 loggingBroker.LogActivity(message: $"{resourceGroupName} Deprovisioned");
             }
             else
@@ -145,7 +144,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         private string GenerateConnectionString(
-            SqlDatabaseResource sqlDatabase, 
+            SqlDatabaseResource sqlDatabase,
             SqlServerResource sqlServer)
         {
             SqlDatabaseAccess sqlDatabaseAccess =
@@ -155,6 +154,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 $"Initial Catalog={sqlServer.Data.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
-        }       
+        }
     }
 }
