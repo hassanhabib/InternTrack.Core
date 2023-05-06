@@ -11,9 +11,6 @@ using InternTrack.Core.Api.Infrastructure.Provision.Models.Configurations;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements;
 using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments;
-using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.CloudManagements
 {
