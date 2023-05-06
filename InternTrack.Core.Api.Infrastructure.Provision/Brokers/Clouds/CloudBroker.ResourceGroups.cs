@@ -21,7 +21,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             ResourceGroupCollection resourceGroups = subscription
                 .GetResourceGroups();
 
-            ResourceGroupData resourceGroupData = new ResourceGroupData(
+            var resourceGroupData = new ResourceGroupData(
                 AzureLocation.WestUS3);
 
             ArmOperation<ResourceGroupResource> operation = await resourceGroups

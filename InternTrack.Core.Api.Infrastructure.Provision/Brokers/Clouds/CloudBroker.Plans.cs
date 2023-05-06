@@ -21,7 +21,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             AppServicePlanCollection appServicePlans = resourceGroup
                 .GetAppServicePlans();
 
-            AppServicePlanData appServicePlanData =
+            var appServicePlanData =
                 new AppServicePlanData(AzureLocation.WestUS3)
                 {
                     Sku = new AppServiceSkuDescription()

@@ -22,7 +22,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             SqlDatabaseCollection sqlDbs = sqlServer
                 .GetSqlDatabases();
 
-            SqlDatabaseData sqlDbData =
+            var sqlDbData =
                 new SqlDatabaseData(AzureLocation.WestUS3)
                 {
                     Sku = new SqlSku("S0")
@@ -50,7 +50,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 
             AzureLocation location = AzureLocation.WestUS3;
 
-            SqlServerData sqlServerData = new SqlServerData(location)
+            var sqlServerData = new SqlServerData(location)
             {
                 AdministratorLogin = GetAdminAccess().AdminName,
                 AdministratorLoginPassword = GetAdminAccess().AdminAccess,

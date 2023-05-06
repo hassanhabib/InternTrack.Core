@@ -23,7 +23,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             WebSiteCollection webSites = resourceGroup
                 .GetWebSites();
 
-            WebSiteData webSiteData =
+            var webSiteData =
                 new WebSiteData(AzureLocation.WestUS3)
                 {
                     AppServicePlanId = plan.Id,
