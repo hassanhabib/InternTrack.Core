@@ -6,7 +6,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace InternTrack.Core.Api.Logging
+namespace InternTrack.Core.Api.Brokers.Logging
 {
     public class LoggingBroker : ILoggingBroker
     {
