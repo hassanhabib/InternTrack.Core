@@ -20,9 +20,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             AppServicePlanResource plan,
             ResourceGroupResource resourceGroup)
         {
-            WebSiteCollection webSites = resourceGroup
-                .GetWebSites();
-
             var webSiteData =
                 new WebSiteData(AzureLocation.WestUS3)
                 {
@@ -48,11 +45,13 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                     }
                 };
 
-            ArmOperation<WebSiteResource> webApp = await webSites
-                .CreateOrUpdateAsync(
-                    WaitUntil.Completed,
-                    webAppName,
-                    webSiteData);
+            ArmOperation<WebSiteResource> webApp = 
+                await resourceGroup
+                    .GetWebSites()
+                    .CreateOrUpdateAsync(
+                        WaitUntil.Completed,
+                        webAppName,
+                        webSiteData);
 
             return webApp.Value;
         }
