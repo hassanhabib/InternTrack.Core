@@ -12,7 +12,5 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
     {
         public void LogActivity(string message) =>
             Console.WriteLine(message);
-
-        
     }
 }
