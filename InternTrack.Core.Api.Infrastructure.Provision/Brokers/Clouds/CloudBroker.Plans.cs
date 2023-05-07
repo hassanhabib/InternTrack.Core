@@ -18,9 +18,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             string planName,
             ResourceGroupResource resourceGroup)
         {
-            AppServicePlanCollection appServicePlans = resourceGroup
-                .GetAppServicePlans();
-
             var appServicePlanData =
                 new AppServicePlanData(AzureLocation.WestUS3)
                 {
@@ -35,7 +32,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                     Kind = "app",
                 };
 
-            ArmOperation<AppServicePlanResource> plan = await appServicePlans
+            ArmOperation<AppServicePlanResource> plan = await resourceGroup
+                .GetAppServicePlans()
                 .CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     planName,
