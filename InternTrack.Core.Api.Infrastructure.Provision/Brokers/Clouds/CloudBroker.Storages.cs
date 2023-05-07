@@ -19,9 +19,6 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             string sqlDatabaseName,
             SqlServerResource sqlServer)
         {
-            SqlDatabaseCollection sqlDbs = sqlServer
-                .GetSqlDatabases();
-
             var sqlDbData =
                 new SqlDatabaseData(AzureLocation.WestUS3)
                 {
@@ -32,7 +29,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                     CreateMode = SqlDatabaseCreateMode.Default,
                 };
 
-            ArmOperation<SqlDatabaseResource> database = await sqlDbs
+            ArmOperation<SqlDatabaseResource> database = await sqlServer
+                .GetSqlDatabases()
                 .CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     sqlDatabaseName,
@@ -45,18 +43,15 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             string sqlServerName,
             ResourceGroupResource resourceGroup)
         {
-            SqlServerCollection sqlServers = resourceGroup
-                .GetSqlServers();
+            var sqlServerData =
+                new SqlServerData(AzureLocation.WestUS3)
+                {
+                    AdministratorLogin = GetAdminAccess().AdminName,
+                    AdministratorLoginPassword = GetAdminAccess().AdminAccess,
+                };
 
-            AzureLocation location = AzureLocation.WestUS3;
-
-            var sqlServerData = new SqlServerData(location)
-            {
-                AdministratorLogin = GetAdminAccess().AdminName,
-                AdministratorLoginPassword = GetAdminAccess().AdminAccess,
-            };
-
-            ArmOperation<SqlServerResource> server = await sqlServers
+            ArmOperation<SqlServerResource> server = await resourceGroup
+                .GetSqlServers()
                 .CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     sqlServerName,
