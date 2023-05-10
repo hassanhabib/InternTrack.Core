@@ -22,6 +22,4 @@ namespace InternTrack.Core.Api.Models.Interns
         public Guid UpdatedBy { get; set; }
         public String TimeZone { get; set; }
     }
-
-    
 }

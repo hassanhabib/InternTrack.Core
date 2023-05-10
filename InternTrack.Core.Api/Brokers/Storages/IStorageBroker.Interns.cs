@@ -3,13 +3,9 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using InternTrack.Core.Api.Models.Interns;
-using System.Data.Entity;
-
-namespace InternTrack.Core.Api
+namespace InternTrack.Core.Api.Brokers.Storages
 {
-    public class InternDbContext : DbContext
+    public partial interface IStorageBroker
     {
-        public DbSet<Intern> Interns { get; set; }
     }
 }
