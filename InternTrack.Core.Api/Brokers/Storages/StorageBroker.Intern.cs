@@ -29,7 +29,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
             return internEntityEntry.Entity;
         }
 
-        public async ValueTask<Intern> InsertAllInterns(Intern intern)
+        public async ValueTask<Intern> InsertInternAysnc(Intern intern)
         {
             var broker = new StorageBroker(this.configuration);
             EntityEntry<Intern> internEntityEntry = await broker.AddAsync(intern);
@@ -38,7 +38,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
             return internEntityEntry.Entity;
         }
 
-        public IQueryable<Intern> SelectInternAsync()
+        public IQueryable<Intern> SelectAllInterns()
         {
             using var broker =
                new StorageBroker(this.configuration);
