@@ -46,13 +46,13 @@ namespace InternTrack.Core.Api.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeZone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UpdatedBy")

@@ -11,6 +11,7 @@ namespace InternTrack.Core.Api.Models.Interns
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -20,6 +21,5 @@ namespace InternTrack.Core.Api.Models.Interns
         public DateTimeOffset JoinDate { get; set; }
         public Guid CreatedBy { get; set; }
         public Guid UpdatedBy { get; set; }
-        public String TimeZone { get; set; }
     }
 }

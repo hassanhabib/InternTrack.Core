@@ -12,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternTrack.Core.Api.Migrations
 {
     [DbContext(typeof(StorageBroker))]
-    [Migration("20230509233135_AddIntern")]
+    [Migration("20230511234303_AddIntern")]
     partial class AddIntern
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -48,13 +49,13 @@ namespace InternTrack.Core.Api.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeZone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UpdatedBy")
