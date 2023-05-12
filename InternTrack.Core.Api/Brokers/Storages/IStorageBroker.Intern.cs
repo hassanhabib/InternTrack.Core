@@ -7,10 +7,6 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
-        ValueTask<Intern> InsertInternAsync(Intern intern);
-        IQueryable<Intern> SelectAllIntern();
         ValueTask<Intern> SelectInternByIdAsync(Guid internId);
-        ValueTask<Intern> DeleteInternAsync(Intern intern);
-        ValueTask<Intern> UpdateInternAsync(Intern intern);
     }
 }
