@@ -8,30 +8,30 @@ using Microsoft.Extensions.Logging;
 
 namespace InternTrack.Core.Api.Brokers.Loggings
 {
-        public class LoggingBroker : ILoggingBroker
-        {
-            private readonly ILogger logger;
+    public class LoggingBroker : ILoggingBroker
+    {
+        private readonly ILogger logger;
 
-            public LoggingBroker(ILogger logger) =>
-                this.logger = logger;
+        public LoggingBroker(ILogger logger) =>
+            this.logger = logger;
 
-            public void LogInformation(string message) =>
-                this.logger.LogInformation(message);
+        public void LogInformation(string message) =>
+            this.logger.LogInformation(message);
 
-            public void LogTrace(String message) =>
-                this.logger.LogTrace(message);
+        public void LogTrace(String message) =>
+            this.logger.LogTrace(message);
 
-            public void LogDebug(string message) =>
-                this.logger.LogDebug(message);
+        public void LogDebug(string message) =>
+            this.logger.LogDebug(message);
 
-            public void LogWarning(string message) =>
-                this.logger.LogWarning(message);
+        public void LogWarning(string message) =>
+            this.logger.LogWarning(message);
 
-            public void LogError(Exception exception) =>
-                this.logger.LogError(exception.Message, exception);
+        public void LogError(Exception exception) =>
+            this.logger.LogError(exception.Message, exception);
 
-            public void LogCritical(Exception exception) =>
-                this.logger.LogCritical(exception, exception.Message);
-        }
+        public void LogCritical(Exception exception) =>
+            this.logger.LogCritical(exception, exception.Message);
+    }
 }
 
