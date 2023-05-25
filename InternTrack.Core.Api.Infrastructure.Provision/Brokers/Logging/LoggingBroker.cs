@@ -3,9 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using System;
-using Microsoft.Extensions.Logging;
-
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
 {
     public class LoggingBroker : ILoggingBroker
