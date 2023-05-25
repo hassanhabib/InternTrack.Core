@@ -3,36 +3,61 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
+using Azure.ResourceManager.Sql.Models;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker
     {
-        public async ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
+        public async ValueTask<SqlDatabaseResource> CreateSqlDataBaseAsync(
             string sqlDatabaseName,
-            ISqlServer sqlServer)
+            SqlServerResource sqlServer)
         {
-            return await azure.SqlServers.Databases
-                .Define(sqlDatabaseName)
-                .WithExistingSqlServer(sqlServer)
-                .CreateAsync();
+            var sqlDbData =
+                new SqlDatabaseData(AzureLocation.WestUS3)
+                {
+                    Sku = new SqlSku("S0")
+                    {
+                        Tier = "Standard",
+                    },
+                    CreateMode = SqlDatabaseCreateMode.Default,
+                };
+
+            ArmOperation<SqlDatabaseResource> database = await sqlServer
+                .GetSqlDatabases()
+                .CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    sqlDatabaseName,
+                    sqlDbData);
+
+            return database.Value;
         }
 
-        public async ValueTask<ISqlServer> CreateSqlServerAsync(
+        public async ValueTask<SqlServerResource> CreateSqlServerAsync(
             string sqlServerName,
-            IResourceGroup resourceGroup)
+            ResourceGroupResource resourceGroup)
         {
-            return await azure.SqlServers
-                .Define(name: sqlServerName)
-                .WithRegion(region: Region.USWest3)
-                .WithExistingResourceGroup(resourceGroup)
-                .WithAdministratorLogin(adminName)
-                .WithAdministratorPassword(adminAccess)
-                .CreateAsync();
+            var sqlServerData =
+                new SqlServerData(AzureLocation.WestUS3)
+                {
+                    AdministratorLogin = GetAdminAccess().AdminName,
+                    AdministratorLoginPassword = GetAdminAccess().AdminAccess,
+                };
+
+            ArmOperation<SqlServerResource> server = await resourceGroup
+                .GetSqlServers()
+                .CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    sqlServerName,
+                    sqlServerData);
+
+            return server.Value;
         }
 
         public SqlDatabaseAccess GetAdminAccess()
@@ -40,7 +65,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             return new SqlDatabaseAccess
             {
                 AdminName = adminName,
-                AdminAccess = adminAccess
+                AdminAccess = adminPassword
             };
         }
     }

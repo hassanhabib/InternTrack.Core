@@ -3,10 +3,13 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging
+using InternTrack.Core.Api.Models.Interns;
+using Microsoft.EntityFrameworkCore;
+
+namespace InternTrack.Core.Api.Brokers.Storages
 {
-    public interface ILoggingBroker
+    public partial class StorageBroker
     {
-        void LogActivity(string message);
+        public DbSet<Intern> Interns { get; set; }
     }
 }
