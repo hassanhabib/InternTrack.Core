@@ -3,8 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using Microsoft.EntityFrameworkCore;
@@ -16,51 +14,10 @@ namespace InternTrack.Core.Api.Brokers.Storages
     {
         public DbSet<Intern> Interns { get; set; }
 
-        public async ValueTask<Intern> DeleteInternsAsync(Intern intern)
-        {
-            using var broker =
-                 new StorageBroker(this.configuration);
-
-            EntityEntry<Intern> internEntityEntry =
-                broker.Interns.Remove(intern);
-
-            await broker.SaveChangesAsync();
-
-            return internEntityEntry.Entity;
-        }
-
         public async ValueTask<Intern> InsertInternAsync(Intern intern)
         {
             var broker = new StorageBroker(this.configuration);
             EntityEntry<Intern> internEntityEntry = await broker.AddAsync(intern);
-            await broker.SaveChangesAsync();
-
-            return internEntityEntry.Entity;
-        }
-
-        public IQueryable<Intern> SelectAllIntern()
-        {
-            using var broker =
-               new StorageBroker(this.configuration);
-
-            return broker.Interns;
-        }
-        public async ValueTask<Intern> SelectInternByIdAsync(Guid internId)
-        {
-            using var broker =
-                   new StorageBroker(this.configuration);
-
-            return await broker.Interns.FindAsync(internId);
-        }
-
-        public async ValueTask<Intern> UpdateInternAsync(Intern intern)
-        {
-            using var broker =
-                new StorageBroker(this.configuration);
-
-            EntityEntry<Intern> internEntityEntry =
-                broker.Interns.Update(intern);
-
             await broker.SaveChangesAsync();
 
             return internEntityEntry.Entity;
