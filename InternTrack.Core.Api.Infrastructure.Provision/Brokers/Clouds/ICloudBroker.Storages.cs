@@ -3,21 +3,21 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial interface ICloudBroker
     {
-        ValueTask<ISqlServer> CreateSqlServerAsync(
+        ValueTask<SqlServerResource> CreateSqlServerAsync(
             string sqlServerName,
-            IResourceGroup resourceGroup);
+            ResourceGroupResource resourceGroup);
 
-        ValueTask<ISqlDatabase> CreateSqlDataBaseAsync(
+        ValueTask<SqlDatabaseResource> CreateSqlDataBaseAsync(
             string sqlDatabaseName,
-            ISqlServer sqlServer);
+            SqlServerResource sqlServer);
 
         SqlDatabaseAccess GetAdminAccess();
     }
