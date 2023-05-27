@@ -12,6 +12,10 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
+users/ADILATIC/brokers-intern-select-all
         IQueryable<Intern> SelectAllIntern();
+      
+        ValueTask<Intern> DeleteInternAsync(Intern intern); 
+main
     }
 }

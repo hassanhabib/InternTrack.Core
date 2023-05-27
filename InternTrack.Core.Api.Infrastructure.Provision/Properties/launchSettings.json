@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "InternTrack.Core.Api.Infrastructure.Provision": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AZURE_CLIENT_ID": "",
+        "AZURE_CLIENT_SECRET": "",
+        "AZURE_TENANT_ID": "",
+        "AZURE_ADMIN_NAME": "",
+        "AZURE_ADMIN_Password":""
+      }
+    }
+  }
+}
