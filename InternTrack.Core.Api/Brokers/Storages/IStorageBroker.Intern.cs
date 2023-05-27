@@ -12,6 +12,9 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
+ users/YOUR_NAME/brokers-intern-update
         ValueTask<Intern> UpdateInternAsync(Intern intern);
+        ValueTask<Intern> DeleteInternAsync(Intern intern); 
+main
     }
 }
