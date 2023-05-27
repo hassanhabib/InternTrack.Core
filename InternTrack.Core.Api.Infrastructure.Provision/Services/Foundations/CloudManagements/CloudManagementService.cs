@@ -162,7 +162,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             string environment, 
             ResourceGroupResource resourceGroup)
         {
-            string applicationInsightComponentName = $"{projectName}-{environment}".ToLower();
+            string applicationInsightComponentName = $"{projectName}-Application-Insight-{environment}".ToLower();
             loggingBroker.LogActivity(message: $"Provisioning {applicationInsightComponentName}");
 
             ApplicationInsightsComponentResource applicationInsight =
