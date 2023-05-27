@@ -14,13 +14,27 @@ namespace InternTrack.Core.Api.Brokers.Storages
     {
         public DbSet<Intern> Interns { get; set; }
 
+ users/ADILATIC/brokers-intern-insert
         public async ValueTask<Intern> InsertInternAsync(Intern intern)
         {
             var broker = new StorageBroker(this.configuration);
             EntityEntry<Intern> internEntityEntry = await broker.AddAsync(intern);
+
+        public async ValueTask<Intern> DeleteInternsAsync(Intern intern)
+        {
+            using var broker =
+                 new StorageBroker(this.configuration);
+
+            EntityEntry<Intern> internEntityEntry =
+                broker.Interns.Remove(intern);
+
+ main
             await broker.SaveChangesAsync();
 
             return internEntityEntry.Entity;
         }
+users/ADILATIC/brokers-intern-insert
+
+ main
     }
 }

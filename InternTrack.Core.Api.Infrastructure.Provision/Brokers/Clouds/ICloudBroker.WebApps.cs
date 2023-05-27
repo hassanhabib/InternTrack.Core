@@ -3,17 +3,17 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Resources;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial interface ICloudBroker
     {
-        ValueTask<IWebApp> CreateWebAppAsync(
+        ValueTask<WebSiteResource> CreateWebAppAsync(
             string webAppName,
             string databaseConnectionString,
-            IAppServicePlan plan,
-            IResourceGroup resourceGroup);
+            AppServicePlanResource plan,
+            ResourceGroupResource resourceGroup);
     }
 }

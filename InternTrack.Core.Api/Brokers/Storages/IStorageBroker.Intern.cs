@@ -12,6 +12,12 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
+users/ADILATIC/brokers-intern-insert
         ValueTask<Intern> InsertInternAsync(Intern intern);
     }
 }
+
+        ValueTask<Intern> DeleteInternAsync(Intern intern); 
+    }
+}
+ main
