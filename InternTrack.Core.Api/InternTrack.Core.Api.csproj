@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Brokers\Storages\IStorageBroker.Intern.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Brokers\Storages\IStorageBroker.Intern.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EFxceptions" Version="0.4.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.3.23174.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.3.23174.2">
