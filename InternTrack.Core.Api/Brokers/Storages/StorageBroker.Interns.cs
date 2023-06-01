@@ -14,6 +14,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
     public partial class StorageBroker
     {
         public DbSet<Intern> Interns { get; set; }
+
         public async ValueTask<Intern> DeleteInternAsync(Intern intern)
         {
             using var broker =
@@ -31,9 +32,13 @@ namespace InternTrack.Core.Api.Brokers.Storages
         {
             var broker = new StorageBroker(this.configuration);
 
+        public async ValueTask<Intern> InsertInternAsync(Intern intern)
+        {
+            var broker = new StorageBroker(this.configuration);
+            
             EntityEntry<Intern> internEntityEntry =
                 await broker.AddAsync(intern);
-
+          
             await broker.SaveChangesAsync();
 
             return internEntityEntry.Entity;
@@ -45,6 +50,9 @@ namespace InternTrack.Core.Api.Brokers.Storages
                new StorageBroker(this.configuration);
 
             return broker.Interns;
+        }
+            
+            return internEntityEntry.Entity;
         }
     }
 }
