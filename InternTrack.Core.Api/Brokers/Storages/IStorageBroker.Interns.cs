@@ -3,9 +3,8 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using InternTrack.Core.Api.Models.Interns;
-using System.Linq;
 using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Brokers.Storages
 {

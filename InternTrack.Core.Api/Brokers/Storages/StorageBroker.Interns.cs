@@ -29,12 +29,12 @@ namespace InternTrack.Core.Api.Brokers.Storages
         public async ValueTask<Intern> InsertInternAsync(Intern intern)
         {
             var broker = new StorageBroker(this.configuration);
-            
+
             EntityEntry<Intern> internEntityEntry =
                 await broker.AddAsync(intern);
 
             await broker.SaveChangesAsync();
-            
+
             return internEntityEntry.Entity;
         }
     }
