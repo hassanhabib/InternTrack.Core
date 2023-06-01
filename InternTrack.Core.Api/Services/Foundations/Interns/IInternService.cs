@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
@@ -6,5 +8,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
     public interface IInternService
     {
         ValueTask<Intern> CreateInternAsync(Intern intern);
+        IQueryable<Intern> RetrieveAllInterns();
     }
 }

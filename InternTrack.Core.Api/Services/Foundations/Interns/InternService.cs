@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
@@ -30,5 +31,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 return await this.storageBroker
                     .InsertInternAsync(intern);
             });
+
+        public IQueryable<Intern> RetrieveAllInterns() => this.storageBroker.SelectAllInternsAsync();
     }
 }

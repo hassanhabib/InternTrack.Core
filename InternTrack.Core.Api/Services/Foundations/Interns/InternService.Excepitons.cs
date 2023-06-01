@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
@@ -12,6 +13,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
     public partial class InternService
     {
         private delegate ValueTask<Intern> ReturningInternFunction();
+        private delegate IQueryable<Intern> ReturningQueryableInternFunction();
 
         private async ValueTask<Intern> TryCatch(ReturningInternFunction returningInternFunction)
         {
@@ -58,6 +60,28 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     new FailedInternStorageException(databaseUpdateException);
 
                 throw CreateAndLogDependencyException(failedStorageInternException);
+            }
+            catch (Exception exception)
+            {
+                var failedInternServiceException =
+                    new FailedInternServiceException(exception);
+
+                throw CreateAndLogServiceException(failedInternServiceException);
+            }
+        }
+
+        private IQueryable<Intern> TryCatch(ReturningQueryableInternFunction returningInternFunction)
+        {
+            try
+            {
+                return returningInternFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                var failedInternStorageException =
+                    new FailedInternStorageException(sqlException);
+
+                throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
             catch (Exception exception)
             {
