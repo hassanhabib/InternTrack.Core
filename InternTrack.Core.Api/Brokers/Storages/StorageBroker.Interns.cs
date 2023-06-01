@@ -29,24 +29,24 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
             return internEntityEntry.Entity;
         }
-        
-        public async ValueTask<Intern> SelectInternByIdAsync(Guid internId)
-        {
-            using var broker =
-                   new StorageBroker(this.configuration);
-
-            return await broker.Interns.FindAsync(internId);
 
         public IQueryable<Intern> SelectAllInternsAsync()
         {
-             var broker =
-               new StorageBroker(this.configuration);
+            var broker =
+              new StorageBroker(this.configuration);
 
             return broker.Interns;
         }
             
             return internEntityEntry.Entity;
         }
+    public async ValueTask<Intern> SelectInternByIdAsync(Guid internId)
+        {
+            using var broker =
+                   new StorageBroker(this.configuration);
+
+            return await broker.Interns.FindAsync(internId);
+
         public async ValueTask<Intern> DeleteInternAsync(Intern intern)
         {
             using var broker =
