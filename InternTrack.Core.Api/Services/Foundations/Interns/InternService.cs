@@ -22,9 +22,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<Intern> CreateInternAsync(Intern intern)
-        {
-            throw new System.NotImplementedException();
-        }
+        public ValueTask<Intern> CreateInternAsync(Intern intern) =>
+            TryCatch(async () =>
+            {
+                ValidateInternOnAdd(intern);
+
+                return await this.storageBroker
+                    .InsertInternAsync(intern);
+            });
     }
 }
