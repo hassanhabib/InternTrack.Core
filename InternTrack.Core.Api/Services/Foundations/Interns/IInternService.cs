@@ -12,6 +12,5 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
     public interface IInternService
     {
         ValueTask<Intern> CreateInternAsync(Intern intern);
-        IQueryable<Intern> RetrieveAllInterns();
     }
 }
