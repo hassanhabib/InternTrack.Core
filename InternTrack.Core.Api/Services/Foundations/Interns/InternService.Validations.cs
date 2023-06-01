@@ -83,13 +83,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return timeDifference.Duration() > oneMinute;
         }
 
-        private static void ValidateLanguageId(Guid InternId) =>
+        private static void ValidateInternId(Guid InternId) =>
             Validate((Rule: IsInvalid(InternId), Parameter: nameof(Intern.Id)));
 
-        private static void ValidateStorageLanguage(Intern intern, Guid internId)
+        private static void ValidateStorageIntern(Intern intern, Guid internId)
         {
             if (intern is null)
-                throw new NotFoundLanguageException(internId);
+                throw new NotFoundInternException(internId);
         }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
