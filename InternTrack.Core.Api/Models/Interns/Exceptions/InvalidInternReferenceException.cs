@@ -1,6 +1,12 @@
-﻿namespace InternTrack.Core.Api.Models.Interns.Exceptions
+﻿using System;
+using Xeptions;
+
+namespace InternTrack.Core.Api.Models.Interns.Exceptions
 {
-    public class InvalidInternReferenceException
+    public class InvalidInternReferenceException : Xeption
     {
+        public InvalidInternReferenceException(Exception innerException)
+            : base(message: "Invalid intern reference error occurred.", innerException)
+        { }
     }
 }

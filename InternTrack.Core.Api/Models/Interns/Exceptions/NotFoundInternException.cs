@@ -1,6 +1,12 @@
-﻿namespace InternTrack.Core.Api.Models.Interns.Exceptions
+﻿using System;
+using Xeptions;
+
+namespace InternTrack.Core.Api.Models.Interns.Exceptions
 {
-    public class NotFoundInternException
+    public class NotFoundInternException : Xeption
     {
+        public NotFoundInternException(Guid internId)
+            : base(message: $"Couldn't find intern with id: {internId}.")
+        { }
     }
 }
