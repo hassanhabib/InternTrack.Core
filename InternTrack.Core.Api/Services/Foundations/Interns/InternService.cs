@@ -1,10 +1,12 @@
-﻿using InternTrack.Core.Api.Brokers.DateTimes;
+﻿using System.Threading.Tasks;
+using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
+using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
-    public partial class InternService
+    public partial class InternService : IInternService
     {
         private readonly IStorageBroker storageBroker;
         private readonly IDateTimeBroker dateTimeBroker;
@@ -18,6 +20,11 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.storageBroker = storageBroker;
             this.dateTimeBroker = dateTimeBroker;
             this.loggingBroker = loggingBroker;
+        }
+
+        public ValueTask<Intern> CreateInternAsync(Intern intern)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
