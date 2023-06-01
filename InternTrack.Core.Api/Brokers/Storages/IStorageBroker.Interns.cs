@@ -11,6 +11,6 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
-        IQueryable<Intern> SelectAllIntern();
+        IQueryable<Intern> SelectAllInternsAsync();
     }
 }

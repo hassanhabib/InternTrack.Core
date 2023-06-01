@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using Microsoft.EntityFrameworkCore;
@@ -25,5 +26,13 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
             return internEntityEntry.Entity;
         }
+        public IQueryable<Intern> SelectAllIntern()
+        {
+            using var broker =
+               new StorageBroker(this.configuration);
+
+            return broker.Interns;
+        }
     }
 }
+
