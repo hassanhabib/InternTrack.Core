@@ -6,7 +6,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
-        private void ValidateInternOnAdd(Intern intern)
+        private void ValidateInternOnCreate(Intern intern)
         {
             ValidateInternIsNotNull(intern);
 

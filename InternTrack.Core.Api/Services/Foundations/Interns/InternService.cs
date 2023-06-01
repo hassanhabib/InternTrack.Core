@@ -25,7 +25,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public ValueTask<Intern> CreateInternAsync(Intern intern) =>
             TryCatch(async () =>
             {
-                ValidateInternOnAdd(intern);
+                ValidateInternOnCreate(intern);
 
                 return await this.storageBroker
                     .InsertInternAsync(intern);
