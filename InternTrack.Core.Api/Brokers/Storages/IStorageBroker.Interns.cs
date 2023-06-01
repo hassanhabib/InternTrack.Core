@@ -14,5 +14,8 @@ namespace InternTrack.Core.Api.Brokers.Storages
     {
         ValueTask<Intern> DeleteInternAsync(Intern intern);
         ValueTask<Intern> SelectInternByIdAsync(Guid internId);
+        ValueTask<Intern> InsertInternAsync(Intern intern);
+        IQueryable<Intern> SelectAllInternsAsync();
+        ValueTask<Intern> DeleteInternAsync(Intern intern);
     }
 }
