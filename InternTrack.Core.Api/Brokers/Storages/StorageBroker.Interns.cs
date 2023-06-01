@@ -11,5 +11,6 @@ namespace InternTrack.Core.Api.Brokers.Storages
     public partial class StorageBroker
     {
         public DbSet<Intern> Interns { get; set; }
+    
     }
 }
