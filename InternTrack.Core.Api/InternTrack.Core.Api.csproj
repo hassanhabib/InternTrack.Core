@@ -18,6 +18,11 @@
     </PackageReference>
     <PackageReference Include="RESTFulSense" Version="2.13.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Xeption" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Foundations\Interns\" />
   </ItemGroup>
 
 </Project>
