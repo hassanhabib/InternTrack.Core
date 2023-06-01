@@ -41,7 +41,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public IQueryable<Intern> SelectAllInternsAsync()
         {
-            using var broker =
+             var broker =
                new StorageBroker(this.configuration);
 
             return broker.Interns;
