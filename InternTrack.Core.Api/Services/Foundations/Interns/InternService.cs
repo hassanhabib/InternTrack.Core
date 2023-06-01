@@ -1,6 +1,6 @@
 ﻿namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
-    public class InternService
+    public partial class InternService
     {
     }
 }
