@@ -4,6 +4,7 @@
 // -------------------------------------------------------
 
 using InternTrack.Core.Api.Models.Interns;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,6 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
-        IQueryable<Intern> SelectAllIntern();
+        ValueTask<Intern> SelectInternByIdAsync(Guid internId);
     }
 }
