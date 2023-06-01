@@ -14,14 +14,14 @@ namespace InternTrack.Core.Api.Brokers.Storages
     public partial class StorageBroker
     {
         public DbSet<Intern> Interns { get; set; }
-        
+
         public async ValueTask<Intern> InsertInternAsync(Intern intern)
         {
             var broker = new StorageBroker(this.configuration);
 
             EntityEntry<Intern> internEntityEntry =
                 await broker.AddAsync(intern);
-          
+
             await broker.SaveChangesAsync();
 
             return internEntityEntry.Entity;
@@ -29,8 +29,8 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public IQueryable<Intern> SelectAllInternsAsync()
         {
-             var broker =
-               new StorageBroker(this.configuration);
+            var broker =
+              new StorageBroker(this.configuration);
 
             return broker.Interns;
         }

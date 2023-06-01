@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
