@@ -1,4 +1,9 @@
-﻿using Xeptions;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
+using Xeptions;
 
 namespace InternTrack.Core.Api.Models.Interns.Exceptions
 {
