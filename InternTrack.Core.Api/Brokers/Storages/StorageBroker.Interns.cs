@@ -14,8 +14,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
 {
     public partial class StorageBroker
     {
-        private object internEntityEntry;
-
+     
         public DbSet<Intern> Interns { get; set; }
 
         public async ValueTask<Intern> InsertInternAsync(Intern intern)
