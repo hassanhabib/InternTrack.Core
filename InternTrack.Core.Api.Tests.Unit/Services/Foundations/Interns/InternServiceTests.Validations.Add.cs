@@ -129,5 +129,48 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
+        {
+            // given
+
+            int randomNumber = GetRandomNumber();
+            Models.Interns.Intern randomIntern = CreateRandomIntern();
+            Models.Interns.Intern invalidIntern = randomIntern;
+
+            invalidIntern.UpdatedDate =
+                invalidIntern.UpdatedDate.AddDays(randomNumber);
+
+            var invalidInternException =
+                new InvalidInternException();
+
+            invalidInternException.AddData(
+                key: nameof(Models.Interns.Intern.UpdatedDate),
+                values: $"Date is not the same as {nameof(Models.Interns.Intern.CreatedDate)}");
+
+            var expectedInternValidationException =
+                new InternValidationException(invalidInternException);
+
+            // when
+            ValueTask<Models.Interns.Intern> createInternTask =
+                this.internService.CreateInternAsync(invalidIntern);
+
+            // then
+            await Assert.ThrowsAsync<InternValidationException>(() =>
+                createInternTask.AsTask());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameValidationExceptionAs(
+                        expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Models.Interns.Intern>()),
+                    Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
