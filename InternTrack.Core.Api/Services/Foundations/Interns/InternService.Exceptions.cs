@@ -19,6 +19,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 throw CreateAndLogicValidationException(nullInternException);
             }
+            catch (InvalidInternException invalidInternException)
+            {
+                throw CreateAndLogicValidationException(invalidInternException);
+            }
         }
 
         private InternValidationException CreateAndLogicValidationException(
