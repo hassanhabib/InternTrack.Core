@@ -53,6 +53,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         private static Intern CreateRandomIntern() =>
             CreateInternFiller(dates: GetRandomDateTimeOffset()).Create();
+
         private static Intern CreateRandomIntern(DateTimeOffset dates) =>
             CreateInternFiller(dates).Create();
 
