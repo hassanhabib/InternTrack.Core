@@ -69,6 +69,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             return filler;
         }
 
+        private static string GetRandomMessage() =>
+            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
+
         private static SqlException GetSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
