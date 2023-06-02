@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
@@ -113,9 +114,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Models.Interns.Intern> createInternTask =
                 this.internService.CreateInternAsync(invalidIntern);
 
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    createInternTask.AsTask);
+
             // then
-            await Assert.ThrowsAsync<InternValidationException>(() =>
-                createInternTask.AsTask());
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
@@ -134,10 +139,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
         {
             // given
-
+            DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
             int randomNumber = GetRandomNumber();
             Models.Interns.Intern randomIntern = CreateRandomIntern();
             Models.Interns.Intern invalidIntern = randomIntern;
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomDateTime);
 
             invalidIntern.UpdatedDate =
                 invalidIntern.UpdatedDate.AddDays(randomNumber);
@@ -156,20 +165,29 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Models.Interns.Intern> createInternTask =
                 this.internService.CreateInternAsync(invalidIntern);
 
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    createInternTask.AsTask);
+
             // then
-            await Assert.ThrowsAsync<InternValidationException>(() =>
-                createInternTask.AsTask());
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidationException );
+                        
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Models.Interns.Intern>()),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                        Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
                         expectedInternValidationException))),
                         Times.Once);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Models.Interns.Intern>()),
-                    Times.Once);
-
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
