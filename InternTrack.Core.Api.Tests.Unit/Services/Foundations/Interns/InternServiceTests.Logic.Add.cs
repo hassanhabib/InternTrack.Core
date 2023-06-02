@@ -23,10 +23,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             //given
             DateTimeOffset dateTime = GetRandomDateTime();
-            Models.Interns.Intern randomIntern = CreateRandomIntern();
-            Models.Interns.Intern inputIntern = randomIntern;
-            Models.Interns.Intern storageIntern = inputIntern;
-            Models.Interns.Intern expectedIntern = storageIntern.DeepClone();
+            Intern randomIntern = CreateRandomIntern();
+            Intern inputIntern = randomIntern;
+            Intern storageIntern = inputIntern;
+            Intern expectedIntern = storageIntern.DeepClone();
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(dateTime);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.InsertInternAsync(inputIntern))
@@ -34,7 +38,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             //when
 
-            Models.Interns.Intern actualIntern =
+            Intern actualIntern =
                 await this.internService.CreateInternAsync(inputIntern);
 
             //then
@@ -43,6 +47,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(inputIntern),
                     Times.Once());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
