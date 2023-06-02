@@ -22,7 +22,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowValidationExceptionOnAddIfInternIsNullAndLogItAsync()
         {
             // given
-            Models.Interns.Intern nullIntern = null;
+            Intern nullIntern = null;
 
             var nullInternException =
                 new NullInternException();
@@ -31,7 +31,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternValidationException(nullInternException);
 
             // when
-            ValueTask<Models.Interns.Intern> createInternTask =
+            ValueTask<Intern> createInternTask =
                 this.internService.CreateInternAsync(nullIntern);
 
             // then
@@ -56,7 +56,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             string invalidText)
         {
             // given
-            var invalidIntern = new Models.Interns.Intern
+            var invalidIntern = new Intern
             {
                 FirstName = invalidText,
                 MiddleName = invalidText,
@@ -69,54 +69,54 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.Id),
+                key: nameof(Intern.Id),
                 values: "Id is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.FirstName),
+                key: nameof(Intern.FirstName),
                 values: "Text is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.MiddleName),
+                key: nameof(Intern.MiddleName),
                 values: "Text is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.LastName),
+                key: nameof(Intern.LastName),
                 values: "Text is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.Email),
+                key: nameof(Intern.Email),
                 values: "Text is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.PhoneNumber),
+                key: nameof(Intern.PhoneNumber),
                 values: "Text is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.Status),
+                key: nameof(Intern.Status),
                 values: "Text is required");            
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.CreatedDate),
+                key: nameof(Intern.CreatedDate),
                 values: "Id is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.CreatedBy),
+                key: nameof(Intern.CreatedBy),
                 values: "Id is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.UpdatedDate),
+                key: nameof(Intern.UpdatedDate),
                 values: "Id is required");
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.UpdatedBy),
+                key: nameof(Intern.UpdatedBy),
                 values: "Id is required");
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Models.Interns.Intern> createInternTask =
+            ValueTask<Intern> createInternTask =
                 this.internService.CreateInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
@@ -133,7 +133,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Models.Interns.Intern>()),
+                broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
@@ -146,8 +146,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
             int randomNumber = GetRandomNumber();
-            Models.Interns.Intern randomIntern = CreateRandomIntern();
-            Models.Interns.Intern invalidIntern = randomIntern;
+            Intern randomIntern = CreateRandomIntern();
+            Intern invalidIntern = randomIntern;
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -161,13 +161,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Models.Interns.Intern.UpdatedDate),
-                values: $"Date is not the same as {nameof(Models.Interns.Intern.CreatedDate)}");
+                values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Models.Interns.Intern> createInternTask =
+            ValueTask<Intern> createInternTask =
                 this.internService.CreateInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
@@ -179,7 +179,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 expectedInternValidationException );
                         
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Models.Interns.Intern>()),
+                broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Once);
 
             this.dateTimeBrokerMock.Verify(broker =>

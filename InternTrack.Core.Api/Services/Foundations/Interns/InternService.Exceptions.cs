@@ -3,12 +3,11 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using System;
 using System.Threading.Tasks;
+using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
-using RESTFulSense.Models;
 using Xeptions;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
@@ -36,6 +35,24 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 var failedInternStorageException = new FailedInternStorageException(sqlException);
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
+            catch (DuplicateKeyException duplicateKeyException)
+            {
+                var alreadyExistsInternException =
+                    new AlreadyExistsInternException(duplicateKeyException);
+
+                throw Create
+            }
+        }
+
+        private InternDependencyValidationException CreateAndLogDependencyValidationException(
+            Xeption exception)
+        {
+            var internDependencyValidationException =
+                new InternDependencyValidationException(exception);
+
+            this.loggingBroker.LogError(internDependencyValidationException);
+
+            return internDependencyValidationException;
         }
 
         private InternDependencyException CreateAndLogCriticalDependencyException(
