@@ -3,6 +3,7 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System.Linq;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
@@ -15,6 +16,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
     public partial class InternService
     {
         private delegate ValueTask<Intern> ReturningInternFuction();
+        private delegate IQueryable<Intern> ReturningInternsFunction();
 
         private async ValueTask<Intern> TryCatch(ReturningInternFuction returningInternFuction)
         {
@@ -40,7 +42,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 var alreadyExistsInternException =
                     new AlreadyExistsInternException(duplicateKeyException);
 
-                throw Create
+                throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
             }
         }
 
