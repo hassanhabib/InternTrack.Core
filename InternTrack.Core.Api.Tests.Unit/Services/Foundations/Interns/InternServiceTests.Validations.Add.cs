@@ -160,7 +160,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InvalidInternException();
 
             invalidInternException.AddData(
-                key: nameof(Models.Interns.Intern.UpdatedDate),
+                key: nameof(Intern.UpdatedDate),
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
@@ -189,6 +189,65 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
                         expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Theory]
+        [MemberData(nameof(MinutesBeforeOrAfter))]
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+            int minutesBeforeOrAfter)
+        {
+            // given
+            DateTimeOffset randomDateTime =
+                GetRandomDateTimeOffset();
+
+            DateTimeOffset invalidDateTime =
+                randomDateTime.AddMinutes(minutesBeforeOrAfter);
+
+            Intern randomIntern = CreateRandomIntern(invalidDateTime);
+            Intern invalidIntern = randomIntern;
+
+            var invalidInternExeption =
+                new InvalidInternException();
+
+            invalidInternExeption.AddData(
+                key: nameof(Intern.CreatedDate),
+                values: "Date is not recent");
+
+            var expectedInternValidException =
+                new InternValidationException(invalidInternExeption);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomDateTime);
+
+            // when
+            ValueTask<Intern> createInternTask =
+                this.internService.CreateInternAsync(randomIntern);
+
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    createInternTask.AsTask);
+
+            // then
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                        Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameValidationExceptionAs(
+                        expectedInternValidException))),
                         Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
