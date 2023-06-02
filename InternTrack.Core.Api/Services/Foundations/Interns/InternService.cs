@@ -6,7 +6,7 @@ using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
-    public class InternService : IInternService
+    public partial class InternService : IInternService
     {
         public readonly IStorageBroker storageBroker;
         public readonly IDateTimeBroker dateTimeBroker;
