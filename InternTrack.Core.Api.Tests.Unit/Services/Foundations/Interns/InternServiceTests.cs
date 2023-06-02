@@ -1,9 +1,17 @@
-﻿using System;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
+
+using System;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
+using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Services.Foundations.Interns;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;
@@ -29,7 +37,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 this.loggingBrokerMock.Object);
         }
 
-        private static Models.Interns.Intern CreateRandomIntern() =>
+        private static Intern CreateRandomIntern() =>
             CreateInternFiller().Create();
 
         private static Expression<Func<Exception,bool>> SameExceptionsAs(Exception expectedException)
@@ -47,9 +55,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
-        private static Filler<Models.Interns.Intern> CreateInternFiller()
+        private static Filler<Intern> CreateInternFiller()
         {
-            var filler = new Filler<Models.Interns.Intern>();
+            var filler = new Filler<Intern>();
             Guid createdById = Guid.NewGuid();
 
             filler.Setup()
@@ -60,6 +68,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             return filler;
         }
+
+        private static SqlException GetSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();

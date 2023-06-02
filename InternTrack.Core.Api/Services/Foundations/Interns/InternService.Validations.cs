@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
+
+using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using InternTrack.Core.Api.Models.Interns;
