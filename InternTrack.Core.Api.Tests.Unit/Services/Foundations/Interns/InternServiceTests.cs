@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq.Expressions;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Services.Foundations.Interns;
 using Moq;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
@@ -29,6 +31,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         private static Models.Interns.Intern CreateRandomIntern() =>
             CreateInternFiller().Create();
+
+        private static Expression<Func<Exception,bool>> SameExceptionsAs(Exception expectedException)
+        {
+            return actualExpection =>
+                expectedException.Message == actualExpection.Message
+                && expectedException.InnerException.Message == actualExpection.InnerException.Message;
+        }
+
+        private static Expression<Func<Exception, bool>> SameValidationExceptionAs(Exception expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+        }
 
         private static Filler<Models.Interns.Intern> CreateInternFiller()
         {
