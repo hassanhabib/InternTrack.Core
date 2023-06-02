@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Force.DeepCloner;
 using InternTrack.Core.Api.Models.Interns;
 using Moq;
@@ -28,6 +29,19 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             //when
 
+            Models.Interns.Intern actualIntern =
+                await this.internService.CreateInternAsync(inputIntern);
+
+            //then
+            actualIntern.Should().BeEquivalentTo(expectedIntern);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(inputIntern),
+                    Times.Once());
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

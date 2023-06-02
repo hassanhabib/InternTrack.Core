@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
-using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Services.Foundations.Interns;
 using Moq;
 using Tynamix.ObjectFiller;
@@ -15,17 +11,20 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
+        private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
-        private readonly Mock<IInternService> internService;
+        private readonly IInternService internService;
 
         public InternServiceTests()
         {
             this.storageBrokerMock = new Mock<IStorageBroker>();
+            this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
-            this.internService = new Mock<IInternService>(
-                this.storageBrokerMock,
-                this.loggingBrokerMock);
+            this.internService = new InternService(
+                this.storageBrokerMock.Object,
+                this.dateTimeBrokerMock.Object,
+                this.loggingBrokerMock.Object);
         }
 
         private static Models.Interns.Intern CreateRandomIntern() =>
