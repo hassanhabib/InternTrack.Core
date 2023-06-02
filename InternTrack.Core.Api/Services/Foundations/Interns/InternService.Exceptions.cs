@@ -3,6 +3,7 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
@@ -52,6 +53,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogDependencyException(failedStorageInternException);
             }
+            catch (Exception exception)
+            {
+                var failedInternServiceException =
+                    new FailedInternServiceException(exception);
+
+                throw CreateAndLogServiceException(failedInternServiceException);
+            }
         }
 
         private InternDependencyValidationException CreateAndLogDependencyValidationException(
@@ -94,6 +102,16 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.loggingBroker.LogError(InternDependencyException);
 
             return InternDependencyException;
+        }
+
+        private InternServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var InternServiceException =
+                new InternServiceException(exception);
+
+            this.loggingBroker.LogError(InternServiceException);
+
+            return InternServiceException;
         }
     }
 }
