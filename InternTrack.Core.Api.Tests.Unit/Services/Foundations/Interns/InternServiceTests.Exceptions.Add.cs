@@ -167,5 +167,52 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
+        {
+            // given
+            Intern randomIntern = CreateRandomIntern();
+            var serviceException = new Exception();
+
+            var failedInternServiceException =
+                new FailedInternServiceException(serviceException);
+
+            var expectedInternServiceExcetpion =
+                new InternServiceException(failedInternServiceException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Throws(serviceException);
+
+            // when
+            ValueTask<Intern> createInternTask =
+                this.internService.CreateInternAsync(randomIntern);
+
+            InternServiceException actualInternServiceException =
+                await Assert.ThrowsAsync<InternServiceException>(
+                    createInternTask.AsTask);
+
+            // then
+            actualInternServiceException.Should().BeEquivalentTo(
+                expectedInternServiceExcetpion);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Never());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionsAs(
+                        expectedInternServiceExcetpion))),
+                            Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
