@@ -3,9 +3,12 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
+using Microsoft.Data.SqlClient;
+using RESTFulSense.Models;
 using Xeptions;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
@@ -20,14 +23,29 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 return await returningInternFuction();
             }
-            catch (NullInternException nullInternException)
+            catch(NullInternException nullInternException)
             {
                 throw CreateAndLogicValidationException(nullInternException);
             }
-            catch (InvalidInternException invalidInternException)
+            catch(InvalidInternException invalidInternException)
             {
                 throw CreateAndLogicValidationException(invalidInternException);
             }
+            catch(SqlException sqlException)
+            {
+                var failedInternStorageException = new FailedInternStorageException(sqlException);
+                throw CreateAndLogCriticalDependencyException(failedInternStorageException);
+            }
+        }
+
+        private InternDependencyException CreateAndLogCriticalDependencyException(
+            Xeption exception)
+        {
+            var internDepencyException = 
+                new InternDependencyException(exception);
+            this.loggingBroker.LogCritical(internDepencyException);
+
+            return internDepencyException;
         }
 
         private InternValidationException CreateAndLogicValidationException(
