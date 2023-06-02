@@ -14,7 +14,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
-        private static void ValidateIntern(Intern intern)
+        private void ValidateIntern(Intern intern)
         {
             ValidateInternIsNotNull(intern);
 
@@ -32,7 +32,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     firstDate: intern.UpdatedDate,
                     secondDate: intern.CreatedDate,
                     secondDateName: nameof(Intern.CreatedDate)),
-                    Parameter: nameof(Intern.UpdatedDate)));
+                Parameter: nameof(Intern.UpdatedDate)),
+                
+                (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
         private static void ValidateInternIsNotNull(Intern intern)
@@ -69,6 +71,23 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 Condition = firstDate != secondDate,
                 Message = $"Date is not the same as {secondDateName}"
             };
+
+        private dynamic IsNotRecent(DateTimeOffset date) => new
+        {
+            Condition = IsDateNotRecent(date),
+            Message = "Date is not recent"
+        };
+
+        private bool IsDateNotRecent(DateTimeOffset date)
+        {
+            DateTimeOffset currentDateTime =
+                this.dateTimeBroker.GetCurrentDateTimeOffset();
+
+            TimeSpan timeDifference = currentDateTime.Subtract(date);
+            TimeSpan oneMinute = TimeSpan.FromMinutes(1);
+
+            return timeDifference.Duration() > oneMinute;
+        }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
