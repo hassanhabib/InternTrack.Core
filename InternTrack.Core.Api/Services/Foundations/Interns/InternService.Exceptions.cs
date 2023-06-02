@@ -1,6 +1,35 @@
-﻿namespace InternTrack.Core.Api.Services.Foundations.Interns
+﻿using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
+using Xeptions;
+
+namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
-    public class InternService
+    public partial class InternService
     {
+        private delegate ValueTask<Intern> ReturningInternFuction();
+
+        private async ValueTask<Intern> TryCatch(ReturningInternFuction returningInternFuction)
+        {
+            try
+            {
+                return await returningInternFuction();
+            }
+            catch (NullInternException nullInternException)
+            {
+                throw CreateAndLogicValidationException(nullInternException);
+            }
+        }
+
+        private InternValidationException CreateAndLogicValidationException(
+            Xeption exception)
+        {
+            var internValidationException =
+                new InternValidationException(exception);
+
+            this.loggingBroker.LogError(internValidationException);
+
+            return internValidationException;
+        }
     }
 }
