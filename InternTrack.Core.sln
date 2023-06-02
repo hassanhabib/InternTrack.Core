@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33606.364
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternTrack.Core.Api", "InternTrack.Core.Api\InternTrack.Core.Api.csproj", "{9BE0B3ED-326F-473A-9861-2C07523DC864}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intern.Core.Api.Tests.Unit", "Intern.Core.Api.Tests.Unit\Intern.Core.Api.Tests.Unit.csproj", "{6EC2E24C-785B-4C31-821C-DBEFD652DE5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternTrack.Core.Api.Tests.Unit", "InternTrack.Core.Api.Tests.Unit\InternTrack.Core.Api.Tests.Unit.csproj", "{6EC2E24C-785B-4C31-821C-DBEFD652DE5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternTrack.Core.Api.Infrastructure.Provision", "InternTrack.Core.Api.Infrastructure.Provision\InternTrack.Core.Api.Infrastructure.Provision.csproj", "{7AF8DB59-95A5-44DA-BD3A-7349633DBC7B}"
 EndProject
