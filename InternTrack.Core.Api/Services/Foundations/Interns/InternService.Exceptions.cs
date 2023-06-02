@@ -9,6 +9,7 @@ using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Xeptions;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
@@ -37,12 +38,19 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 var failedInternStorageException = new FailedInternStorageException(sqlException);
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
-            catch (DuplicateKeyException duplicateKeyException)
+            catch(DuplicateKeyException duplicateKeyException)
             {
                 var alreadyExistsInternException =
                     new AlreadyExistsInternException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
+            }
+            catch(DbUpdateException databaseUpdateException)
+            {
+                var failedStorageInternException =
+                    new FailedInternStorageException(databaseUpdateException);
+
+                throw CreateAndLogDependencyException(failedStorageInternException);
             }
         }
 
@@ -76,6 +84,16 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.loggingBroker.LogError(internValidationException);
 
             return internValidationException;
+        }
+
+        private InternDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var InternDependencyException =
+                new InternDependencyException(exception);
+
+            this.loggingBroker.LogError(InternDependencyException);
+
+            return InternDependencyException;
         }
     }
 }
