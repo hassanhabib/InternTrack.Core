@@ -57,7 +57,25 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         private static Intern CreateRandomIntern(DateTimeOffset dates) =>
             CreateInternFiller(dates).Create();
 
-        private static Expression<Func<Exception,bool>> SameExceptionsAs(Exception expectedException)
+        private static int GetRandomNegativeNumber() =>
+            -1 * new IntRange(min: 2, max: 10).GetValue();
+
+        private static string GetRandomMessage() =>
+            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
+
+        private static SqlException GetSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+
+        private static DateTimeOffset GetRandomDateTimeOffset() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 10).GetValue();
+
+        private static DateTimeOffset GetRandomDateTime() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static Expression<Func<Exception, bool>> SameExceptionsAs(Exception expectedException)
         {
             return actualExpection =>
                 expectedException.Message == actualExpection.Message
@@ -85,23 +103,5 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             return filler;
         }
-
-        private static int GetRandomNegativeNumber() =>
-            -1 * new IntRange(min: 2, max: 10).GetValue();
-
-        private static string GetRandomMessage() =>
-            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
-
-        private static SqlException GetSqlException() =>
-            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
-
-        private static DateTimeOffset GetRandomDateTimeOffset() =>
-            new DateTimeRange(earliestDate: new DateTime()).GetValue();
-
-        private static int GetRandomNumber() =>
-            new IntRange(min: 2, max: 10).GetValue();
-
-        private static DateTimeOffset GetRandomDateTime() =>
-            new DateTimeRange(earliestDate: new DateTime()).GetValue();
     }
 }

@@ -14,19 +14,19 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
-        private void ValidateIntern(Intern intern)
+        private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);
 
             Validate(
-                (Rule: isInvalid(intern.Id), Parameter: nameof(Intern.Id)),
-                (Rule: isInvalid(intern.FirstName), Parameter: nameof(Intern.FirstName)),
-                (Rule: isInvalid(intern.MiddleName), Parameter: nameof(Intern.MiddleName)),
-                (Rule: isInvalid(intern.LastName), Parameter: nameof(Intern.LastName)),
-                (Rule: isInvalid(intern.Email), Parameter: nameof(Intern.Email)),
-                (Rule: isInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
-                (Rule: isInvalid(intern.Status), Parameter: nameof(Intern.Status)),
-                (Rule: isInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+                (Rule: IsInvalid(intern.Id), Parameter: nameof(Intern.Id)),
+                (Rule: IsInvalid(intern.FirstName), Parameter: nameof(Intern.FirstName)),
+                (Rule: IsInvalid(intern.MiddleName), Parameter: nameof(Intern.MiddleName)),
+                (Rule: IsInvalid(intern.LastName), Parameter: nameof(Intern.LastName)),
+                (Rule: IsInvalid(intern.Email), Parameter: nameof(Intern.Email)),
+                (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
+                (Rule: IsInvalid(intern.Status), Parameter: nameof(Intern.Status)),
+                (Rule: IsInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
 
                 (Rule: IsNotSame(
                     firstDate: intern.UpdatedDate,
@@ -45,19 +45,19 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
-        private static dynamic isInvalid(Guid id) => new
+        private static dynamic IsInvalid(Guid id) => new
         {
             Condition = id == Guid.Empty,
             Message = "Id is required"
         };
 
-        private static dynamic isInvalid(DateTimeOffset date) => new
+        private static dynamic IsInvalid(DateTimeOffset date) => new
         {
             Condition = date == default,
             Message = "Date is required"
         };
 
-        private static dynamic isInvalid(string text) => new
+        private static dynamic IsInvalid(string text) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
             Message = "Text is required"

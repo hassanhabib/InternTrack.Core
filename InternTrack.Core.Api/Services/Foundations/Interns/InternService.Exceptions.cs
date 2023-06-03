@@ -28,11 +28,11 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
             catch(NullInternException nullInternException)
             {
-                throw CreateAndLogicValidationException(nullInternException);
+                throw CreateAndLogValidationException(nullInternException);
             }
             catch(InvalidInternException invalidInternException)
             {
-                throw CreateAndLogicValidationException(invalidInternException);
+                throw CreateAndLogValidationException(invalidInternException);
             }
             catch(SqlException sqlException)
             {
@@ -62,6 +62,27 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
+        private InternValidationException CreateAndLogValidationException(
+            Xeption exception)
+        {
+            var internValidationException =
+                new InternValidationException(exception);
+
+            this.loggingBroker.LogError(internValidationException);
+
+            return internValidationException;
+        }
+
+        private InternDependencyException CreateAndLogCriticalDependencyException(
+            Xeption exception)
+        {
+            var internDepencyException =
+                new InternDependencyException(exception);
+            this.loggingBroker.LogCritical(internDepencyException);
+
+            return internDepencyException;
+        }
+
         private InternDependencyValidationException CreateAndLogDependencyValidationException(
             Xeption exception)
         {
@@ -71,27 +92,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.loggingBroker.LogError(internDependencyValidationException);
 
             return internDependencyValidationException;
-        }
-
-        private InternDependencyException CreateAndLogCriticalDependencyException(
-            Xeption exception)
-        {
-            var internDepencyException = 
-                new InternDependencyException(exception);
-            this.loggingBroker.LogCritical(internDepencyException);
-
-            return internDepencyException;
-        }
-
-        private InternValidationException CreateAndLogicValidationException(
-            Xeption exception)
-        {
-            var internValidationException =
-                new InternValidationException(exception);
-
-            this.loggingBroker.LogError(internValidationException);
-
-            return internValidationException;
         }
 
         private InternDependencyException CreateAndLogDependencyException(Xeption exception)
