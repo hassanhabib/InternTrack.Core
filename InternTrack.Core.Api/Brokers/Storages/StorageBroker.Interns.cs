@@ -33,6 +33,8 @@ namespace InternTrack.Core.Api.Brokers.Storages
         {
             using var broker =
                new StorageBroker(this.configuration);
+            var broker =
+              new StorageBroker(this.configuration);
 
             return broker.Interns;
         }
