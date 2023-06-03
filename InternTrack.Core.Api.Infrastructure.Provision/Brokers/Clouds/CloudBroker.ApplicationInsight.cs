@@ -18,7 +18,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
             string componentName,
             ResourceGroupResource resourceGroup)
         {
-            ApplicationInsightsComponentCollection appInsightCollection = resourceGroup.GetApplicationInsightsComponents();
+            ApplicationInsightsComponentCollection appInsightCollection = 
+                resourceGroup.GetApplicationInsightsComponents();
 
             var appInsightData = new ApplicationInsightsComponentData(AzureLocation.WestUS, "web")
             {
