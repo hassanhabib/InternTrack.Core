@@ -4,11 +4,8 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
@@ -33,13 +30,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     secondDate: intern.CreatedDate,
                     secondDateName: nameof(Intern.CreatedDate)),
                 Parameter: nameof(Intern.UpdatedDate)),
-                
+
                 (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
         private static void ValidateInternIsNotNull(Intern intern)
         {
-            if(intern is null)
+            if (intern is null)
             {
                 throw new NullInternException();
             }

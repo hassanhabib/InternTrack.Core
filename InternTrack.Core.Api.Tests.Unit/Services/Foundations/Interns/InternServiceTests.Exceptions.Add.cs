@@ -4,9 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using FluentAssertions;
@@ -40,7 +37,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             ValueTask<Intern> createIntern =
-                this.internService.CreateInternAsync(randomIntern);
+                this.internService.AddInternAsync(randomIntern);
 
             InternDependencyException actualInternDependecyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
@@ -90,12 +87,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .Throws(duplicateKeyException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(alreadyExistsIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(alreadyExistsIntern);
 
             InternDependencyValidationException actualInternDependencyValidationException =
                 await Assert.ThrowsAsync<InternDependencyValidationException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternDependencyValidationException.Should().BeEquivalentTo(
@@ -139,12 +136,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .Throws(databaseUpdateException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(randomIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(randomIntern);
 
             InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternDependencyException.Should().BeEquivalentTo(
@@ -186,12 +183,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .Throws(serviceException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(randomIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(randomIntern);
 
             InternServiceException actualInternServiceException =
                 await Assert.ThrowsAsync<InternServiceException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternServiceException.Should().BeEquivalentTo(

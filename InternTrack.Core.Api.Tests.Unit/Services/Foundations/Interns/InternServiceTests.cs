@@ -12,7 +12,6 @@ using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Services.Foundations.Interns;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Hosting;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;

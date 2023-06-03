@@ -4,9 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -39,7 +36,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             //when
 
             Intern actualIntern =
-                await this.internService.CreateInternAsync(inputIntern);
+                await this.internService.AddInternAsync(inputIntern);
 
             //then
             actualIntern.Should().BeEquivalentTo(expectedIntern);

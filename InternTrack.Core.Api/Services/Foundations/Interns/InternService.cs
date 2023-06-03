@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Intern> CreateInternAsync(Intern intern)
+        public async ValueTask<Intern> AddInternAsync(Intern intern)
         {
             return await this.storageBroker.InsertInternAsync(intern);
         }

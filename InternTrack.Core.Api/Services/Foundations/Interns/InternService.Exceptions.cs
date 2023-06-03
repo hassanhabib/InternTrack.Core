@@ -26,27 +26,27 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 return await returningInternFuction();
             }
-            catch(NullInternException nullInternException)
+            catch (NullInternException nullInternException)
             {
                 throw CreateAndLogValidationException(nullInternException);
             }
-            catch(InvalidInternException invalidInternException)
+            catch (InvalidInternException invalidInternException)
             {
                 throw CreateAndLogValidationException(invalidInternException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
                 var failedInternStorageException = new FailedInternStorageException(sqlException);
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
-            catch(DuplicateKeyException duplicateKeyException)
+            catch (DuplicateKeyException duplicateKeyException)
             {
                 var alreadyExistsInternException =
                     new AlreadyExistsInternException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
             }
-            catch(DbUpdateException databaseUpdateException)
+            catch (DbUpdateException databaseUpdateException)
             {
                 var failedStorageInternException =
                     new FailedInternStorageException(databaseUpdateException);
@@ -94,7 +94,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return internDependencyValidationException;
         }
 
-        private InternDependencyException CreateAndLogDependencyException(Xeption exception)
+        private InternDependencyException CreateAndLogDependencyException(
+            Xeption exception)
         {
             var InternDependencyException =
                 new InternDependencyException(exception);
@@ -104,7 +105,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return InternDependencyException;
         }
 
-        private InternServiceException CreateAndLogServiceException(Xeption exception)
+        private InternServiceException CreateAndLogServiceException(
+            Exception exception)
         {
             var InternServiceException =
                 new InternServiceException(exception);

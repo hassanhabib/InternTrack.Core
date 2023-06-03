@@ -4,9 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
@@ -31,12 +28,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternValidationException(nullInternException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(nullIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(nullIntern);
 
             InternValidationException actualInternValidationException =
                 await Assert.ThrowsAsync<InternValidationException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
@@ -106,7 +103,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.Status),
-                values: "Text is required");            
+                values: "Text is required");
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
@@ -128,12 +125,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(invalidIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
                 await Assert.ThrowsAsync<InternValidationException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
@@ -184,17 +181,17 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(invalidIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
                 await Assert.ThrowsAsync<InternValidationException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
-                expectedInternValidationException );
-                        
+                expectedInternValidationException);
+
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never);
@@ -243,12 +240,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .Returns(randomDateTime);
 
             // when
-            ValueTask<Intern> createInternTask =
-                this.internService.CreateInternAsync(randomIntern);
+            ValueTask<Intern> addInternTask =
+                this.internService.AddInternAsync(randomIntern);
 
             InternValidationException actualInternValidationException =
                 await Assert.ThrowsAsync<InternValidationException>(
-                    createInternTask.AsTask);
+                    addInternTask.AsTask);
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
