@@ -36,9 +36,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
             catch (SqlException sqlException)
             {
-                var failedInternStorageException = 
+                var failedInternStorageException =
                     new FailedInternStorageException(sqlException);
-                
+
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
             catch (DuplicateKeyException duplicateKeyException)

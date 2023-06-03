@@ -4,7 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Data;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 
