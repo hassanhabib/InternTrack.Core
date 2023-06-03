@@ -45,6 +45,19 @@ namespace InternTrack.Core.Api.Brokers.Storages
             return await broker.Interns.FindAsync(internId);
         }
 
+        public async ValueTask<Intern> UpdateInternAsync(Intern intern)
+        {
+            var broker =
+                new StorageBroker(this.configuration);
+
+            EntityEntry<Intern> internEntityEntry =
+                broker.Interns.Update(intern);
+
+            await broker.SaveChangesAsync();
+
+            return internEntityEntry.Entity;
+        }
+        
         public async ValueTask<Intern> DeleteInternAsync(Intern intern)
         {
              var broker =
