@@ -47,7 +47,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public async ValueTask<Intern> UpdateInternAsync(Intern intern)
         {
-            using var broker =
+            var broker =
                 new StorageBroker(this.configuration);
 
             EntityEntry<Intern> internEntityEntry =
