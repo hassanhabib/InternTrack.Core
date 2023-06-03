@@ -7,6 +7,7 @@ using InternTrack.Core.Api.Models.Interns;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns;
 
 namespace InternTrack.Core.Api.Brokers.Storages
 {
@@ -14,5 +15,9 @@ namespace InternTrack.Core.Api.Brokers.Storages
     {
         ValueTask<Intern> DeleteInternAsync(Intern intern);
         ValueTask<Intern> UpdateInternAsync(Intern intern);  
+        ValueTask<Intern> InsertInternAsync(Intern intern);
+        ValueTask<Intern> SelectInternByIdAsync(Guid internId);
+        IQueryable<Intern> SelectAllInternsAsync();
+        ValueTask<Intern> DeleteInternAsync(Intern intern);
     }
 }
