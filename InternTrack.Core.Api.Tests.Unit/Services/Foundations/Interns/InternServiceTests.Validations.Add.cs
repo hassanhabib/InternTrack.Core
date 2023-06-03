@@ -43,10 +43,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
-                        Times.Once);
-
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
                     expectedInternValidationException))),
@@ -119,6 +115,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedBy),
+                values: "Id is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.JoinDate),
                 values: "Id is required");
 
             var expectedInternValidationException =

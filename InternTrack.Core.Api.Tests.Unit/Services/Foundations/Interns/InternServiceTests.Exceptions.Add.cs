@@ -31,9 +31,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternDependencyExcetpion =
                 new InternDependencyException(failedInternStorageException);
 
-            this.storageBrokerMock.Setup(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()))
-                    .ThrowsAsync(sqlException);
+            this.dateTimeBrokerMock.Setup(broker =>
+                            broker.GetCurrentDateTimeOffset())
+                                .Throws(sqlException);
 
             // when
             ValueTask<Intern> createIntern =
