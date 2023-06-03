@@ -31,8 +31,6 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public IQueryable<Intern> SelectAllInternsAsync()
         {
-            using var broker =
-               new StorageBroker(this.configuration);
             var broker =
               new StorageBroker(this.configuration);
 
@@ -41,7 +39,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public async ValueTask<Intern> SelectInternByIdAsync(Guid internId)
         {
-            using var broker =
+            var broker =
                    new StorageBroker(this.configuration);
 
             return await broker.Interns.FindAsync(internId);
@@ -49,7 +47,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
 
         public async ValueTask<Intern> DeleteInternAsync(Intern intern)
         {
-            using var broker =
+             var broker =
                  new StorageBroker(this.configuration);
 
             EntityEntry<Intern> internEntityEntry =
