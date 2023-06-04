@@ -68,7 +68,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 LastName = invalidText,
                 Email = invalidText,
                 PhoneNumber = invalidText,
-                Status = invalidText
+                Status = invalidText,
+
             };
 
             var invalidInternException = new InvalidInternException();
@@ -103,7 +104,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
-                values: "Id is required");
+                values: "Date is required");
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedBy),
@@ -111,7 +112,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
-                values: "Id is required");
+                values: "Date is required");
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedBy),
@@ -119,7 +120,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.JoinDate),
-                values: "Id is required");
+                values: "Date is required");
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
