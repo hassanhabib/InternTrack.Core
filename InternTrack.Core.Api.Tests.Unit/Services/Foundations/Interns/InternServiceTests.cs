@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using InternTrack.Core.Api.Brokers.DateTimes;
@@ -55,6 +56,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         private static Intern CreateRandomIntern(DateTimeOffset dates) =>
             CreateInternFiller(dates).Create();
+
+        private static IQueryable<Intern> CreateRandomInterns() =>
+            CreateInternFiller(dates: GetRandomDateTime()).Create(GetRandomNumber()).AsQueryable();
+
 
         private static int GetRandomNegativeNumber() =>
             -1 * new IntRange(min: 2, max: 10).GetValue();

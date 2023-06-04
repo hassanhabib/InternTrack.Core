@@ -3,6 +3,7 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
@@ -27,6 +28,11 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public async ValueTask<Intern> AddInternAsync(Intern intern)
         {
             return await this.storageBroker.InsertInternAsync(intern);
+        }
+
+        public IQueryable<Intern> RetrieveAllInternAsync()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
