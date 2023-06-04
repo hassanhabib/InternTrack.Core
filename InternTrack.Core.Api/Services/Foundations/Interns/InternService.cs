@@ -31,6 +31,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         public IQueryable<Intern> RetrieveAllInternAsync() =>
-            this.storageBroker.SelectAllInternsAsync();
+            TryCatch(() => this.storageBroker.SelectAllInternsAsync());
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Xeptions;
@@ -59,6 +60,21 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     new FailedInternServiceException(exception);
 
                 throw CreateAndLogServiceException(failedInternServiceException);
+            }
+        }
+
+        private IQueryable<Intern> TryCatch(ReturningInternsFunction returningInternsFunction)
+        {
+            try
+            {
+                return returningInternsFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                var failedInternStorageException =
+                    new FailedInternStorageException(sqlException);
+
+                throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
         }
 
