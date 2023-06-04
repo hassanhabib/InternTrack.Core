@@ -56,5 +56,46 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnRetrieveAllIfServiceErrorOccursAndLogIt()
+        {
+            // given
+            var serviceException = new Exception();
+
+            var failedInternServiceException =
+                new FailedInternServiceException(serviceException);
+
+            var expectedInternServiceException =
+                new InternServiceException(failedInternServiceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectAllInternsAsync())
+                    .Throws(serviceException);
+
+            // when
+            Action retrieveAllInternAction = () =>
+                this.internService.RetrieveAllInternAsync();
+
+            // then
+            Assert.Throws<InternServiceException>(retrieveAllInternAction);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionsAs(
+                    expectedInternServiceException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectAllInternsAsync(),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
