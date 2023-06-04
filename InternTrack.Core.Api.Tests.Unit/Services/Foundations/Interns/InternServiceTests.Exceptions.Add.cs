@@ -107,7 +107,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     Times.Once());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionsAs(
+                broker.LogError(It.Is(SameExceptionsAs(
                         expectedInternDependencyValidationExcetption))),
                             Times.Once);
 
@@ -156,7 +156,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     Times.Once());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionsAs(
+                broker.LogError(It.Is(SameExceptionsAs(
                         expectedInternDependencyException))),
                             Times.Once);            
 
@@ -203,7 +203,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     Times.Once());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionsAs(
+                broker.LogError(It.Is(SameExceptionsAs(
                         expectedInternServiceExcetpion))),
                             Times.Once);
 
