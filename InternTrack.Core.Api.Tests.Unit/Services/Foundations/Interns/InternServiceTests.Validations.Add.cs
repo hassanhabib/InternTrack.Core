@@ -159,7 +159,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
-            int randomNumber = GetRandomNumber();
             Intern randomIntern = CreateRandomIntern(randomDateTime);
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = randomIntern.CreatedBy;
