@@ -81,7 +81,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Assert.Throws<InternServiceException>(retrieveAllInternAction);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionsAs(
+                broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternServiceException))),
                         Times.Once);
 

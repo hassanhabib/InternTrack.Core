@@ -76,6 +76,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
+            catch (Exception exception)
+            {
+                var failedInternServiceException =
+                    new FailedInternServiceException(exception);
+
+                throw CreateAndLogServiceException(failedInternServiceException);
+            }
         }
 
         private InternValidationException CreateAndLogValidationException(
