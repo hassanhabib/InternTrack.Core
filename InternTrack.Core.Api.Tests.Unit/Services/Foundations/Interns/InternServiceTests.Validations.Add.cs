@@ -216,13 +216,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDateTime =
-                GetRandomDateTimeOffset();
+                GetRandomDateTime();
 
-            DateTimeOffset invalidDateTime =
-                randomDateTime.AddMinutes(minutesBeforeOrAfter);
-
-            Intern randomIntern = CreateRandomIntern(invalidDateTime);
+            Intern randomIntern = CreateRandomIntern(randomDateTime.AddMinutes(minutesBeforeOrAfter));
             Intern invalidIntern = randomIntern;
+            invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
+            invalidIntern.CreatedDate = randomDateTime.AddMinutes(minutesBeforeOrAfter);
+            invalidIntern.UpdatedDate = invalidIntern.CreatedDate;
 
             var invalidInternExeption =
                 new InvalidInternException();
@@ -240,7 +240,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             ValueTask<Intern> addInternTask =
-                this.internService.AddInternAsync(randomIntern);
+                this.internService.AddInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
                 await Assert.ThrowsAsync<InternValidationException>(

@@ -146,7 +146,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInternDependencyException);
-
+            
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never());

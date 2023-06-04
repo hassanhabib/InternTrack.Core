@@ -41,7 +41,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     secondIdName: nameof(Intern.CreatedBy)),
                 Parameter: nameof(Intern.UpdatedBy)),
 
-                (Rule: IsNotRecent(intern.JoinDate), Parameter: nameof(Intern.JoinDate)));
+                (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
         private static void ValidateInternIsNotNull(Intern intern)
