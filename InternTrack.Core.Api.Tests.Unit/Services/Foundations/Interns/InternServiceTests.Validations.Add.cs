@@ -160,15 +160,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
             int randomNumber = GetRandomNumber();
-            Intern randomIntern = CreateRandomIntern();
+            Intern randomIntern = CreateRandomIntern(randomDateTime);
             Intern invalidIntern = randomIntern;
+            invalidIntern.UpdatedBy = randomIntern.CreatedBy;
+            invalidIntern.UpdatedDate = GetRandomDateTime();
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Returns(randomDateTime);
-
-            invalidIntern.UpdatedDate =
-                invalidIntern.UpdatedDate.AddDays(randomNumber);
 
             var invalidInternException =
                 new InvalidInternException();
