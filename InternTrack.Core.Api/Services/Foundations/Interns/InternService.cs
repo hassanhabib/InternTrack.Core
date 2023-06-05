@@ -18,7 +18,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public readonly IDateTimeBroker dateTimeBroker;
         public readonly ILoggingBroker loggingBroker;
 
-        public InternService(IStorageBroker storageBroker, IDateTimeBroker dateTimeBroker, ILoggingBroker loggingBroker)
+        public InternService(
+            IStorageBroker storageBroker, 
+            IDateTimeBroker dateTimeBroker, 
+            ILoggingBroker loggingBroker)
         {
             this.storageBroker = storageBroker;
             this.dateTimeBroker = dateTimeBroker;
