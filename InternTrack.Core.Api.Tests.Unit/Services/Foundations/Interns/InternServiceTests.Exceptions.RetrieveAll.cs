@@ -4,10 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
 using Moq;
@@ -34,7 +30,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             Action retrieveAllInternsAction = () =>
-                this.internService.RetrieveAllInternAsync();
+                this.internService.RetrieveAllInternsAsync();
 
             // then
             Assert.Throws<InternDependencyException>(retrieveAllInternsAction);
@@ -75,7 +71,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             Action retrieveAllInternAction = () =>
-                this.internService.RetrieveAllInternAsync();
+                this.internService.RetrieveAllInternsAsync();
 
             // then
             Assert.Throws<InternServiceException>(retrieveAllInternAction);

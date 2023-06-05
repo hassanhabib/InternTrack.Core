@@ -3,11 +3,8 @@
 // FREE TO USE AS LONG AS SOFTWARE FUNDS ARE DONATED TO THE POOR
 // ---------------------------------------------------------------
 
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
-using Force.DeepCloner;
 using InternTrack.Core.Api.Models.Interns;
 using Moq;
 using Xunit;
@@ -30,7 +27,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             IQueryable<Intern> actualInterns =
-                this.internService.RetrieveAllInternAsync();
+                this.internService.RetrieveAllInternsAsync();
 
             // then
             actualInterns.Should().BeEquivalentTo(expectedInterns);

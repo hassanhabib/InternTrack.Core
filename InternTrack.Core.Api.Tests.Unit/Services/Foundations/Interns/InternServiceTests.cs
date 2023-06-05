@@ -60,7 +60,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         private static IQueryable<Intern> CreateRandomInterns() =>
             CreateInternFiller(dates: GetRandomDateTime()).Create(GetRandomNumber()).AsQueryable();
 
-
         private static int GetRandomNegativeNumber() =>
             -1 * new IntRange(min: 2, max: 10).GetValue();
 

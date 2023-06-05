@@ -30,7 +30,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return await this.storageBroker.InsertInternAsync(intern);
         }
 
-        public IQueryable<Intern> RetrieveAllInternAsync() =>
+        public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
     }
 }

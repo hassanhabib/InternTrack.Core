@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
-using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Xeptions;

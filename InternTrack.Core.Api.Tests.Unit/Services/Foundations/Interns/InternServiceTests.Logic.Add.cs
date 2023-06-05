@@ -4,11 +4,6 @@
 // ---------------------------------------------------------------
 
 using System;
-// ---------------------------------------------------------------
-// Copyright (c) Coalition of the Good-Hearted Engineers
-// FREE TO USE AS LONG AS SOFTWARE FUNDS ARE DONATED TO THE POOR
-// ---------------------------------------------------------------
-
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -39,7 +34,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ReturnsAsync(storageIntern);
 
             //when
-
             Intern actualIntern =
                 await this.internService.AddInternAsync(inputIntern);
 
