@@ -3,7 +3,6 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
-using InternTrack.Core.Api.Models.Interns;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

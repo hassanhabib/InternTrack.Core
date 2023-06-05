@@ -146,7 +146,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInternDependencyException);
-            
+
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never());
@@ -158,7 +158,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                         expectedInternDependencyException))),
-                            Times.Once);            
+                            Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();

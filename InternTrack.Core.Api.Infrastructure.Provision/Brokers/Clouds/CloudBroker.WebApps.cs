@@ -45,7 +45,7 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds
                     }
                 };
 
-            ArmOperation<WebSiteResource> webApp = 
+            ArmOperation<WebSiteResource> webApp =
                 await resourceGroup
                     .GetWebSites()
                     .CreateOrUpdateAsync(
