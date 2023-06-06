@@ -36,7 +36,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ReturnsAsync(storageIntern);
 
             //when
-
             Intern actualIntern =
                 await this.internService.AddInternAsync(inputIntern);
 
