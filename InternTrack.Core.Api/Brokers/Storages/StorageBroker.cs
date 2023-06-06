@@ -1,6 +1,7 @@
-﻿// ---------------------------------------------------------------------------------- 
-// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
-// ----------------------------------------------------------------------------------
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
 
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
