@@ -29,13 +29,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> modifyInternTask =
                 this.internService.ModifyInternAsync(nullIntern);
 
-            InternValidationException actualInternValidationException =
-                await Assert.ThrowsAsync<InternValidationException>(
+            NullInternException actualInternValidationException =
+                await Assert.ThrowsAsync<NullInternException>(
                     modifyInternTask.AsTask);
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
-                expectedInternValidationException);
+                nullInternException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
