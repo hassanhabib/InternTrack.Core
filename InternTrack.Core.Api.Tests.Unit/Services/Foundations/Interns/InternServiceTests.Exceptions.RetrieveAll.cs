@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
 using Moq;
@@ -16,6 +17,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public void ShouldThrowCriticalDependencyExceptionOnRetrieveAllIfSqlErrorOccursAndLogIt()
         {
+            // given
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
@@ -32,8 +34,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Action retrieveAllInternsAction = () =>
                 this.internService.RetrieveAllInternsAsync();
 
+            InternDependencyException actualInternDependencyException =
+                Assert.Throws<InternDependencyException>(retrieveAllInternsAction);
+
             // then
-            Assert.Throws<InternDependencyException>(retrieveAllInternsAction);
+            actualInternDependencyException.Should()
+                .BeEquivalentTo(expectedInternStorageException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
@@ -73,8 +79,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Action retrieveAllInternAction = () =>
                 this.internService.RetrieveAllInternsAsync();
 
+            InternServiceException actualInternServiceExeption =
+                Assert.Throws<InternServiceException>(retrieveAllInternAction);
+
             // then
-            Assert.Throws<InternServiceException>(retrieveAllInternAction);
+            actualInternServiceExeption.Should()
+                .BeEquivalentTo(expectedInternServiceException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
