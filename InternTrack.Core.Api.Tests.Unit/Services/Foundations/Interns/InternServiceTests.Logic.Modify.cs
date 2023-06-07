@@ -50,14 +50,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.SelectInternByIdAsync(internId),
                     Times.Once);
 
-            
-
             this.storageBrokerMock.Verify(broker =>
                 broker.UpdateInternAsync(inputIntern),
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
-            //this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
