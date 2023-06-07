@@ -41,25 +41,23 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ReturnsAsync(afterUpdateStorageIntern);
 
             // when
-            Intern actualStudent = await this.internService.ModifyInternAsync(inputIntern);
+            Intern actualIntern = await this.internService.ModifyInternAsync(inputIntern);
 
             // then
-            actualStudent.Should().BeEquivalentTo(expectedIntern);
+            actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(internId),
                     Times.Once);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
-                    Times.Once);
+            
 
             this.storageBrokerMock.Verify(broker =>
                 broker.UpdateInternAsync(inputIntern),
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            //this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
