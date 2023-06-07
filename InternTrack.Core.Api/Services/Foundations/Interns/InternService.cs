@@ -29,16 +29,15 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         {
             return await this.storageBroker.InsertInternAsync(intern);
         }
-        public async ValueTask<Intern> ModifyInternAsync(Intern intern)
-        {
-            ValidateInternOnModify(intern);
+        public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
+            TryCatch(async () =>
+            {
+                ValidateInternOnModify(intern);
 
-            Intern maybeIntern =
-                await this.storageBroker.SelectInternByIdAsync(intern.Id);
+                Intern maybeIntern =
+                    await this.storageBroker.SelectInternByIdAsync(intern.Id);
 
-            return await this.storageBroker.UpdateInternAsync(intern);
-
-
-        }
+                return await this.storageBroker.UpdateInternAsync(intern);
+            });
     }
 }

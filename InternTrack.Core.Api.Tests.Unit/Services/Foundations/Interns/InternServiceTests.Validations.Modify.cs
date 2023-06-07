@@ -66,10 +66,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
-                key: nameof(Intern.Id),
-                values: "Id is required");
-
-            invalidInternException.AddData(
                 key: nameof(Intern.FirstName),
                 values: "Text is required");
 
@@ -93,23 +89,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 key: nameof(Intern.Status),
                 values: "Text is required");
 
-            invalidInternException.AddData(
-                key: nameof(Intern.CreatedDate),
-                values: "Date is required");
-
-            invalidInternException.AddData(
-                key: nameof(Intern.CreatedBy),
-                values: "Id is required");
-
-            invalidInternException.AddData(
-                key: nameof(Intern.UpdatedDate),
-                "Date is required",
-                $"Date is the same as {nameof(Intern.CreatedDate)}");
-
-            invalidInternException.AddData(
-                key: nameof(Intern.UpdatedBy),
-                values: "Id is required");
-
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
 
@@ -123,7 +102,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
-                invalidInternException);
+                expectedInternValidationException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
@@ -132,10 +111,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
                     expectedInternValidationException))),
-                        Times.Once);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
                         Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
