@@ -33,12 +33,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     firstDate: intern.UpdatedDate,
                     secondDate: intern.CreatedDate,
                     secondDateName: nameof(Intern.CreatedDate)),
+
                 Parameter: nameof(Intern.UpdatedDate)),
 
                 (Rule: IsNotSame(
                     firstId: intern.UpdatedBy,
                     secondId: intern.CreatedBy,
                     secondIdName: nameof(Intern.CreatedBy)),
+
                 Parameter: nameof(Intern.UpdatedBy)),
 
                 (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
