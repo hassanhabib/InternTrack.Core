@@ -34,6 +34,29 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
+        private void ValidateInternOnModify(Intern intern)
+        {
+            ValidateInternIsNotNull(intern);
+
+            Validate(
+                (Rule: IsInvalid(intern.Id), Parameter: nameof(Intern.Id)),
+                (Rule: IsInvalid(intern.FirstName), Parameter: nameof(Intern.FirstName)),
+                (Rule: IsInvalid(intern.MiddleName), Parameter: nameof(Intern.MiddleName)),
+                (Rule: IsInvalid(intern.LastName), Parameter: nameof(Intern.LastName)),
+                (Rule: IsInvalid(intern.Email), Parameter: nameof(Intern.Email)),
+                (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
+                (Rule: IsInvalid(intern.Status), Parameter: nameof(Intern.Status)),
+                (Rule: IsInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsSame(
+                    firstDate: intern.UpdatedDate,
+                    secondDate: intern.CreatedDate,
+                    secondDateName: nameof(Intern.CreatedDate)),
+                Parameter: nameof(Intern.UpdatedDate))
+            );
+
+        }
+
         private static void ValidateInternIsNotNull(Intern intern)
         {
             if (intern is null)
@@ -67,6 +90,15 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 Condition = firstDate != secondDate,
                 Message = $"Date is not the same as {secondDateName}"
+            };
+
+        private static dynamic IsSame(
+            DateTimeOffset firstDate,
+            DateTimeOffset secondDate,
+            string secondDateName) => new
+            {
+                Condition = firstDate == secondDate,
+                Message = $"Date is the same as {secondDateName}"
             };
 
         private dynamic IsNotRecent(DateTimeOffset date) => new

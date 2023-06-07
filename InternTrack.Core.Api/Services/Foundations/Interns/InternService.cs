@@ -9,7 +9,6 @@ using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Models.Interns;
-using InternTrack.Core.Api.Models.Interns.Exceptions;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
@@ -32,10 +31,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
         public async ValueTask<Intern> ModifyInternAsync(Intern intern)
         {
-            if (intern is null)
-            {
-                throw new NullInternException();
-            }
+            ValidateInternOnModify(intern);
 
             Intern maybeIntern =
                 await this.storageBroker.SelectInternByIdAsync(intern.Id);
