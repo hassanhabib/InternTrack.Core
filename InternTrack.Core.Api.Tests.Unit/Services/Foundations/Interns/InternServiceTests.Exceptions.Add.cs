@@ -77,8 +77,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             DateTimeOffset datetime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(datetime);            
-            Intern alreadyExistsIntern = randomIntern;
-            alreadyExistsIntern.UpdatedBy = alreadyExistsIntern.CreatedBy;
+            randomIntern.UpdatedBy = randomIntern.CreatedBy;
             string randomMessage = GetRandomMessage();
 
             var duplicateKeyException =
@@ -100,7 +99,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // when
             ValueTask<Intern> addInternTask =
-                this.internService.AddInternAsync(alreadyExistsIntern);
+                this.internService.AddInternAsync(randomIntern);
 
             InternDependencyValidationException actualInternDependencyValidationException =
                 await Assert.ThrowsAsync<InternDependencyValidationException>(
