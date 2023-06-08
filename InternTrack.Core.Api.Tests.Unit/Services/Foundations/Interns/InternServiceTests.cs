@@ -94,12 +94,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var filler = new Filler<Intern>();
             Guid createdById = Guid.NewGuid();
 
-            filler.Setup()
-                .OnProperty(intern => intern.CreatedDate).Use(dates)
-                .OnProperty(intern => intern.UpdatedDate).IgnoreIt()
-                .OnProperty(intern => intern.CreatedBy).Use(createdById)
-                .OnProperty(intern => intern.UpdatedBy).IgnoreIt();
-
+            filler.Setup().OnType<DateTimeOffset>().Use(dates);
+                
             return filler;
         }
     }

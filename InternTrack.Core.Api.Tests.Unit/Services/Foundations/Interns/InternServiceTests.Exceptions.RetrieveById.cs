@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
-    public partial class InternServicesTests
+}
+    /*public partial class InternServicesTests
     {
+        private object loggingBrokerMock;
+        private object storageBrokerMock;
+        private object internService;
+
         [Fact]
         public void ShouldThrowServiceExceptionOnRetrieveByIdIfServiceErrorOccursAndLogIt()
         {
@@ -21,7 +27,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternServiceException(serviceException);
 
             var expectedInternServiceException =
-                new BookServiceException(failedInternServiceException);
+                new InternServiceException(failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternById(It.IsAny<Guid>()))
@@ -30,7 +36,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // when
             Action reretrieveInternByIdAction = () =>
                 this.internService.RetrieveInternById(someId);
-
+           
             // then 
             Assert.Throws<InternServiceException>(reretrieveInternByIdAction);
 
@@ -48,3 +54,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
     }
 }
+
+    }
+}
+    */

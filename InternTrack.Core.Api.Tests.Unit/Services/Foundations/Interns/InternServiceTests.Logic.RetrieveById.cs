@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +34,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternById(inputInternId),
+                broker.SelectInternByIdAsync(inputInternId),
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
