@@ -117,5 +117,35 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnModifyIfCreatedAndUpdatedDatesAreSameAndLogItAsync()
+        {
+            // given
+            Intern randomIntern = CreateRandomIntern();
+            DateTimeOffset sameDate = randomIntern.CreatedDate;
+            Intern invalidIntern = randomIntern;
+            invalidIntern.CreatedDate = sameDate;
+            invalidIntern.UpdatedDate = sameDate;
+            var invalidInternException = new InvalidInternException();
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedDate),
+                values: $"Date is the same as {nameof(Intern.CreatedDate)}");
+
+            var expectedInternValidationException =
+                new InternValidationException(invalidInternException);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(invalidIntern);
+
+            // then
+            await Assert.ThrowsAsync<InternValidationException>(() =>
+                modifyInternTask.AsTask());
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
