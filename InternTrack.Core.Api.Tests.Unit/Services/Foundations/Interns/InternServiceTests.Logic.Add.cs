@@ -42,14 +42,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             //then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(inputIntern),
-                    Times.Once());
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once);
 
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(inputIntern),
+                    Times.Once());
+                        
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
