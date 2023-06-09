@@ -14,13 +14,13 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Home
         public async Task ShouldReturnHomeMessageAsync()
         {
             // given
-            string expectedMessage = 
+            string expectedMessage =
                 "Thank you, Mario. But the princess is in another castle!";
-            
+
             // when
-            string actualMessage = 
+            string actualMessage =
                 await this.internTrackApiBroker.GetHomeMessageAsync();
-            
+
             // then
             actualMessage.Should().BeEquivalentTo(expectedMessage);
         }
