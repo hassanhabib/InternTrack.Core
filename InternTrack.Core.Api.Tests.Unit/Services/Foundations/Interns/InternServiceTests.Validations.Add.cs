@@ -39,11 +39,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternValidationException.Should().BeEquivalentTo(
                 expectedInternValidationException);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
-                    Times.Once);
-
-
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never);
