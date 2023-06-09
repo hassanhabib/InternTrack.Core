@@ -36,7 +36,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
             catch (SqlException sqlException)
             {
-                var failedInternStorageException = new FailedInternStorageException(sqlException);
+                var failedInternStorageException =
+                    new FailedInternStorageException(sqlException);
+
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
             catch (DuplicateKeyException duplicateKeyException)
@@ -100,6 +102,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         {
             var internDepencyException =
                 new InternDependencyException(exception);
+
             this.loggingBroker.LogCritical(internDepencyException);
 
             return internDepencyException;
@@ -128,7 +131,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         private InternServiceException CreateAndLogServiceException(
-            Exception exception)
+            Xeption exception)
         {
             var InternServiceException =
                 new InternServiceException(exception);

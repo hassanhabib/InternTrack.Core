@@ -78,12 +78,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
-        private static Expression<Func<Exception, bool>> SameExceptionsAs(Exception expectedException)
-        {
-            return actualExpection =>
-                expectedException.Message == actualExpection.Message
-                && expectedException.InnerException.Message == actualExpection.InnerException.Message;
-        }
+        private static Expression<Func<Exception, bool>> SameExceptionsAs(Exception expectedException) =>
+             actualException => actualException.SameExceptionAs(expectedException);
 
         private static Expression<Func<Exception, bool>> SameValidationExceptionAs(Exception expectedException)
         {

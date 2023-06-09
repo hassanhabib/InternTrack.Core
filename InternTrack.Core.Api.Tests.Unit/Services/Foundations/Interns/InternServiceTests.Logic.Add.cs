@@ -20,7 +20,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             //given
             DateTimeOffset dateTime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern();
+            Intern randomIntern = CreateRandomIntern(dateTime);
+            randomIntern.UpdatedBy = randomIntern.CreatedBy;
+            randomIntern.UpdatedDate = randomIntern.CreatedDate;
             Intern inputIntern = randomIntern;
             Intern storageIntern = inputIntern;
             Intern expectedIntern = storageIntern.DeepClone();
