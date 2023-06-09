@@ -24,12 +24,24 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
                 (Rule: IsInvalid(intern.Status), Parameter: nameof(Intern.Status)),
                 (Rule: IsInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+                (Rule: IsInvalid(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)),
+                (Rule: IsInvalid(intern.JoinDate), Parameter: nameof(Intern.JoinDate)),
+                (Rule: IsInvalid(intern.CreatedBy), Parameter: nameof(Intern.CreatedBy)),
+                (Rule: IsInvalid(intern.UpdatedBy), Parameter: nameof(Intern.UpdatedBy)),
 
                 (Rule: IsNotSame(
                     firstDate: intern.UpdatedDate,
                     secondDate: intern.CreatedDate,
                     secondDateName: nameof(Intern.CreatedDate)),
+
                 Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsNotSame(
+                    firstId: intern.UpdatedBy,
+                    secondId: intern.CreatedBy,
+                    secondIdName: nameof(Intern.CreatedBy)),
+
+                Parameter: nameof(Intern.UpdatedBy)),
 
                 (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
@@ -67,6 +79,15 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 Condition = firstDate != secondDate,
                 Message = $"Date is not the same as {secondDateName}"
+            };
+
+        private static dynamic IsNotSame(
+            Guid firstId,
+            Guid secondId,
+            string secondIdName) => new
+            {
+                Condition = firstId != secondId,
+                Message = $"Id is not the same as {secondIdName}"
             };
 
         private dynamic IsNotRecent(DateTimeOffset date) => new
