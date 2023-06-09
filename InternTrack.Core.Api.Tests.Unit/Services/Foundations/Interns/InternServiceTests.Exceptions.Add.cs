@@ -35,15 +35,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-<<<<<<< HEAD
-                    .Throws(sqlException);
-=======
                     .Returns(datetime);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()))
                     .ThrowsAsync(sqlException);
->>>>>>> 2f01c36c3700d66a50c3c4ca5e60201cd403a40c
 
             // when
             ValueTask<Intern> createIntern =
@@ -176,13 +172,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-<<<<<<< HEAD
-                        expectedInternDependencyException))),
-                            Times.Once);
-=======
                     expectedInternDependencyException))),
                         Times.Once);
->>>>>>> 2f01c36c3700d66a50c3c4ca5e60201cd403a40c
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();

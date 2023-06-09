@@ -29,7 +29,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         public ValueTask<Intern> AddInternAsync(Intern intern) =>
-<<<<<<< HEAD
         TryCatch(async () =>
         {
             ValidateInternOnAdd(intern);
@@ -39,13 +38,5 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
-=======
-            TryCatch(async () =>
-            {
-                ValidateInternOnAdd(intern);
-
-                return await this.storageBroker.InsertInternAsync(intern);
-            });
->>>>>>> 2f01c36c3700d66a50c3c4ca5e60201cd403a40c
     }
 }
