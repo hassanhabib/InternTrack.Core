@@ -59,13 +59,19 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
                 (Rule: IsInvalid(intern.Status), Parameter: nameof(Intern.Status)),
                 (Rule: IsInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+                (Rule: IsInvalid(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)),
+                (Rule: IsInvalid(intern.JoinDate), Parameter: nameof(Intern.JoinDate)),
+                (Rule: IsInvalid(intern.CreatedBy), Parameter: nameof(Intern.CreatedBy)),
+                (Rule: IsInvalid(intern.UpdatedBy), Parameter: nameof(Intern.UpdatedBy)),
 
                 (Rule: IsSame(
                         firstDate: intern.UpdatedDate,
                         secondDate: intern.CreatedDate,
                         secondDateName: nameof(Intern.CreatedDate)),
-                Parameter: nameof(Intern.UpdatedDate))
-            );
+
+                Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
         private static void ValidateInternIsNotNull(Intern intern)
