@@ -9,18 +9,52 @@ using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
-}
-    /*public partial class InternServicesTests
+    public partial class InternServiceTests
     {
-        private object loggingBrokerMock;
-        private object storageBrokerMock;
-        private object internService;
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfServiceExceptionOccursAndLogItAsync()
+        {
+            //given
+            Guid someInternId = Guid.NewGuid();
+            var serviceException = new Exception();
+
+            var failedInternStorageException =
+                new FailedInternStorageException(serviceException);
+
+            var expectedInternDependencyException =
+                new InternDependencyException(failedInternStorageException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(serviceException);
+
+            //when
+            ValueTask<Intern> retrieveInternByIdTask =
+                this.internService.RetrieveInternByIdAsync(someinternId);
+
+            //then
+            await Assert.ThrowsAsync<InternDependencyException>(() =>
+                retrieveInternByIdTask.AsTask());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
+                Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionAs(
+                    expectedInternDependencyException))),
+                    Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
 
         [Fact]
-        public void ShouldThrowServiceExceptionOnRetrieveByIdIfServiceErrorOccursAndLogIt()
+        public async Task ShouldThrowServiceExceptionOnRetrieveIfExceptionOccursAndLogItAsync()
         {
             // given
-            Guid someId = Guid.NewGuid();
+            Guid someInternId = Guid.NewGuid();
             var serviceException = new Exception();
 
             var failedInternServiceException =
@@ -30,18 +64,19 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternServiceException(failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternById(It.IsAny<Guid>()))
-                    .Throws(serviceException);
+            broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+                .ThrowsAsync(serviceException);
 
             // when
-            Action reretrieveInternByIdAction = () =>
-                this.internService.RetrieveInternById(someId);
-           
-            // then 
-            Assert.Throws<InternServiceException>(reretrieveInternByIdAction);
+            ValueTask<Intern> retrieveInternByIdTask =
+                this.internService.RetrieveInternByIdAsync(someInternId);
+
+            // then
+            await Assert.ThrowsAsync<InternServiceException>(() =>
+                retrieveInternByIdTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternById(It.IsAny<Guid>()),
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -51,10 +86,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
-
-    }
-}
-    */

@@ -32,8 +32,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         public async ValueTask<Intern> RetrieveInternByIdAsync(Guid id)
-        {
-            return await this.storageBroker.SelectInternByIdAsync(id);
+        { 
+                return await this.storageBroker.SelectInternByIdAsync(id);
         }
     }
 }
