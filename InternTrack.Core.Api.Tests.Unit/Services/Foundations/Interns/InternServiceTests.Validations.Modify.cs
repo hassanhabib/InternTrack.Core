@@ -356,7 +356,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> modifyInternTask =
                 this.internService.ModifyInternAsync(invalidIntern);
 
-
             // then
             InternValidationException actualInternValidationException =
             await Assert.ThrowsAsync<InternValidationException>(() =>
