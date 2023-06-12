@@ -1,4 +1,9 @@
-﻿using FluentAssertions;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
+
+using FluentAssertions;
 using Force.DeepCloner;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
@@ -125,7 +130,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedBy),
                 values: "Id is required");
-
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
@@ -334,9 +338,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
+
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
                 values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
+
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedBy),
                 values: $"Id is not the same as {nameof(Intern.CreatedBy)}");
@@ -381,7 +387,5 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
-    
-    
     }
 }
