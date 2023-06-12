@@ -63,15 +63,47 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsInvalid(intern.JoinDate), Parameter: nameof(Intern.JoinDate)),
                 (Rule: IsInvalid(intern.CreatedBy), Parameter: nameof(Intern.CreatedBy)),
                 (Rule: IsInvalid(intern.UpdatedBy), Parameter: nameof(Intern.UpdatedBy)),
+                (Rule: IsNotRecent(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
 
                 (Rule: IsSame(
                         firstDate: intern.UpdatedDate,
                         secondDate: intern.CreatedDate,
                         secondDateName: nameof(Intern.CreatedDate)),
 
+                Parameter: nameof(Intern.UpdatedDate)));
+
+          
+        }
+
+        private static void ValidateStorageIntern(Intern storageIntern, Guid internId)
+        {
+            if (storageIntern is null)
+            {
+                throw new InternNotFoundException(internId);
+            }
+        }
+
+        public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
+        {
+            Validate(
+                (Rule: IsNotSame(
+                        firstDate: inputIntern.CreatedDate,
+                        secondDate: storageIntern.CreatedDate,
+                        secondDateName: nameof(Intern.CreatedDate)),
+                Parameter: nameof(Intern.CreatedDate)),
+
+                (Rule: IsSame(
+                        firstDate: inputIntern.UpdatedDate,
+                        secondDate: storageIntern.UpdatedDate,
+                        secondDateName: nameof(Intern.UpdatedDate)),
                 Parameter: nameof(Intern.UpdatedDate)),
 
-                (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
+                (Rule: IsNotSame(
+                        firstId: inputIntern.CreatedBy,
+                        secondId: storageIntern.CreatedBy,
+                        secondIdName: nameof(Intern.CreatedBy)),
+                Parameter: nameof(Intern.CreatedBy))
+            );
         }
 
         private static void ValidateInternIsNotNull(Intern intern)

@@ -9,6 +9,7 @@ using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Models.Interns;
+using Microsoft.Identity.Client;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
@@ -33,12 +34,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 return await this.storageBroker.InsertInternAsync(intern);
             });
 
-        public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
-             TryCatch(async () =>
-             {
-                 ValidateInternOnModify(intern);
-                 await this.storageBroker.SelectInternByIdAsync(intern.Id);
-                 return await this.storageBroker.UpdateInternAsync(intern);
-             });
+        public ValueTask<Intern> ModifyInternAsync(Intern intern)
+        {
+            throw new NotImplementedException();
+        }
+        
+            
+        
+             
     }
 }
