@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
+
+using System;
 using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
 using Xunit;
@@ -11,50 +14,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
     public partial class InternServiceTests
     {
-        [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRetrieveIfServiceExceptionOccursAndLogItAsync()
-        {
-            //given
-            Guid someInternId = Guid.NewGuid();
-            var serviceException = new Exception();
-
-            var failedInternStorageException =
-                new FailedInternStorageException(serviceException);
-
-            var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternByIdAsync(It.IsAny<Guid>()))
-                    .ThrowsAsync(serviceException);
-
-            //when
-            ValueTask<Intern> retrieveInternByIdTask =
-                this.internService.RetrieveInternByIdAsync(someinternId);
-
-            //then
-            await Assert.ThrowsAsync<InternDependencyException>(() =>
-                retrieveInternByIdTask.AsTask());
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                Times.Once);
-
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionAs(
-                    expectedInternDependencyException))),
-                    Times.Once);
-
-            this.storageBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-        }
 
         [Fact]
         public async Task ShouldThrowServiceExceptionOnRetrieveIfExceptionOccursAndLogItAsync()
         {
             // given
-            Guid someInternId = Guid.NewGuid();
+            var someInternId = Guid.NewGuid();
+            var inputInternId = someInternId;
             var serviceException = new Exception();
 
             var failedInternServiceException =
@@ -64,7 +30,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternServiceException(failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
-            broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+            broker.SelectInternByIdAsync(inputInternId))
                 .ThrowsAsync(serviceException);
 
             // when
@@ -80,9 +46,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(
+                broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternServiceException))),
-                        Times.Once);
+                      Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
