@@ -3,14 +3,13 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using System;
 using Xeptions;
 
 namespace InternTrack.Core.Api.Models.Interns.Exceptions
 {
     public class InternServiceException : Xeption
     {
-        public InternServiceException(Exception innterException)
+        public InternServiceException(Xeption innterException)
             : base(message: "Intern service error occured, contact support", innterException)
         { }
     }
