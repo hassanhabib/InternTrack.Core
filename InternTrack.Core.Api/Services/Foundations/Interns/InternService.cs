@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
@@ -18,7 +19,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public readonly IDateTimeBroker dateTimeBroker;
         public readonly ILoggingBroker loggingBroker;
 
-        public InternService(IStorageBroker storageBroker, IDateTimeBroker dateTimeBroker, ILoggingBroker loggingBroker)
+        public InternService(
+            IStorageBroker storageBroker,
+            IDateTimeBroker dateTimeBroker,
+            ILoggingBroker loggingBroker)
         {
             this.storageBroker = storageBroker;
             this.dateTimeBroker = dateTimeBroker;
@@ -26,9 +30,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         public ValueTask<Intern> AddInternAsync(Intern intern) =>
-            TryCatch(async () =>
-            {
-                ValidateInternOnAdd(intern);
+        TryCatch(async () =>
+        {
+            ValidateInternOnAdd(intern);
+
+            return await this.storageBroker.InsertInternAsync(intern);
+        });
 
                 return await this.storageBroker.InsertInternAsync(intern);
             });
@@ -40,5 +47,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                return await this.storageBroker.SelectInternByIdAsync(internId);
            });    
+  
+        public IQueryable<Intern> RetrieveAllInternsAsync() =>
+            TryCatch(() => this.storageBroker.SelectAllInternsAsync());
     }
 }

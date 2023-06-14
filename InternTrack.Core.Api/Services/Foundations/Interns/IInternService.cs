@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 
@@ -13,5 +14,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
     {
         ValueTask<Intern> AddInternAsync(Intern intern);
         ValueTask<Intern> RetrieveInternByIdAsync(Guid internId);
+        IQueryable<Intern> RetrieveAllInternsAsync();
     }
 }
