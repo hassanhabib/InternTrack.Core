@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
@@ -67,6 +68,61 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
                     expectedInternDependencyExcetpion))),
+                        Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnModifyIfDatabaseUpdateExceptionOccursAndLogItAsync()
+        {
+            // given
+            DateTimeOffset datetime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomIntern(datetime);
+            randomIntern.CreatedDate = datetime;
+            randomIntern.UpdatedDate = randomIntern.CreatedDate.AddMinutes(GetRandomNumber());
+
+            var databaseUpdateException = new DbUpdateException();
+
+            var failedInternStorageException =
+                new FailedInternStorageException(databaseUpdateException);
+
+            var expectedInternDependencyException =
+                new InternDependencyException(failedInternStorageException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomIntern.UpdatedDate);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(randomIntern.Id))
+                    .ThrowsAsync(databaseUpdateException);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(randomIntern);
+
+            InternDependencyException actualInternDependencyException =
+                await Assert.ThrowsAsync<InternDependencyException>(
+                    modifyInternTask.AsTask);
+
+            // then
+            actualInternDependencyException.Should().BeEquivalentTo(
+                expectedInternDependencyException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(randomIntern.Id),
+                    Times.Once());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
