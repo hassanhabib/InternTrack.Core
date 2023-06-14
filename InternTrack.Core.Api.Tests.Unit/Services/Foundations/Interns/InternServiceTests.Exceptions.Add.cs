@@ -53,10 +53,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternDependecyException.Should().BeEquivalentTo(
                 expectedInternDependencyExcetpion);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
-                    Times.Once());
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -65,6 +61,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogCritical(It.Is(SameExceptionsAs(
                     expectedInternDependencyExcetpion))),
                         Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Once());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
@@ -76,7 +76,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);            
+            Intern randomIntern = CreateRandomIntern(datetime);
             randomIntern.UpdatedBy = randomIntern.CreatedBy;
             string randomMessage = GetRandomMessage();
 
@@ -109,10 +109,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternDependencyValidationException.Should()
                 .BeEquivalentTo(expectedInternDependencyValidationExcetption);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
-                    Times.Once());
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -121,6 +117,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternDependencyValidationExcetption))),
                         Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Once());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
@@ -162,10 +162,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInternDependencyException);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
-                    Times.Once());
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -174,6 +170,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternDependencyException))),
                         Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Once());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
@@ -215,10 +215,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternServiceException.Should().BeEquivalentTo(
                 expectedInternServiceExcetpion);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
-                    Times.Once());
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -227,6 +223,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternServiceExcetpion))),
                         Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Once());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();

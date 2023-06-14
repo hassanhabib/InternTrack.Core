@@ -148,7 +148,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                        Times.Once);
+                    Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
@@ -250,10 +250,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternValidationException.Should().BeEquivalentTo(
                 expectedInternValidException);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
-                    Times.Never);
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once);
@@ -262,6 +258,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameValidationExceptionAs(
                     expectedInternValidException))),
                         Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Never);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
