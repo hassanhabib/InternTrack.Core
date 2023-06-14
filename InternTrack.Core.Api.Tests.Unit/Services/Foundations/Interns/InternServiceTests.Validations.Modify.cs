@@ -254,7 +254,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 expectedInternValidException);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
+                broker.SelectInternByIdAsync(randomIntern.Id),
                     Times.Never);
 
             this.dateTimeBrokerMock.Verify(broker =>
