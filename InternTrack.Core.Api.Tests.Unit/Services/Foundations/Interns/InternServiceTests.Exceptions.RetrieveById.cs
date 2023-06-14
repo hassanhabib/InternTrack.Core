@@ -56,5 +56,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
+    
     }
 }
