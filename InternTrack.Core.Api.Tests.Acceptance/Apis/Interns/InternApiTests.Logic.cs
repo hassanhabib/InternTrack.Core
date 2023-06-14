@@ -23,8 +23,12 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             //when
             await this.internTrackApiBroker.PostInternAsync(inputIntern);
 
-            //then
+            Intern actualIntern = 
+                await internTrackApiBroker.GetInternByIdAsync(inputIntern.Id);
 
+            //then
+            actualIntern.Should().BeEquivalentTo(expectedIntern);
+            await this.internTrackApiBroker.DeleteInternByIdAsync(actualIntern.Id);
         }
     }
 }
