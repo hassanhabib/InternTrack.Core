@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
+using System;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Tynamix.ObjectFiller;

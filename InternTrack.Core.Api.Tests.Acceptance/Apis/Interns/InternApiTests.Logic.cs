@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
-using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
@@ -23,7 +23,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             //when
             await this.internTrackApiBroker.PostInternAsync(inputIntern);
 
-            Intern actualIntern = 
+            Intern actualIntern =
                 await internTrackApiBroker.GetInternByIdAsync(inputIntern.Id);
 
             //then

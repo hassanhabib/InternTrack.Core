@@ -1,4 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
+using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using InternTrack.Core.Api.Services.Foundations.Interns;
@@ -27,7 +32,7 @@ namespace InternTrack.Core.Api.Controllers
                 return Created(createIntern);
             }
             catch (InternValidationException internValidationException)
-                when(internValidationException.InnerException is AlreadyExistsInternException)
+                when (internValidationException.InnerException is AlreadyExistsInternException)
             {
                 return Conflict(internValidationException.InnerException);
             }

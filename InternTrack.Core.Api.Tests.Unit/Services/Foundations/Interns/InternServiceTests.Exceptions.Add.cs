@@ -76,7 +76,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);            
+            Intern randomIntern = CreateRandomIntern(datetime);
             randomIntern.UpdatedBy = randomIntern.CreatedBy;
             string randomMessage = GetRandomMessage();
 
