@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using InternTrack.Core.Api.Brokers.Storages;
+using InternTrack.Core.Api.Services.Foundations.Interns;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,7 @@ namespace InternTrack.Core.Api
             services.AddControllers();
             services.AddDbContext<StorageBroker>();
             services.AddTransient<IStorageBroker, StorageBroker>();
+            services.AddTransient<IInternService, InternService>();
 
             services.AddSwaggerGen(options =>
             {
