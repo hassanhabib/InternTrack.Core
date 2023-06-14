@@ -28,8 +28,11 @@ namespace InternTrack.Core.Api
             services.AddLogging();
             services.AddDbContext<StorageBroker>();
             services.AddTransient<IStorageBroker, StorageBroker>();
+<<<<<<< HEAD
             services.AddTransient<ILoggingBroker, LoggingBroker>();
             services.AddTransient<IDateTimeBroker, DateTimeBroker>();
+=======
+>>>>>>> 2f01c36c3700d66a50c3c4ca5e60201cd403a40c
             services.AddTransient<IInternService, InternService>();
 
             services.AddSwaggerGen(options =>
