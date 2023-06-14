@@ -49,7 +49,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(inputIntern),
                     Times.Once());
-                        
+
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

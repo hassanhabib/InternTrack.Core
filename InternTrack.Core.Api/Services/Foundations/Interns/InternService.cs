@@ -19,8 +19,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public readonly ILoggingBroker loggingBroker;
 
         public InternService(
-            IStorageBroker storageBroker, 
-            IDateTimeBroker dateTimeBroker, 
+            IStorageBroker storageBroker,
+            IDateTimeBroker dateTimeBroker,
             ILoggingBroker loggingBroker)
         {
             this.storageBroker = storageBroker;
@@ -34,7 +34,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             ValidateInternOnAdd(intern);
 
             return await this.storageBroker.InsertInternAsync(intern);
-        });                    
+        });
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());

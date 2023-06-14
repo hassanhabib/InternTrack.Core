@@ -262,7 +262,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertInternAsync(It.IsAny<Intern>()),
                     Times.Never);
-                       
+
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

@@ -52,7 +52,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualInternDependecyException.Should().BeEquivalentTo(
                 expectedInternDependencyExcetpion);
-                        
+
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -76,7 +76,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);            
+            Intern randomIntern = CreateRandomIntern(datetime);
             randomIntern.UpdatedBy = randomIntern.CreatedBy;
             string randomMessage = GetRandomMessage();
 
@@ -108,7 +108,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualInternDependencyValidationException.Should()
                 .BeEquivalentTo(expectedInternDependencyValidationExcetption);
-                        
+
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
@@ -165,7 +165,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
-            
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternDependencyException))),
@@ -214,7 +214,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualInternServiceException.Should().BeEquivalentTo(
                 expectedInternServiceExcetpion);
-                        
+
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once());
