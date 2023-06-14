@@ -9,7 +9,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Brokers
 {
     public partial class InternTrackApiBroker
     {
-        private const string InternRelativeString = "api/interns";
+        private const string InternRelativeString = "api/intern";
 
         public async ValueTask<Intern> PostInternAsync(Intern intern) =>
             await this.apiFactoryClient.PostContentAsync(InternRelativeString, intern);
