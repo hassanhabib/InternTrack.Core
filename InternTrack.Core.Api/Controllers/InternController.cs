@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
@@ -47,6 +48,26 @@ namespace InternTrack.Core.Api.Controllers
             catch (InternServiceException internServiceException)
             {
                 return InternalServerError(internServiceException);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult<IQueryable<Intern>> GetAllInterns()
+        {
+            try
+            {
+                IQueryable<Intern> storageInterns =
+                    this.internService.RetrieveAllInternsAsync();
+
+                return Ok(storageInterns);
+            }
+            catch (InternDependencyException interDependencyException)
+            {
+                return Problem(interDependencyException.Message);
+            }
+            catch (InternServiceException internServiceException)
+            {
+                return Problem(internServiceException.Message);
             }
         }
     }
