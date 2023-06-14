@@ -18,12 +18,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public readonly IDateTimeBroker dateTimeBroker;
         public readonly ILoggingBroker loggingBroker;
 
-<<<<<<< HEAD
-        public InternService(IStorageBroker storageBroker,
-=======
         public InternService(
             IStorageBroker storageBroker,
->>>>>>> 315ad10c922567363203346ecf320d5e2303de8f
             IDateTimeBroker dateTimeBroker,
             ILoggingBroker loggingBroker)
         {
