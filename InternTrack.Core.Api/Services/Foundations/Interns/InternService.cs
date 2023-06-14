@@ -3,6 +3,7 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
@@ -17,7 +18,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public readonly IDateTimeBroker dateTimeBroker;
         public readonly ILoggingBroker loggingBroker;
 
+<<<<<<< HEAD
         public InternService(IStorageBroker storageBroker,
+=======
+        public InternService(
+            IStorageBroker storageBroker,
+>>>>>>> 315ad10c922567363203346ecf320d5e2303de8f
             IDateTimeBroker dateTimeBroker,
             ILoggingBroker loggingBroker)
         {
@@ -27,11 +33,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         }
 
         public ValueTask<Intern> AddInternAsync(Intern intern) =>
-            TryCatch(async () =>
-            {
-                ValidateInternOnAdd(intern);
+        TryCatch(async () =>
+        {
+            ValidateInternOnAdd(intern);
 
-                return await this.storageBroker.InsertInternAsync(intern);
-            });
+            return await this.storageBroker.InsertInternAsync(intern);
+        });
+
+        public IQueryable<Intern> RetrieveAllInternsAsync() =>
+            TryCatch(() => this.storageBroker.SelectAllInternsAsync());
     }
 }
