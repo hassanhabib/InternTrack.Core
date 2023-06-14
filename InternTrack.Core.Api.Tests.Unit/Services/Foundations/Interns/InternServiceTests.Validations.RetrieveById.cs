@@ -13,45 +13,39 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValdationExceptionOnRetrieveByIdIfIdIsInValidAndLogItAsync()
+        public async Task ShouldThrowValidatonExceptionOnRetrieveByIdIfIdIsInvalidAndLogItAsync()
         {
             // given
-            Guid randomInternId = default;
-            Guid inputInternId = randomInternId;
-
+            Guid invalidInternId = Guid.Empty;
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
-                key: nameof(Intern.Id),
-                values: "id is required");
+               key: nameof(Intern.Id),
+               values: "Id is required");
 
             var expectedInternValidationException =
-            new InternValidationException(invalidInternException);
+                new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Intern> retrieveInternByIdTask =
-                this.internService.RetrieveInternByIdAsync(inputInternId);
+            ValueTask<Intern> actualInternTask =
+                this.internService.RetrieveInternByIdAsync(invalidInternId);
 
             // then
-            await Assert.ThrowsAsync<InternValidationException>(() =>
-                retrieveInternByIdTask.AsTask());
+            await Assert.ThrowsAsync<InternValidationException>(() => actualInternTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionsAs(
-                        expectedInternValidationException))),
+                broker.LogError(It.Is(SameValidationExceptionAs(
+                    expectedInternValidationException))),
                         Times.Once);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
-                    Times.Never);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
                     Times.Never);
 
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
-}
+    }
+

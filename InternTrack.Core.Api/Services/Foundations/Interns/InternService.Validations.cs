@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 
@@ -11,6 +12,11 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
+        private static void ValidateInternId(Guid internId)
+        {
+            Validate((Rule: IsInvalid(internId), Parameter: nameof(Intern.Id)));
+        }
+
         private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);
