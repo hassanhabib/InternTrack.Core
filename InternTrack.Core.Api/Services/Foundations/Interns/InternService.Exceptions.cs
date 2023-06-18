@@ -64,6 +64,28 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
+        private IQueryable<Intern> TryCatch(ReturningInternsFunction returningInternsFunction)
+        {
+            try
+            {
+                return returningInternsFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                var failedInternStorageException =
+                    new FailedInternStorageException(sqlException);
+
+                throw CreateAndLogCriticalDependencyException(failedInternStorageException);
+            }
+            catch (Exception exception)
+            {
+                var failedInternServiceException =
+                    new FailedInternServiceException(exception);
+
+                throw CreateAndLogServiceException(failedInternServiceException);
+            }
+        }
+
         private InternValidationException CreateAndLogValidationException(
             Xeption exception)
         {
