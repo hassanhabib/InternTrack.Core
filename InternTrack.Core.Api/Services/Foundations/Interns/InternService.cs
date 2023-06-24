@@ -40,9 +40,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
 
-        public ValueTask<Intern> RetrieveInternByIdAsync(Guid internId)
+        public async ValueTask<Intern> RetrieveInternByIdAsync(Guid internId)
         {
-            throw new NotImplementedException();
+            return await this.storageBroker.SelectInternByIdAsync(internId);
         }
     }
 }
