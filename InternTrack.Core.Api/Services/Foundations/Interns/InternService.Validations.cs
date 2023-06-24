@@ -54,7 +54,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
-        private static dynamic IsInvalid(Guid id) => new
+        private static void ValidateInternId(Guid internId) =>
+            Validate((Rule: IsInvalid(internId), Parameter: nameof(Intern.Id)));
+        
+            private static dynamic IsInvalid(Guid id) => new
         {
             Condition = id == Guid.Empty,
             Message = "Id is required"
