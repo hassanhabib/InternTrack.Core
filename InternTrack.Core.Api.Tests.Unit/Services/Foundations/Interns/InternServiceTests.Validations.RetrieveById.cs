@@ -3,11 +3,11 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using InternTrack.Core.Api.Models.Interns.Exceptions;
-using InternTrack.Core.Api.Models.Interns;
-using Moq;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
+using Moq;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns

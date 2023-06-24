@@ -47,5 +47,5 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 return await this.storageBroker.SelectInternByIdAsync(internId);
             });
-        }
     }
+}
