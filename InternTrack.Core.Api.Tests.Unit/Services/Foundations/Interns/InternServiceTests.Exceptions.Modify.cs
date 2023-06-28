@@ -3,15 +3,15 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using InternTrack.Core.Api.Models.Interns.Exceptions;
-using InternTrack.Core.Api.Models.Interns;
-using Microsoft.Data.SqlClient;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
+using InternTrack.Core.Api.Models.Interns;
+using Microsoft.Data.SqlClient;
+using Moq;
 using Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -21,14 +21,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDepdnencyExceptionOnModifyIfSqlErrorOccursAndLogItAsync()
+        public async Task ShouldThrowCriticalDependencyExceptionOnModifyIfSqlErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(datetime);
-            randomIntern.CreatedDate = datetime;
-            randomIntern.UpdatedDate = randomIntern.CreatedDate.AddMinutes(GetRandomNumber());
-
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
@@ -39,11 +36,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomIntern.UpdatedDate);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternByIdAsync(randomIntern.Id))
-                    .ThrowsAsync(sqlException);
+                    .Throws(sqlException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -68,7 +61,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(randomIntern.Id),
-                    Times.Once());
+                    Times.Never());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();

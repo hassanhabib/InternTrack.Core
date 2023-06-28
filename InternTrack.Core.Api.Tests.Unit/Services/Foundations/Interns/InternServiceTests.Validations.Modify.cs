@@ -3,17 +3,17 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using FluentAssertions;
-using Force.DeepCloner;
-using InternTrack.Core.Api.Models.Interns;
-using InternTrack.Core.Api.Models.Interns.Exceptions;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Force.DeepCloner;
+using InternTrack.Core.Api.Models.Interns;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
+using Moq;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
@@ -67,18 +67,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             var invalidIntern = new Intern
             {
-                Id = Guid.Empty,
                 FirstName = invalidText,
                 MiddleName = invalidText,
                 LastName = invalidText,
-                Email = invalidText,
-                PhoneNumber = invalidText,
-                Status = invalidText,
-                UpdatedDate = default,
-                CreatedDate = default,
-                JoinDate = default,
-                UpdatedBy = Guid.Empty,
-                CreatedBy = Guid.Empty
             };
 
             var invalidInternException = new InvalidInternException();

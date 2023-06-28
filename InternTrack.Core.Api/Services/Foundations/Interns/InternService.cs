@@ -4,13 +4,11 @@
 // ---------------------------------------------------------------
 
 using System.Linq;
-using System;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Models.Interns;
-using Microsoft.Identity.Client;
 
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
@@ -35,11 +33,11 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         {
             ValidateInternOnAdd(intern);
 
-                return await this.storageBroker.InsertInternAsync(intern);
-            });
+            return await this.storageBroker.InsertInternAsync(intern);
+        });
 
         public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
-            TryCatch(async () =>
+         TryCatch(async () =>
             {
                 ValidateInternOnModify(intern);
 
@@ -51,8 +49,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 return await this.storageBroker.UpdateInternAsync(intern);
             });
-            return await this.storageBroker.InsertInternAsync(intern);
-        });
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());

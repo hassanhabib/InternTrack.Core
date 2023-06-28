@@ -3,15 +3,15 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
-using FluentAssertions;
-using Force.DeepCloner;
-using InternTrack.Core.Api.Models.Interns;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Force.DeepCloner;
+using InternTrack.Core.Api.Models.Interns;
+using Moq;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
