@@ -37,18 +37,18 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         });
 
         public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
-         TryCatch(async () =>
-            {
-                ValidateInternOnModify(intern);
+        TryCatch(async () =>
+        {
+            ValidateInternOnModify(intern);
 
-                Intern maybeIntern =
-                await this.storageBroker.SelectInternByIdAsync(intern.Id);
+            Intern maybeIntern =
+            await this.storageBroker.SelectInternByIdAsync(intern.Id);
 
-                ValidateStorageIntern(maybeIntern, intern.Id);
-                ValidateAgainstStorageInternOnModify(inputIntern: intern, storageIntern: maybeIntern);
+            ValidateStorageIntern(maybeIntern, intern.Id);
+            ValidateAgainstStorageInternOnModify(inputIntern: intern, storageIntern: maybeIntern);
 
-                return await this.storageBroker.UpdateInternAsync(intern);
-            });
+            return await this.storageBroker.UpdateInternAsync(intern);
+        });
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());

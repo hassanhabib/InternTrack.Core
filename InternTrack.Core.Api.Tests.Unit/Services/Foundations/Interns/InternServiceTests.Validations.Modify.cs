@@ -309,7 +309,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInformationNotSameAsInputStudentAuditInformationAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInformationNotSameAsInputInternAuditInformationAndLogItAsync()
         {
             // given
             int randomNumber = GetRandomNumber();

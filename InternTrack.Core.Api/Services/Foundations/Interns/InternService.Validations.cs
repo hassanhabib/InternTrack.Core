@@ -71,8 +71,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                         secondDateName: nameof(Intern.CreatedDate)),
 
                 Parameter: nameof(Intern.UpdatedDate)));
-
-
         }
 
         private static void ValidateStorageIntern(Intern storageIntern, Guid internId)
