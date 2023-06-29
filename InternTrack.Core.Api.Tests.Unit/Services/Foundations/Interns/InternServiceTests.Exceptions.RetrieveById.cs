@@ -15,6 +15,45 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfSqlExceptionOccursAndLogItAsync()
+        {
+            // given
+            Guid someInternId = Guid.NewGuid();
+            var sqlException = GetSqlException();
+
+            var failedInternStorageException =
+                new FailedInternStorageException(sqlException);
+
+            var expectedInternDependencyException =
+                new InternDependencyException(failedInternStorageException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(sqlException);
+
+            // when
+            ValueTask<Intern> retrieveInternByIdTask =
+                this.internService.RetrieveInternByIdAsync(someInternId);
+
+            // then
+            await Assert.ThrowsAsync<InternDependencyException>(() =>
+                retrieveInternByIdTask.AsTask());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionsAs(
+                    expectedInternDependencyException))),
+                        Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task ShouldThrowServiceExceptionOnRetrieveIfExceptionOccursAndLogItAsync()
         {
             // given
@@ -29,8 +68,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternServiceException(failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
-            broker.SelectInternByIdAsync(inputInternId))
-                .ThrowsAsync(serviceException);
+                broker.SelectInternByIdAsync(someInternId))
+                    .ThrowsAsync(serviceException);
 
             // when
             ValueTask<Intern> retrieveInternByIdTask =
