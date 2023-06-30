@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
@@ -41,5 +42,10 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         ValueTask DeprovisionResourceGroupAsync(
             string projectName,
             string environment);
+
+        ValueTask<ApplicationInsightsComponentResource> ProvisionApplicationInsightComponentAsync(
+            string projectName,
+            string environment,
+            ResourceGroupResource resourceGroup);
     }
 }

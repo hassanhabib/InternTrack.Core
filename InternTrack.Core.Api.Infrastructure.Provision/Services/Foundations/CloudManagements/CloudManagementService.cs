@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
@@ -154,6 +155,24 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
                 $"Initial Catalog={sqlServer.Data.Name}" +
                 $"User ID={sqlDatabaseAccess.AdminName}" +
                 $"Password={sqlDatabaseAccess.AdminAccess}";
+        }
+
+        public async ValueTask<ApplicationInsightsComponentResource> ProvisionApplicationInsightComponentAsync(
+            string projectName, 
+            string environment, 
+            ResourceGroupResource resourceGroup)
+        {
+            string applicationInsightComponentName = $"{projectName}-Application-Insight-{environment}".ToLower();
+            loggingBroker.LogActivity(message: $"Provisioning {applicationInsightComponentName}");
+
+            ApplicationInsightsComponentResource applicationInsight =
+                await cloudBroker.CreateApplicationInsightComponentAsync(
+                    applicationInsightComponentName,
+                    resourceGroup);
+
+            loggingBroker.LogActivity(message: $"{applicationInsightComponentName} Provisioned");
+
+            return applicationInsight;
         }
     }
 }
