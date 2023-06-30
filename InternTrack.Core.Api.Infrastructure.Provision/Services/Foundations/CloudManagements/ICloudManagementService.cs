@@ -39,13 +39,13 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
             ResourceGroupResource resourceGroup,
             AppServicePlanResource appServicePlan);
 
-        ValueTask DeprovisionResourceGroupAsync(
-            string projectName,
-            string environment);
-
         ValueTask<ApplicationInsightsComponentResource> ProvisionApplicationInsightComponentAsync(
             string projectName,
             string environment,
             ResourceGroupResource resourceGroup);
+
+        ValueTask DeprovisionResourceGroupAsync(
+            string projectName,
+            string environment);
     }
 }
