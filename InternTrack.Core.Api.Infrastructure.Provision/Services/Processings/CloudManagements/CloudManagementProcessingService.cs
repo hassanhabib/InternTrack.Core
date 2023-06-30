@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
@@ -77,6 +78,13 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Processings.Clo
                         sqlDatabase.ConnectionString,
                         resourceGroup,
                         appServicePlan);
+
+                ApplicationInsightsComponentResource applicationInsight =
+                    await cloudManagementService
+                        .ProvisionApplicationInsightComponentAsync(
+                            projectName,
+                            environmentName,
+                            resourceGroup);
             }
         }
 
