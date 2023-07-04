@@ -4,17 +4,14 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using InternTrack.Core.Api.Models.Interns.Exceptions;
+using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
+using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 
 namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
@@ -52,7 +49,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
@@ -61,11 +58,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(randomIntern.Id),
-                    Times.Never());
+                    Times.Never);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -87,11 +84,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomIntern.UpdatedDate);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternByIdAsync(randomIntern.Id))
-                    .ThrowsAsync(databaseUpdateException);
+                    .Throws(databaseUpdateException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -107,7 +100,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
@@ -116,11 +109,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(randomIntern.Id),
-                    Times.Once());
+                    Times.Never);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -158,7 +151,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
@@ -167,11 +160,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(randomIntern.Id),
-                    Times.Never());
+                    Times.Never);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -209,7 +202,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
@@ -218,11 +211,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(randomIntern.Id),
-                    Times.Never());
+                    Times.Never);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

@@ -53,7 +53,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             Validate(
                 (Rule: IsInvalid(intern.Id), Parameter: nameof(Intern.Id)),
                 (Rule: IsInvalid(intern.FirstName), Parameter: nameof(Intern.FirstName)),
-                (Rule: IsInvalid(intern.MiddleName), Parameter: nameof(Intern.MiddleName)),
                 (Rule: IsInvalid(intern.LastName), Parameter: nameof(Intern.LastName)),
                 (Rule: IsInvalid(intern.Email), Parameter: nameof(Intern.Email)),
                 (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
@@ -73,7 +72,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 Parameter: nameof(Intern.UpdatedDate)));
         }
 
-        private static void ValidateStorageIntern(Intern storageIntern, Guid internId)
+        private static void ValidateStorageInternExists(Intern storageIntern, Guid internId)
         {
             if (storageIntern is null)
             {
@@ -83,6 +82,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
         public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
         {
+            ValidateStorageInternExists(storageIntern, inputIntern.Id);
+
             Validate(
                 (Rule: IsNotSame(
                         firstDate: inputIntern.CreatedDate,
