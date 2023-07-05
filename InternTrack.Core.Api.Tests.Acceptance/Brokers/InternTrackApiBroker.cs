@@ -14,6 +14,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Brokers
         private readonly WebApplicationFactory<Startup> webApplicationFactory;
         private readonly HttpClient httpClient;
         private readonly IRESTFulApiFactoryClient apiFactoryClient;
+
         public InternTrackApiBroker()
         {
             this.webApplicationFactory = new WebApplicationFactory<Startup>();
