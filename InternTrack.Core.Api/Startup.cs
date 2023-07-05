@@ -2,6 +2,8 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using InternTrack.Core.Api.Brokers.DateTimes;
+using InternTrack.Core.Api.Brokers.Loggings;
 using InternTrack.Core.Api.Brokers.Storages;
 using InternTrack.Core.Api.Services.Foundations.Interns;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +28,8 @@ namespace InternTrack.Core.Api
             services.AddDbContext<StorageBroker>();
             services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<IInternService, InternService>();
+            services.AddTransient<IDateTimeBroker, DateTimeBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
 
             services.AddSwaggerGen(options =>
             {
