@@ -32,7 +32,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
         public IQueryable<Intern> SelectAllInternsAsync()
         {
             var broker =
-              new StorageBroker(this.configuration);
+                new StorageBroker(this.configuration);
 
             return broker.Interns;
         }
@@ -40,7 +40,7 @@ namespace InternTrack.Core.Api.Brokers.Storages
         public async ValueTask<Intern> SelectInternByIdAsync(Guid internId)
         {
             var broker =
-                   new StorageBroker(this.configuration);
+                new StorageBroker(this.configuration);
 
             return await broker.Interns.FindAsync(internId);
         }
