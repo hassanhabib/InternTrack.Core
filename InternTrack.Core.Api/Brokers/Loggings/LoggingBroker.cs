@@ -18,7 +18,7 @@ namespace InternTrack.Core.Api.Brokers.Loggings
         public void LogInformation(string message) =>
             this.logger.LogInformation(message);
 
-        public void LogTrace(String message) =>
+        public void LogTrace(string message) =>
             this.logger.LogTrace(message);
 
         public void LogDebug(string message) =>
