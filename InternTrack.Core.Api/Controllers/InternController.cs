@@ -23,26 +23,6 @@ namespace InternTrack.Core.Api.Controllers
         public InternController(IInternService internService) =>
             this.internService = internService;
 
-        [HttpGet]
-        public ActionResult<IQueryable<Intern>> GetAllInterns()
-        {
-            try
-            {
-                IQueryable<Intern> storageInterns =
-                    this.internService.RetrieveAllInternsAsync();
-
-                return Ok(storageInterns);
-            }
-            catch (InternDependencyException interDependencyException)
-            {
-                return Problem(interDependencyException.Message);
-            }
-            catch (InternServiceException internServiceException)
-            {
-                return Problem(internServiceException.Message);
-            }
-        }
-
         [HttpPost]
         public async ValueTask<ActionResult<Intern>> PostInternAsync(Intern intern)
         {
@@ -69,6 +49,26 @@ namespace InternTrack.Core.Api.Controllers
             catch (InternServiceException internServiceException)
             {
                 return InternalServerError(internServiceException);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult<IQueryable<Intern>> GetAllInterns()
+        {
+            try
+            {
+                IQueryable<Intern> storageInterns =
+                    this.internService.RetrieveAllInternsAsync();
+
+                return Ok(storageInterns);
+            }
+            catch (InternDependencyException interDependencyException)
+            {
+                return Problem(interDependencyException.Message);
+            }
+            catch (InternServiceException internServiceException)
+            {
+                return Problem(internServiceException.Message);
             }
         }
     }
