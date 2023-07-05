@@ -35,6 +35,8 @@ namespace InternTrack.Core.Api
             services.AddTransient<ILoggingBroker, LoggingBroker>();
             services.AddTransient<IDateTimeBroker, DateTimeBroker>();
             services.AddTransient<IInternService, InternService>();
+            services.AddTransient<IDateTimeBroker, DateTimeBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
 
             services.AddSwaggerGen(options =>
             {
