@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
@@ -43,6 +44,46 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
                     Times.Never);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValidatonExceptionOnRetriveWhenStorageInternIsInvalidAndLogItAsync()
+        {
+            // given
+            DateTimeOffset dateTime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomIntern(dateTime);
+            Guid inputInternId = randomIntern.Id;
+            Intern inputIntern = randomIntern;
+            Intern nullStorageIntern = null;
+
+            var notFoundInternException = new NotFoundInternException(inputInternId);
+
+            var expectedInternValidationException =
+                new InternValidationException(notFoundInternException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(inputInternId))
+                    .ReturnsAsync(nullStorageIntern);
+
+            // when
+            ValueTask<Intern> actualInternTask =
+                this.internService.RetrieveInternByIdAsync(inputInternId);
+
+            // then
+            await Assert.ThrowsAsync<InternValidationException>(() => actualInternTask.AsTask());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(inputInternId),
+                    Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
