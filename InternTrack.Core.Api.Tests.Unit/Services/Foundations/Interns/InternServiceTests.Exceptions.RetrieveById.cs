@@ -80,7 +80,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             InternServiceException actualInternServiceException =
                 await Assert.ThrowsAsync<InternServiceException>(retrieveInternByIdTask.AsTask);
-            
+
             // then
             actualInternServiceException.Should().BeEquivalentTo(expectedInternServiceException);
 

@@ -6,7 +6,6 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;

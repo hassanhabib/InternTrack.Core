@@ -117,7 +117,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 throw new NotFoundInternException(internId);
             }
         }
-        
+
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidInternException = new InvalidInternException();
