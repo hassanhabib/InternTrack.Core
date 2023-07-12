@@ -34,6 +34,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 throw CreateAndLogValidationException(invalidInternException);
             }
+            catch (NotFoundInternException NotfoundInternException)
+            {
+                throw CreateAndLogValidationException(NotfoundInternException);
+            }
             catch (SqlException sqlException)
             {
                 var failedInternStorageException =

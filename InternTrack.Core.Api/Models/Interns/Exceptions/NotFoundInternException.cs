@@ -3,15 +3,15 @@
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
 
+using System;
 using Xeptions;
 
 namespace InternTrack.Core.Api.Models.Interns.Exceptions
 {
-    public class InternValidationException : Xeption
+    public class NotFoundInternException : Xeption
     {
-        public InternValidationException(Xeption innerException)
-            : base("Intern validation error occured. Please, try again.",
-                       innerException)
+        public NotFoundInternException(Guid internId)
+            : base(message: $"Couldn't find intern id: {internId}.")
         { }
     }
 }
