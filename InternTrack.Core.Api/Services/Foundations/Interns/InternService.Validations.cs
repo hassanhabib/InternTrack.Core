@@ -110,6 +110,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return timeDifference.Duration() > oneMinute;
         }
 
+        private static void ValidateStorageIntern(Intern storageIntern, Guid internId)
+        {
+            if (storageIntern is null) { }
+            {
+                throw new NotFoundInternException(internId);
+            }
+        }
+        
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidInternException = new InvalidInternException();

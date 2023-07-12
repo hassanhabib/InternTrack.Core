@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
@@ -35,9 +36,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> retrieveInternByIdTask =
                 this.internService.RetrieveInternByIdAsync(someInternId);
 
+            InternDependencyException actualinternDependencyException =
+                await Assert.ThrowsAsync<InternDependencyException>(retrieveInternByIdTask.AsTask);
+
             // then
-            await Assert.ThrowsAsync<InternDependencyException>(() =>
-                retrieveInternByIdTask.AsTask());
+            actualinternDependencyException.Should().BeEquivalentTo(expectedInternDependencyException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -75,9 +78,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> retrieveInternByIdTask =
                 this.internService.RetrieveInternByIdAsync(someInternId);
 
+            InternServiceException actualInternServiceException =
+                await Assert.ThrowsAsync<InternServiceException>(retrieveInternByIdTask.AsTask);
+            
             // then
-            await Assert.ThrowsAsync<InternServiceException>(() =>
-                retrieveInternByIdTask.AsTask());
+            actualInternServiceException.Should().BeEquivalentTo(expectedInternServiceException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
