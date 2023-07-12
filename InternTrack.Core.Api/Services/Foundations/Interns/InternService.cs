@@ -41,10 +41,13 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
            TryCatch(async () =>
            {
                ValidateInternId(internId);
-               Intern maybeIntern = await this.storageBroker.SelectInternByIdAsync(internId);
-               ValidateStorageIntern(maybeIntern, internId);
                
-               return await this.storageBroker.SelectInternByIdAsync(internId);
+               Intern maybeIntern = 
+                    await this.storageBroker.SelectInternByIdAsync(internId);
+               
+               ValidateStorageIntern(maybeIntern, internId);
+
+               return maybeIntern;
            });    
   
         public IQueryable<Intern> RetrieveAllInternsAsync() =>

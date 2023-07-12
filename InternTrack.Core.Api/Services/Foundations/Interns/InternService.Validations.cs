@@ -54,7 +54,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
-        private static void ValidateInternId(Guid internId) =>
+        private void ValidateInternId(Guid internId) =>
             Validate((Rule: IsInvalid(internId), Parameter: nameof(Intern.Id)));
 
         private static dynamic IsInvalid(Guid id) => new
@@ -110,9 +110,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             return timeDifference.Duration() > oneMinute;
         }
 
-        private static void ValidateStorageIntern(Intern storageIntern, Guid internId)
+        private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
         {
-            if (storageIntern is null) { }
+            if (maybeIntern is null)
             {
                 throw new NotFoundInternException(internId);
             }
