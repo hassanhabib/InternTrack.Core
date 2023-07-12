@@ -6,6 +6,7 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Force.DeepCloner;
 using InternTrack.Core.Api.Models.Interns;
 using Moq;
 using Xunit;
@@ -15,15 +16,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldRetrieveInternById()
+        public async Task ShouldRetrieveInternByIdAsync()
         {
             //given
+            Guid randomInternId = Guid.NewGuid();
+            Guid inputInternId = randomInternId;
             Intern randomIntern = CreateRandomIntern();
-            Guid inputInternId = randomIntern.Id;
             Intern storageIntern = randomIntern;
-            Intern expectedIntern = storageIntern;
+            Intern expectedIntern = storageIntern.DeepClone();
 
-            this.storageBrokerMock.Setup(broker => broker.SelectInternByIdAsync(inputInternId))
+            this.storageBrokerMock.Setup(broker => broker.SelectInternByIdAsync(randomInternId))
                 .ReturnsAsync(storageIntern);
 
             //when
@@ -34,11 +36,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(inputInternId),
-                    Times.Once);
+                broker.SelectInternByIdAsync(inputInternId), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using FluentAssertions.Equivalency.Tracing;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
@@ -30,51 +31,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new InternValidationException(invalidInternException);
 
             // when
-            ValueTask<Intern> actualInternTask =
+            ValueTask<Intern> retrieveInternByIdTask =
                 this.internService.RetrieveInternByIdAsync(invalidInternId);
 
-            // then
-            await Assert.ThrowsAsync<InternValidationException>(() => actualInternTask.AsTask());
-
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameValidationExceptionAs(
-                    expectedInternValidationException))),
-                        Times.Once);
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Never);
-
-            this.storageBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public async Task ShouldThrowValidatonExceptionOnRetriveWhenStorageInternIsInvalidAndLogItAsync()
-        {
-            // given
-            DateTimeOffset dateTime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(dateTime);
-            Guid inputInternId = randomIntern.Id;
-            Intern inputIntern = randomIntern;
-            Intern nullStorageIntern = null;
-
-            var notFoundInternException = new NotFoundInternException(inputInternId);
-
-            var expectedInternValidationException =
-                new InternValidationException(notFoundInternException);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternByIdAsync(inputInternId))
-                    .ReturnsAsync(nullStorageIntern);
-
-            // when
-            ValueTask<Intern> actualInternTask =
-                this.internService.RetrieveInternByIdAsync(inputInternId);
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(retrieveInternByIdTask.AsTask);
 
             // then
-            await Assert.ThrowsAsync<InternValidationException>(() => actualInternTask.AsTask());
+            actualInternValidationException.Should().BeEquivalentTo(expectedInternValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
@@ -82,11 +46,52 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(inputInternId),
-                    Times.Once);
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
+                    Times.Never);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfInternNotFoundAndLogItAsync()
+        {
+            // given
+            Guid someInternId = Guid.NewGuid();
+            Intern noIntern = null;
+
+            var notFoundInternValidationException =
+                new NotFoundInternException(someInternId);
+
+            var expectedInternValidationException =
+                new InternValidationException(notFoundInternValidationException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+                    .ReturnsAsync(noIntern);
+
+            // when
+            ValueTask<Intern> retrieveByIdInternTask =
+                this.internService.RetrieveInternByIdAsync(someInternId);
+
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(retrieveByIdInternTask.AsTask);
+
+            // then
+            actualInternValidationException.Should().BeEquivalentTo(expectedInternValidationException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
+                  Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
