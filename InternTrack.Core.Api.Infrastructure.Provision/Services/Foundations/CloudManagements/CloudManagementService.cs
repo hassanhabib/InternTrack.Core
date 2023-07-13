@@ -10,7 +10,6 @@ using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
-using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements
 {

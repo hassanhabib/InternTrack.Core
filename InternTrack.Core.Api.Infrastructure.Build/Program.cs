@@ -9,7 +9,7 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 
-namespace InternTrack.Core.Infrastructure.Build
+namespace InternTrack.Core.Api.Infrastructure.Build
 {
     internal class Program
     {
@@ -21,56 +21,58 @@ namespace InternTrack.Core.Infrastructure.Build
 
                 OnEvents = new Events
                 {
-                    PullRequest = new PullRequestEvent
+                    Push = new PushEvent
                     {
                         Branches = new string[] { "main" }
                     },
 
-                    Push = new PushEvent
+                    PullRequest = new PullRequestEvent
                     {
                         Branches = new string[] { "main" }
                     }
                 },
 
-                Jobs = new Jobs
+                Jobs = new Dictionary<string, Job>
                 {
-                    Build = new BuildJob
                     {
-                        RunsOn = BuildMachines.Windows2022,
-
-                        Steps = new List<GithubTask>
+                        "",
+                        new Job
                         {
-                            new CheckoutTaskV2
-                            {
-                                Name = "Checking Out Code"
-                            },
+                            RunsOn = BuildMachines.WindowsLatest,
 
-                            new SetupDotNetTaskV1
+                            Steps = new List<GithubTask>
                             {
-                                Name = "Installing .NET",
-
-                                TargetDotNetVersion = new TargetDotNetVersion
+                                new CheckoutTaskV2
                                 {
-                                    DotNetVersion = "7.0.203",
-                                    IncludePrerelease = true
+                                    Name = "Checking Out Code"
+                                },
+
+                                new SetupDotNetTaskV1
+                                {
+                                    Name = "Installing .NET",
+
+                                    TargetDotNetVersion = new TargetDotNetVersion
+                                    {
+                                        DotNetVersion = "7.0.306"
+                                    }
+                                },
+
+                                new RestoreTask
+                                {
+                                    Name = "Restoring Nuget Packages"
+                                },
+
+                                new DotNetBuildTask
+                                {
+                                    Name = "Building Project"
+                                },
+
+                                new TestTask
+                                {
+                                    Name = "Running Tests"
                                 }
                             },
-
-                            new RestoreTask
-                            {
-                                Name = "Restoring Nuget Packages"
-                            },
-
-                            new DotNetBuildTask
-                            {
-                                Name = "Building Project"
-                            },
-
-                            new TestTask
-                            {
-                                Name = "Running Tests"
-                            }
-                        },
+                        }
                     }
                 }
             };
