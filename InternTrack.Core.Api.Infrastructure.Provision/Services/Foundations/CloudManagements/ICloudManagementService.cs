@@ -9,7 +9,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
 
-namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments
+namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements
 {
     public interface ICloudManagementService
     {

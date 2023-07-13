@@ -9,7 +9,7 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 
-namespace InternTrack.Core.Infrastructure.Build
+namespace InternTrack.Core.Api.Infrastructure.Build
 {
     internal class Program
     {
@@ -21,12 +21,12 @@ namespace InternTrack.Core.Infrastructure.Build
 
                 OnEvents = new Events
                 {
-                    PullRequest = new PullRequestEvent
+                    Push = new PushEvent
                     {
                         Branches = new string[] { "main" }
                     },
 
-                    Push = new PushEvent
+                    PullRequest = new PullRequestEvent
                     {
                         Branches = new string[] { "main" }
                     }
@@ -36,7 +36,7 @@ namespace InternTrack.Core.Infrastructure.Build
                 {
                     Build = new BuildJob
                     {
-                        RunsOn = BuildMachines.Windows2022,
+                        RunsOn = BuildMachines.WindowsLatest,
 
                         Steps = new List<GithubTask>
                         {
@@ -51,8 +51,7 @@ namespace InternTrack.Core.Infrastructure.Build
 
                                 TargetDotNetVersion = new TargetDotNetVersion
                                 {
-                                    DotNetVersion = "7.0.203",
-                                    IncludePrerelease = true
+                                    DotNetVersion = "7.0.306"
                                 }
                             },
 
