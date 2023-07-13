@@ -32,47 +32,45 @@ namespace InternTrack.Core.Api.Infrastructure.Build
                     }
                 },
 
-                Jobs = new Dictionary<string, Job>
+                Jobs = new Jobs
                 {
+                    Build = new BuildJob
                     {
-                        "",
-                        new Job
+                        RunsOn = BuildMachines.Windows2022,
+
+                        Steps = new List<GithubTask>
                         {
-                            RunsOn = BuildMachines.WindowsLatest,
-
-                            Steps = new List<GithubTask>
+                            new CheckoutTaskV2
                             {
-                                new CheckoutTaskV2
-                                {
-                                    Name = "Checking Out Code"
-                                },
+                                Name = "Checking Out Code"
+                            },
 
-                                new SetupDotNetTaskV1
-                                {
-                                    Name = "Installing .NET",
+                            new SetupDotNetTaskV1
+                            {
+                                Name = "Installing .NET",
 
-                                    TargetDotNetVersion = new TargetDotNetVersion
-                                    {
-                                        DotNetVersion = "7.0.306"
-                                    }
-                                },
-
-                                new RestoreTask
+                                TargetDotNetVersion = new TargetDotNetVersion
                                 {
-                                    Name = "Restoring Nuget Packages"
-                                },
-
-                                new DotNetBuildTask
-                                {
-                                    Name = "Building Project"
-                                },
-
-                                new TestTask
-                                {
-                                    Name = "Running Tests"
+                                    DotNetVersion = "7.0.203",
+                                    IncludePrerelease = true
                                 }
                             },
-                        }
+
+                            new RestoreTask
+                            {
+                                Name = "Restoring Nuget Packages"
+                            },
+
+                            new DotNetBuildTask
+                            {
+                                Name = "Building Project"
+                            },
+
+                            new TestTask
+                            {
+                                Name = "Running Tests"
+                            }
+                        },
                     }
                 }
             };
