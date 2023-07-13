@@ -157,8 +157,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<ApplicationInsightsComponentResource> ProvisionApplicationInsightComponentAsync(
-            string projectName, 
-            string environment, 
+            string projectName,
+            string environment,
             ResourceGroupResource resourceGroup)
         {
             string applicationInsightComponentName = $"{projectName}-Application-Insight-{environment}".ToLower();
