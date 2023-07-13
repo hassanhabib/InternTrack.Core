@@ -36,7 +36,7 @@ namespace InternTrack.Core.Api.Infrastructure.Build
                 {
                     Build = new BuildJob
                     {
-                        RunsOn = BuildMachines.Windows2022,
+                        RunsOn = BuildMachines.WindowsLatest,
 
                         Steps = new List<GithubTask>
                         {
@@ -51,8 +51,7 @@ namespace InternTrack.Core.Api.Infrastructure.Build
 
                                 TargetDotNetVersion = new TargetDotNetVersion
                                 {
-                                    DotNetVersion = "7.0.203",
-                                    IncludePrerelease = true
+                                    DotNetVersion = "7.0.306"
                                 }
                             },
 
