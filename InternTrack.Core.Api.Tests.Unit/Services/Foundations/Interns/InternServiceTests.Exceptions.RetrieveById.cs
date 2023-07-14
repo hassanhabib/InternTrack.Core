@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRetrieveIfSqlExceptionOccursAndLogItAsync()
+        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveByIdAsyncIfSqlErrorOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
