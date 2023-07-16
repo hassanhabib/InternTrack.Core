@@ -33,17 +33,17 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             catch (InvalidInternException invalidInternException)
             {
                 throw CreateAndLogValidationException(invalidInternException);
-            }    
+            }
+            catch (NotFoundInternException NotfoundInternException)
+            {
+                throw CreateAndLogValidationException(NotfoundInternException);
+            }
             catch (SqlException sqlException)
             {
                 var failedInternStorageException =
                     new FailedInternStorageException(sqlException);
 
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
-            }
-            catch (NotFoundInternException NotfoundInternException)
-            {
-                throw CreateAndLogValidationException(NotfoundInternException);
             }
             catch (DuplicateKeyException duplicateKeyException)
             {
