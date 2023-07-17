@@ -87,7 +87,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                  Times.Once);
+                    Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
