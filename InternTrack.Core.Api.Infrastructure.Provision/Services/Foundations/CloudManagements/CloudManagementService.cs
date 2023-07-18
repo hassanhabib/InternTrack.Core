@@ -10,7 +10,6 @@ using Azure.ResourceManager.Sql;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Clouds;
 using InternTrack.Core.Api.Infrastructure.Provision.Brokers.Logging;
 using InternTrack.Core.Api.Infrastructure.Provision.Models.Storages;
-using InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudMangaments;
 
 namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.CloudManagements
 {
@@ -158,8 +157,8 @@ namespace InternTrack.Core.Api.Infrastructure.Provision.Services.Foundations.Clo
         }
 
         public async ValueTask<ApplicationInsightsComponentResource> ProvisionApplicationInsightComponentAsync(
-            string projectName, 
-            string environment, 
+            string projectName,
+            string environment,
             ResourceGroupResource resourceGroup)
         {
             string applicationInsightComponentName = $"{projectName}-Application-Insight-{environment}".ToLower();
