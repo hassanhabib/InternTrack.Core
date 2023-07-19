@@ -10,7 +10,15 @@ using InternTrack.Core.Api.Models.Interns.Exceptions;
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
-    {
+    { 
+        private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
+        {
+            if (maybeIntern is null)
+            {
+                throw new NotFoundInternException(internId);
+            }
+        }
+        
         private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);
@@ -108,14 +116,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             TimeSpan oneMinute = TimeSpan.FromMinutes(1);
 
             return timeDifference.Duration() > oneMinute;
-        }
-
-        private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
-        {
-            if (maybeIntern is null)
-            {
-                throw new NotFoundInternException(internId);
-            }
         }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
