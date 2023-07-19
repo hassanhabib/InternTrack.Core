@@ -18,7 +18,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public async Task ShouldRetrieveInternByIdAsync()
         {
-            //given
+            // given
             Guid randomInternId = Guid.NewGuid();
             Guid inputInternId = randomInternId;
             Intern randomIntern = CreateRandomIntern();
@@ -28,11 +28,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Setup(broker => broker.SelectInternByIdAsync(randomInternId))
                 .ReturnsAsync(storageIntern);
 
-            //when
+            // when
             Intern actualIntern =
                     await this.internService.RetrieveInternByIdAsync(inputInternId);
 
-            //then
+            // then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             this.storageBrokerMock.Verify(broker =>
