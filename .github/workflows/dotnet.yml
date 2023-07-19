@@ -1,4 +1,4 @@
-name: Intern Track Core Build Pipeline
+name: Intern Build
 on:
   push:
     branches:

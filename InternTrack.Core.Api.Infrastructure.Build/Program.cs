@@ -15,9 +15,11 @@ namespace InternTrack.Core.Api.Infrastructure.Build
     {
         public static void Main(string[] args)
         {
+            var client = new ADotNetClient();
+
             var githubPipeline = new GithubPipeline
             {
-                Name = "Intern Track Core Build Pipeline",
+                Name = "Intern Build",
 
                 OnEvents = new Events
                 {
@@ -74,10 +76,8 @@ namespace InternTrack.Core.Api.Infrastructure.Build
                 }
             };
 
-            var client = new ADotNetClient();
 
-            client.SerializeAndWriteToFile(
-                adoPipeline: githubPipeline,
+            client.SerializeAndWriteToFile(adoPipeline: githubPipeline, 
                 path: "../../../../.github/workflows/dotnet.yml");
         }
     }
