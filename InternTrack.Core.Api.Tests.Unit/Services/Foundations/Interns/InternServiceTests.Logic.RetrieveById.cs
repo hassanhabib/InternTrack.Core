@@ -25,8 +25,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern storageIntern = randomIntern;
             Intern expectedIntern = storageIntern.DeepClone();
 
-            this.storageBrokerMock.Setup(broker => broker.SelectInternByIdAsync(randomInternId))
-                .ReturnsAsync(storageIntern);
+            this.storageBrokerMock.Setup(broker => 
+                broker.SelectInternByIdAsync(randomInternId))
+                    .ReturnsAsync(storageIntern);
 
             // when
             Intern actualIntern =
@@ -36,7 +37,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(inputInternId), Times.Once);
+                broker.SelectInternByIdAsync(inputInternId), 
+                    Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
