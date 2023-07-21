@@ -41,6 +41,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
+            catch (NotFoundInternException NotfoundInternException)
+            {
+                throw CreateAndLogValidationException(NotfoundInternException);
+            }
             catch (DuplicateKeyException duplicateKeyException)
             {
                 var alreadyExistsInternException =
