@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Brokers.DateTimes;
 using InternTrack.Core.Api.Brokers.Loggings;
@@ -53,10 +54,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
 
-        public ValueTask<Intern> RemoveInternByIdAsync(Guid internId)
+        public async ValueTask<Intern> RemoveInternByIdAsync(Guid internId)
         {
-            throw new NotImplementedException();
-        }
+            Intern maybeIntern = await this.storageBroker
+                .SelectInternByIdAsync(internId);
 
+            return await this.storageBroker.DeleteInternAsync(maybeIntern);
+        }
     }
 }
