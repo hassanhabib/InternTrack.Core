@@ -1,4 +1,4 @@
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------
 // Copyright (c) Coalition of the Good-Hearted Engineers
 // FREE TO USE TO CONNECT THE WORLD
 // ---------------------------------------------------------------
@@ -36,7 +36,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
             return await this.storageBroker.InsertInternAsync(intern);
         });
-                 
+
         public ValueTask<Intern> RetrieveInternByIdAsync(Guid internId) => 
         TryCatch(async () =>
         {
@@ -52,19 +52,5 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
-        
-        public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
-        TryCatch(async () =>
-        {
-            ValidateInternOnModify(intern);
-
-            Intern maybeIntern =
-                await this.storageBroker.SelectInternByIdAsync(intern.Id);
-
-            ValidateAgainstStorageInternOnModify(inputIntern: intern, storageIntern: maybeIntern);
-
-            return
-                await this.storageBroker.UpdateInternAsync(intern);
-         });
     }
 }
