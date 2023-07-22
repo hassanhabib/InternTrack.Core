@@ -34,6 +34,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 throw CreateAndLogValidationException(invalidInternException);
             }
+            catch (InternNotFoundException nullInternException)
+            {
+                throw CreateAndLogValidationException(nullInternException);
+            }
             catch (SqlException sqlException)
             {
                 var failedInternStorageException =
@@ -51,6 +55,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                     new AlreadyExistsInternException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
+            }
+            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
+            {
+                var lockedInternException = new LockedInternException(dbUpdateConcurrencyException);
+
+                throw CreateAndLogDependencyException(lockedInternException);
             }
             catch (DbUpdateException databaseUpdateException)
             {
