@@ -44,15 +44,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Never);
-
-            this.storageBrokerMock.Verify(broker =>
                 broker.UpdateInternAsync(It.IsAny<Intern>()),
                     Times.Never);
 
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();            
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
@@ -139,7 +135,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertInternAsync(It.IsAny<Intern>()),
+                broker.UpdateInternAsync(It.IsAny<Intern>()),
                     Times.Never);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
