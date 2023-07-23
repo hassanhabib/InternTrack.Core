@@ -52,5 +52,96 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldThrowValidationExceptionOnModifyWhenInternIsInvalidAndLogItAsync(string invalidText)
+        {
+            // given
+            var invalidIntern = new Intern
+            {
+                FirstName = invalidText
+            };
+
+            var invalidInternException = new InvalidInternException();
+
+            invalidInternException.AddData(
+                key: nameof(Intern.Id),
+                values: "Id is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.FirstName),
+                values: "Text is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.LastName),
+                values: "Text is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.Email),
+                values: "Text is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.PhoneNumber),
+                values: "Text is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.Status),
+                values: "Text is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedDate),
+                values: new String[] { "Date is required", "Date is the same as CreatedDate" });
+
+            invalidInternException.AddData(
+                key: nameof(Intern.CreatedDate),
+                values: "Date is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.JoinDate),
+                values: "Date is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedBy),
+                values: "Id is required");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.CreatedBy),
+                values: "Id is required");
+
+            var expectedInternValidationException =
+                new InternValidationException(invalidInternException);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(invalidIntern);
+
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    modifyInternTask.AsTask);
+
+            // then
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidationException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameValidationExceptionAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertInternAsync(It.IsAny<Intern>()),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
