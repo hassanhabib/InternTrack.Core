@@ -1,4 +1,7 @@
-﻿
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
 
 using System;
 using System.Threading.Tasks;
@@ -179,7 +182,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
-                    Times.Never);
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameValidationExceptionAs(
@@ -207,15 +210,15 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
             invalidIntern.UpdatedDate = invalidIntern.UpdatedDate.AddMinutes(minutesBeforeOrAfter);
 
-            var invalidInternExeption =
+            var invalidInternException =
                 new InvalidInternException();
 
-            invalidInternExeption.AddData(
+            invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
                 values: "Date is not recent");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternExeption);
+                new InternValidationException(invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

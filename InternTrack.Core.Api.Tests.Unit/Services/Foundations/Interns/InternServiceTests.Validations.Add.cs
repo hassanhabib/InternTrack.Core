@@ -224,15 +224,15 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             invalidIntern.CreatedDate = randomDateTime.AddMinutes(minutesBeforeOrAfter);
             invalidIntern.UpdatedDate = invalidIntern.CreatedDate;
 
-            var invalidInternExeption =
+            var invalidInternException =
                 new InvalidInternException();
 
-            invalidInternExeption.AddData(
+            invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
                 values: "Date is not recent");
 
             var expectedInternValidException =
-                new InternValidationException(invalidInternExeption);
+                new InternValidationException(invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

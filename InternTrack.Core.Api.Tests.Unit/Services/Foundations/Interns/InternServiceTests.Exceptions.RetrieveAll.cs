@@ -79,11 +79,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Action retrieveAllInternAction = () =>
                 this.internService.RetrieveAllInternsAsync();
 
-            InternServiceException actualInternServiceExeption =
+            InternServiceException actualInternServiceException =
                 Assert.Throws<InternServiceException>(retrieveAllInternAction);
 
             // then
-            actualInternServiceExeption.Should()
+            actualInternServiceException.Should()
                 .BeEquivalentTo(expectedInternServiceException);
 
             this.dateTimeBrokerMock.Verify(broker =>

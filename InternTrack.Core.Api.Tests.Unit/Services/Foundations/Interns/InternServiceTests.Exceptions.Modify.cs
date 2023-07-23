@@ -27,7 +27,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var failedInternStorageException =
                 new FailedInternStorageException(sqlException);
 
-            var expectedInternDependencyExcetpion =
+            var expectedInternDependencyException =
                 new InternDependencyException(failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -44,7 +44,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternDependecyException.Should().BeEquivalentTo(
-                expectedInternDependencyExcetpion);
+                expectedInternDependencyException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -52,7 +52,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
-                    expectedInternDependencyExcetpion))),
+                    expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>

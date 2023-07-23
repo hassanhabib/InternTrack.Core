@@ -36,11 +36,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> retrieveInternByIdTask =
                 this.internService.RetrieveInternByIdAsync(someInternId);
 
-            InternDependencyException actualinternDependencyException =
+            InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(retrieveInternByIdTask.AsTask);
 
             // then
-            actualinternDependencyException.Should().BeEquivalentTo(expectedInternDependencyException);
+            actualInternDependencyException.Should().BeEquivalentTo(expectedInternDependencyException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
