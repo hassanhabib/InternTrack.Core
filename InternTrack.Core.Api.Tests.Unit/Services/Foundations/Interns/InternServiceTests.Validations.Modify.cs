@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -257,7 +259,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
         {
             DateTimeOffset randomDateTimeOffset = GetRandomDateTimeOffset();
-            Intern nonExistentIntern = CreateRandomIntern(randomDateTimeOffset);
+            Intern nonExistentIntern = CreateRandomIntern();
+            nonExistentIntern.UpdatedDate = randomDateTimeOffset;
             Intern noIntern = null;
             var notFoundInternException = new InternNotFoundException(nonExistentIntern.Id);
 
