@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Force.DeepCloner;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Moq;
@@ -255,12 +256,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
         {
-            int randomNegativeMinutes = GetRandomNegativeNumber();
             DateTimeOffset randomDateTimeOffset = GetRandomDateTimeOffset();
             Intern nonExistentIntern = CreateRandomIntern(randomDateTimeOffset);
-            nonExistentIntern.CreatedDate = randomDateTimeOffset.AddMinutes(randomNegativeMinutes);
             Intern noIntern = null;
-
             var notFoundInternException = new InternNotFoundException(nonExistentIntern.Id);
 
             var expectedInternValidationException =
@@ -297,6 +295,77 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(nonExistentIntern.Id),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInformationNotSameAsInputInternAuditInformationAndLogItAsync()
+        {
+            // given
+            int randomNumber = GetRandomNumber();
+            DateTimeOffset randomDate = GetRandomDateTime();
+            Guid differentId = Guid.NewGuid();
+            Guid invalidCreatedBy = differentId;
+            Intern randomIntern = CreateRandomIntern(dates: randomDate);
+            Intern invalidIntern = randomIntern;
+            Intern storageIntern = randomIntern.DeepClone();
+            invalidIntern.CreatedDate = storageIntern.CreatedDate.AddDays(randomNumber);
+            invalidIntern.UpdatedDate = storageIntern.UpdatedDate;
+            invalidIntern.CreatedBy = invalidCreatedBy;
+            Guid internId = invalidIntern.Id;
+
+            var invalidInternException = new InvalidInternException();
+
+            invalidInternException.AddData(
+                key: nameof(Intern.CreatedDate),
+                values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedDate),
+                values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.CreatedBy),
+                values: $"Id is not the same as {nameof(Intern.CreatedBy)}");
+
+            var expectedInternValidationException =
+                new InternValidationException(invalidInternException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomDate);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(internId))
+                    .ReturnsAsync(storageIntern);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(invalidIntern);
+
+            InternValidationException actualInternValidationException =
+            await Assert.ThrowsAsync<InternValidationException>(() =>
+                modifyInternTask.AsTask());
+
+            // then
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidationException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(invalidIntern.Id),
                     Times.Once);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
