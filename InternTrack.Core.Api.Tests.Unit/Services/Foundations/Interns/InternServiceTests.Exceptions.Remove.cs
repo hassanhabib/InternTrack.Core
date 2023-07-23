@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-    public async Task ShouldThrowDependencyExceptionOnDeleteIfSqlExceptionOccursAndLogItAsync()
+    public async Task ShouldThrowDependencyExceptionOnRemoveIfSqlExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
