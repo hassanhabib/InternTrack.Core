@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
 
@@ -18,8 +19,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
     public partial class InternServiceTests
     {
+
         [Fact]
-    public async Task ShouldThrowDependencyExceptionOnRemoveIfSqlExceptionOccursAndLogItAsync()
+        public async Task ShouldThrowDependencyExceptionOnRemoveIfSqlExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
@@ -46,15 +48,54 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
                     Times.Once());
-        
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
                     expectedInterndependencyException))),
                         Times.Once());
-        
+
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
-        }     
+        }
+
+        [Fact]
+        public async Task ShouldThrowdependencyExceptionOnRemoveIfDatabaseUpdateExceptionOccursAndLogItAsync()
+        {
+            // given
+            Guid someInternId = Guid.NewGuid();
+            var databaseUpdateException = new DbUpdateException();
+
+            var failedInternStorageException =
+                new FailedInternStorageException(databaseUpdateException);
+
+            var expectedInternDependencyException =
+                new InternDependencyException(failedInternStorageException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(databaseUpdateException);
+
+            // when 
+            ValueTask<Intern> deleteInternTask =
+                this.internService.RemoveInternByIdAsync(someInternId);
+
+            //then
+            await Assert.ThrowsAsync<InternDependencyException>(() =>
+                deleteInternTask.AsTask());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(It.IsAny<Guid>()),
+                    Times.Once());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternDependencyException))),
+                        Times.Once());
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

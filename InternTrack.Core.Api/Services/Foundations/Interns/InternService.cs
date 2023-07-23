@@ -54,14 +54,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
 
-        public ValueTask<Intern> RemoveInternByIdAsync(Guid internId) =>
-            TryCatch(async () =>
+        public async ValueTask<Intern> RemoveInternByIdAsync(Guid internId)
+            
             {
 
                 Intern maybeIntern = await this.storageBroker
                     .SelectInternByIdAsync(internId);
 
                 return await this.storageBroker.DeleteInternAsync(maybeIntern);
-            });
+            }
     }
 }
