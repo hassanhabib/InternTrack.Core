@@ -19,11 +19,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldModifyInternAsync()
         {
             // given
-            DateTimeOffset randomDate = GetRandomDateTime();
+            DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern someIntern = CreateRandomIntern();
             Intern inputIntern = someIntern;
             Intern storageIntern = inputIntern.DeepClone();
-            inputIntern.UpdatedDate = randomDate.AddMinutes(1);
+            inputIntern.UpdatedDate = randomDateTime.AddMinutes(1);
             Intern updatedIntern = inputIntern;
             Intern expectedIntern = updatedIntern.DeepClone();
 
@@ -31,7 +31,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomDate);
+                    .Returns(randomDateTime);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))
