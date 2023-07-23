@@ -251,5 +251,57 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
+        {
+            int randomNegativeMinutes = GetRandomNegativeNumber();
+            DateTimeOffset randomDateTimeOffset = GetRandomDateTimeOffset();
+            Intern nonExistentIntern = CreateRandomIntern(randomDateTimeOffset);
+            nonExistentIntern.CreatedDate = randomDateTimeOffset.AddMinutes(randomNegativeMinutes);
+            Intern noIntern = null;
+
+            var notFoundInternException = new InternNotFoundException(nonExistentIntern.Id);
+
+            var expectedInternValidationException =
+                new InternValidationException(notFoundInternException);
+                        
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(nonExistentIntern.Id))
+                    .ReturnsAsync(noIntern);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomDateTimeOffset);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(nonExistentIntern);
+
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    modifyInternTask.AsTask);
+
+            // then
+            actualInternValidationException.Should().BeEquivalentTo(
+                expectedInternValidationException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(nonExistentIntern.Id),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

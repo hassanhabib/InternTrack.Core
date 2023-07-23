@@ -80,6 +80,19 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 Parameter: nameof(Intern.UpdatedDate)));
         }
 
+        private static void ValidateStorageInternExists(Intern storageIntern, Guid internId)
+        {
+            if (storageIntern is null)
+            {
+                throw new InternNotFoundException(internId);
+            }
+        }
+
+        public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
+        {
+            ValidateStorageInternExists(storageIntern, inputIntern.Id);
+        }
+
         private static void ValidateInternIsNotNull(Intern intern)
         {
             if (intern is null)
