@@ -15,7 +15,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDate = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(randomDate);
+            Intern randomIntern = CreateRandomIntern();
             Intern inputIntern = randomIntern;
             Intern StorageIntern = inputIntern.DeepClone();
             inputIntern.UpdatedDate = randomDate.AddMinutes(1);
@@ -42,13 +42,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(),
-                    Times.Once);
-
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(internId),
                     Times.Once);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Never);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.UpdateInternAsync(inputIntern),
