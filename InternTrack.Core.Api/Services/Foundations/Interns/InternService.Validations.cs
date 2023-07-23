@@ -10,7 +10,7 @@ using InternTrack.Core.Api.Models.Interns.Exceptions;
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
-    { 
+    {
         private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
         {
             if (maybeIntern is null)
@@ -18,7 +18,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 throw new NotFoundInternException(internId);
             }
         }
-        
+
         private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);

@@ -269,7 +269,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(notFoundInternException);
-                        
+
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(nonExistentIntern.Id))
                     .ReturnsAsync(noIntern);
