@@ -91,6 +91,26 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
         {
             ValidateStorageInternExists(storageIntern, inputIntern.Id);
+
+            Validate(
+                (Rule: IsNotSame(
+                        firstDate: inputIntern.CreatedDate,
+                        secondDate: storageIntern.CreatedDate,
+                        secondDateName: nameof(Intern.CreatedDate)),
+                Parameter: nameof(Intern.CreatedDate)),
+
+                (Rule: IsSame(
+                        firstDate: inputIntern.UpdatedDate,
+                        secondDate: storageIntern.UpdatedDate,
+                        secondDateName: nameof(Intern.UpdatedDate)),
+                Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsNotSame(
+                        firstId: inputIntern.CreatedBy,
+                        secondId: storageIntern.CreatedBy,
+                        secondIdName: nameof(Intern.CreatedBy)),
+                Parameter: nameof(Intern.CreatedBy))
+            );
         }
 
         private static void ValidateInternIsNotNull(Intern intern)
