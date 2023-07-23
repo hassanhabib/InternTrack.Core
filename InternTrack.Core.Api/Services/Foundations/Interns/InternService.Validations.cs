@@ -70,6 +70,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsInvalid(intern.JoinDate), Parameter: nameof(Intern.JoinDate)),
                 (Rule: IsInvalid(intern.CreatedBy), Parameter: nameof(Intern.CreatedBy)),
                 (Rule: IsInvalid(intern.UpdatedBy), Parameter: nameof(Intern.UpdatedBy)),
+                (Rule: IsNotRecent(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
 
                 (Rule: IsSame(
                         firstDate: intern.UpdatedDate,
