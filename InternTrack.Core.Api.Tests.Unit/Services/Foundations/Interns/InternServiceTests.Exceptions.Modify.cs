@@ -21,8 +21,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowCriticalDependencyExceptionOnModifyIfSqlErrorOccursAndLogItAsync()
         {
             // given
-            DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);
+            Intern randomIntern = CreateRandomIntern();
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
@@ -69,11 +68,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowDependencyExceptionOnModifyIfDatabaseUpdateExceptionOccursAndLogItAsync()
         {
             // given
-            DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);
-            randomIntern.CreatedDate = datetime;
-            randomIntern.UpdatedDate = randomIntern.CreatedDate.AddMinutes(GetRandomNumber());
-
+            Intern randomIntern = CreateRandomIntern();
             var databaseUpdateException = new DbUpdateException();
 
             var failedInternStorageException =
@@ -121,10 +116,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(datetime);
-            randomIntern.CreatedDate = datetime;
-            randomIntern.UpdatedDate = randomIntern.CreatedDate.AddMinutes(GetRandomNumber());
-
+            Intern randomIntern = CreateRandomIntern();
             var databaseUpdateConcurrencyException = new DbUpdateConcurrencyException();
 
             var lockedInternException =
@@ -156,6 +148,53 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternDependencyException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(randomIntern.Id),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnModifyIfServiceExceptionOccursAndLogItAsync()
+        {
+            // given
+            Intern randomIntern = CreateRandomIntern();
+            var serviceException = new Exception();
+
+            var failedInternServiceException =
+                new FailedInternServiceException(serviceException);
+
+            var expectedInternServiceException =
+                new InternServiceException(failedInternServiceException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Throws(serviceException);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(randomIntern);
+
+            InternServiceException actualInternDependencyException =
+                await Assert.ThrowsAsync<InternServiceException>(
+                    modifyInternTask.AsTask);
+
+            // then
+            actualInternDependencyException.Should().BeEquivalentTo(
+                expectedInternServiceException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternServiceException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
