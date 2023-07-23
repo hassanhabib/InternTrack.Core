@@ -17,14 +17,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
-        private delegate ValueTask<Intern> ReturningInternFuction();
+        private delegate ValueTask<Intern> ReturningInternFunction();
         private delegate IQueryable<Intern> ReturningInternsFunction();
 
-        private async ValueTask<Intern> TryCatch(ReturningInternFuction returningInternFuction)
+        private async ValueTask<Intern> TryCatch(ReturningInternFunction returningInternFunction)
         {
             try
             {
-                return await returningInternFuction();
+                return await returningInternFunction();
             }
             catch (NullInternException nullInternException)
             {
@@ -41,9 +41,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
             }
-            catch (NotFoundInternException NotfoundInternException)
+            catch (NotFoundInternException NotFoundInternException)
             {
-                throw CreateAndLogValidationException(NotfoundInternException);
+                throw CreateAndLogValidationException(NotFoundInternException);
             }
             catch (DuplicateKeyException duplicateKeyException)
             {
@@ -104,12 +104,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         private InternDependencyException CreateAndLogCriticalDependencyException(
             Xeption exception)
         {
-            var internDepencyException =
+            var internDependencyException =
                 new InternDependencyException(exception);
 
-            this.loggingBroker.LogCritical(internDepencyException);
+            this.loggingBroker.LogCritical(internDependencyException);
 
-            return internDepencyException;
+            return internDependencyException;
         }
 
         private InternDependencyValidationException CreateAndLogDependencyValidationException(
