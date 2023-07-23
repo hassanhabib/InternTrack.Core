@@ -34,7 +34,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 throw CreateAndLogValidationException(invalidInternException);
             }
-            catch (InternNotFoundException nullInternException)
+            catch (NotFoundInternException nullInternException)
             {
                 throw CreateAndLogValidationException(nullInternException);
             }

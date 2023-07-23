@@ -10,15 +10,7 @@ using InternTrack.Core.Api.Models.Interns.Exceptions;
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
-    {
-        private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
-        {
-            if (maybeIntern is null)
-            {
-                throw new NotFoundInternException(internId);
-            }
-        }
-
+    {        
         private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);
@@ -80,17 +72,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 Parameter: nameof(Intern.UpdatedDate)));
         }
 
-        private static void ValidateStorageInternExists(Intern storageIntern, Guid internId)
-        {
-            if (storageIntern is null)
-            {
-                throw new InternNotFoundException(internId);
-            }
-        }
-
         public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
         {
-            ValidateStorageInternExists(storageIntern, inputIntern.Id);
+            ValidateStorageIntern(storageIntern, inputIntern.Id);
 
             Validate(
                 (Rule: IsNotSame(
@@ -113,6 +97,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             );
         }
 
+        private static void ValidateStorageIntern(Intern maybeIntern, Guid internId)
+        {
+            if (maybeIntern is null)
+            {
+                throw new NotFoundInternException(internId);
+            }
+        }
+
         private static void ValidateInternIsNotNull(Intern intern)
         {
             if (intern is null)
@@ -121,7 +113,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
-        private void ValidateInternId(Guid internId) =>
+        private static void ValidateInternId(Guid internId) =>
             Validate((Rule: IsInvalid(internId), Parameter: nameof(Intern.Id)));
 
         private static dynamic IsInvalid(Guid id) => new

@@ -265,7 +265,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern nonExistentIntern = CreateRandomIntern();
             nonExistentIntern.UpdatedDate = randomDateTimeOffset;
             Intern noIntern = null;
-            var notFoundInternException = new InternNotFoundException(nonExistentIntern.Id);
+            var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
 
             var expectedInternValidationException =
                 new InternValidationException(notFoundInternException);
