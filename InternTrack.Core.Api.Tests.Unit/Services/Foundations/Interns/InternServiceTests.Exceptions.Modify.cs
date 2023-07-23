@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE TO CONNECT THE WORLD
+// ---------------------------------------------------------------
+
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
@@ -83,6 +85,57 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Throws(databaseUpdateException);
+
+            // when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(randomIntern);
+
+            InternDependencyException actualInternDependencyException =
+                await Assert.ThrowsAsync<InternDependencyException>(
+                    modifyInternTask.AsTask);
+
+            // then
+            actualInternDependencyException.Should().BeEquivalentTo(
+                expectedInternDependencyException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternDependencyException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(randomIntern.Id),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnModifyIfDbUpdateConcurrencyExceptionOccursAndLogItAsync()
+        {
+            // given
+            DateTimeOffset datetime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomIntern(datetime);
+            randomIntern.CreatedDate = datetime;
+            randomIntern.UpdatedDate = randomIntern.CreatedDate.AddMinutes(GetRandomNumber());
+
+            var databaseUpdateConcurrencyException = new DbUpdateConcurrencyException();
+
+            var lockedInternException =
+                new LockedInternException(databaseUpdateConcurrencyException);
+
+            var expectedInternDependencyException =
+                new InternDependencyException(lockedInternException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Throws(databaseUpdateConcurrencyException);
 
             // when
             ValueTask<Intern> modifyInternTask =
