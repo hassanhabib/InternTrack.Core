@@ -52,5 +52,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
         public IQueryable<Intern> RetrieveAllInternsAsync() =>
             TryCatch(() => this.storageBroker.SelectAllInternsAsync());
+
+        public ValueTask<Intern> ModifyInternAsync(Intern intern)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
