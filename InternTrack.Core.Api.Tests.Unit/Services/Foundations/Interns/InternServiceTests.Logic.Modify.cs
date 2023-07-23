@@ -20,9 +20,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDate = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern();
-            Intern inputIntern = randomIntern;
-            Intern StorageIntern = inputIntern.DeepClone();
+            Intern someIntern = CreateRandomIntern();
+            Intern inputIntern = someIntern;
+            Intern storageIntern = inputIntern.DeepClone();
             inputIntern.UpdatedDate = randomDate.AddMinutes(1);
             Intern updatedIntern = inputIntern;
             Intern expectedIntern = updatedIntern.DeepClone();
@@ -35,7 +35,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))
-                    .ReturnsAsync(StorageIntern);
+                    .ReturnsAsync(storageIntern);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.UpdateInternAsync(inputIntern))
