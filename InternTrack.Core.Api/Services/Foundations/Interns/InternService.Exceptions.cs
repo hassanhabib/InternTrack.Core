@@ -56,6 +56,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
             }
+            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
+            {
+                var lockedInternException = new LockedInternException(dbUpdateConcurrencyException);
+
+                throw CreateAndLogDependencyException(lockedInternException);
+            }
             catch (DbUpdateException databaseUpdateException)
             {
                 var failedStorageInternException =
