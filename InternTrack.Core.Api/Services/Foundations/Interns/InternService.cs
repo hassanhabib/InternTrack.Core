@@ -56,8 +56,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public ValueTask<Intern> ModifyInternAsync(Intern intern) =>
         TryCatch(async () =>
         {
-/*            Intern maybeIntern =
-                await this.storageBroker.SelectInternByIdAsync(intern.Id);*/
+            ValidateInternOnModify(intern);
+
+            Intern maybeIntern =
+                await this.storageBroker.SelectInternByIdAsync(intern.Id);
 
             return
                 await this.storageBroker.UpdateInternAsync(intern);
