@@ -56,7 +56,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnModifyWhenInternIsInvalidAndLogItAsync(string invalidText)
+        public async Task ShouldThrowValidationExceptionOnModifyWhenInternIsInvalidAndLogItAsync(
+            string invalidText)
         {
             // given
             var invalidIntern = new Intern
@@ -305,7 +306,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInformationNotSameAsInputInternAuditInformationAndLogItAsync()
+        public async Task 
+            ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInfoNotSameAsInputInternAuditInfoAndLogItAsync()
         {
             // given
             int randomNumber = GetRandomNumber();
