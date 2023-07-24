@@ -38,12 +38,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ThrowsAsync(sqlException);
 
             //when
-            ValueTask<Intern> deleteInternTask =
+            ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
             //then
             await Assert.ThrowsAsync<InternDependencyException>(() =>
-                deleteInternTask.AsTask());
+                removeInternTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -77,12 +77,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ThrowsAsync(databaseUpdateException);
 
             // when 
-            ValueTask<Intern> deleteInternTask =
+            ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
             //then
             await Assert.ThrowsAsync<InternDependencyException>(() =>
-                deleteInternTask.AsTask());
+                removeInternTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -118,12 +118,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ThrowsAsync(databaseUpdateConcurrencyException);
 
             // when
-            ValueTask<Intern> deleteInternTask =
+            ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
             // then
             await Assert.ThrowsAsync<InternDependencyException>(() =>
-                deleteInternTask.AsTask());
+                removeInternTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -157,12 +157,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ThrowsAsync(serviceException);
 
             // when
-            ValueTask<Intern> deleteInternTask =
+            ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
             // then
             await Assert.ThrowsAsync<InternServiceException>(() => 
-                deleteInternTask.AsTask());
+                removeInternTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),

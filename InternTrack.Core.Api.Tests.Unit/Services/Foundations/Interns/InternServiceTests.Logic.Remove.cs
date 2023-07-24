@@ -28,8 +28,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern randomIntern = CreateRandomIntern();
             Intern storageIntern = randomIntern;
             Intern expectedInputIntern = storageIntern;
-            Intern deletedIntern = expectedInputIntern;
-            Intern expectedIntern = deletedIntern.DeepClone();
+            Intern removedIntern = expectedInputIntern;
+            Intern expectedIntern = removedIntern.DeepClone();
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(inputInternId))
@@ -37,8 +37,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Setup(broker =>
                 broker.DeleteInternAsync(expectedInputIntern))
-                    .ReturnsAsync(deletedIntern);
-
+                    .ReturnsAsync(removedIntern);
+            
             // when
             Intern actualIntern =
                 await this.internService.RemoveInternByIdAsync(inputInternId);
@@ -49,7 +49,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(inputInternId),
                     Times.Once());
-
+            
             this.storageBrokerMock.Verify(broker =>
                 broker.DeleteInternAsync(storageIntern),
                     Times.Once());
