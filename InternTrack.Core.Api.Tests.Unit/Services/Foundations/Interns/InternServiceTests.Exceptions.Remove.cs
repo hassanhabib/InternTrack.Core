@@ -161,7 +161,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 this.internService.RemoveInternByIdAsync(someInternId);
 
             // then
-            await Assert.ThrowsAsync<InternDependencyException>(() => 
+            await Assert.ThrowsAsync<InternServiceException>(() => 
                 deleteInternTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>

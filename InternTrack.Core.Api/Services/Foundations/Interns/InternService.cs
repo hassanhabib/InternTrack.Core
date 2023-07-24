@@ -57,9 +57,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         public ValueTask<Intern> RemoveInternByIdAsync(Guid internId) =>
             TryCatch(async () =>
             {
-
-                Intern maybeIntern = await this.storageBroker
-                    .SelectInternByIdAsync(internId);
+  
+                Intern maybeIntern = 
+                    await this.storageBroker.SelectInternByIdAsync(internId);
 
                 return await this.storageBroker.DeleteInternAsync(maybeIntern);
             });
