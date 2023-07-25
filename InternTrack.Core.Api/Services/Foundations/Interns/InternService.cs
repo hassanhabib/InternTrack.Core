@@ -62,6 +62,8 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 Intern maybeIntern = 
                     await this.storageBroker.SelectInternByIdAsync(internId);
 
+                ValidateStorageIntern(maybeIntern, internId);
+
                 return await this.storageBroker.DeleteInternAsync(maybeIntern);
             });
     }
