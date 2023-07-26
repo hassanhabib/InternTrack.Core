@@ -4,15 +4,10 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
-using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using Xunit;
 
