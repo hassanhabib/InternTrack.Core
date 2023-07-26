@@ -23,7 +23,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern randomIntern = CreateRandomIntern();
             Intern inputIntern = randomIntern;
             Intern storageIntern = inputIntern.DeepClone();
-            inputIntern.UpdatedDate = randomDateTime.AddMinutes(1);
+            inputIntern.UpdatedDate = randomDateTime;
             Intern updatedIntern = inputIntern;
             Intern expectedIntern = updatedIntern.DeepClone();
 
