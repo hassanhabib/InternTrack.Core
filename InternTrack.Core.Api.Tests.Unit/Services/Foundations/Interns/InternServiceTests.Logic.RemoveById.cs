@@ -54,9 +54,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.DeleteInternAsync(storageIntern),
                     Times.Once);
 
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
