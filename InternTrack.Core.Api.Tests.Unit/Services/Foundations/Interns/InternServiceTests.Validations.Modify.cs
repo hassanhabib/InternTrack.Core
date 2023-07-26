@@ -93,7 +93,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
-                values: new String[] { "Date is required", $"Date is the same as {nameof(Intern.CreatedDate)}" });
+                values: new String[] { "Date is required", 
+                    $"Date is the same as {nameof(Intern.CreatedDate)}"});
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
@@ -148,10 +149,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowValidationExceptionOnModifyIfCreatedAndUpdatedDatesAreSameAndLogItAsync()
         {
             // given
-            Intern randomIntern = CreateRandomIntern();
-            DateTimeOffset sameDate = randomIntern.CreatedDate;
+            DateTimeOffset randomDate = GetRandomDateTime();
+            Intern randomIntern = CreateRandomIntern(randomDate);
             Intern invalidIntern = randomIntern;
-            invalidIntern.UpdatedDate = sameDate;
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
@@ -163,7 +163,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(sameDate);
+                    .Returns(randomDate);
 
             // when
             ValueTask<Intern> modifyInternTask =
