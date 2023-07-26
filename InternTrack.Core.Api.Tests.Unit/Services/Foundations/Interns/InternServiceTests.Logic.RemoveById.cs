@@ -48,11 +48,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(inputInternId),
-                    Times.Once());
+                    Times.Once);
             
             this.storageBrokerMock.Verify(broker =>
                 broker.DeleteInternAsync(storageIntern),
-                    Times.Once());
+                    Times.Once);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();

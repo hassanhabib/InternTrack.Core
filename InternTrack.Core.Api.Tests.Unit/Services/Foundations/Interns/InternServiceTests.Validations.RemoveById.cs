@@ -48,10 +48,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-                    expectedInternValidationException))), Times.Once);
+                    expectedInternValidationException))),
+                        Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.DeleteInternAsync(It.IsAny<Intern>()), Times.Never);
+                broker.DeleteInternAsync(It.IsAny<Intern>()),
+                    Times.Never);
             
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
@@ -90,16 +92,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
-                        Times.Once());
+                        Times.Once);
                     
             this.storageBrokerMock.Verify(broker =>
                 broker.DeleteInternAsync(It.IsAny<Intern>()),
-                    Times.Never());
+                    Times.Never);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
