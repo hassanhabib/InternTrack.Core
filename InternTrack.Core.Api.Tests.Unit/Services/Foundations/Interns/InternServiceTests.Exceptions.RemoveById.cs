@@ -47,12 +47,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
                     expectedInterndependencyException))),
-                        Times.Once());
+                        Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -86,12 +86,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-                    expectedInternDependencyException))),
-                        Times.Once());
+                    expectedInternDependencyValidationException))),
+                        Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -127,7 +127,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs
@@ -166,7 +166,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
-                    Times.Once());
+                    Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
