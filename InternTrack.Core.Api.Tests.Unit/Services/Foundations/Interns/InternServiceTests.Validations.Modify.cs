@@ -17,7 +17,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyWhenInternIsNullAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnModifyIfInternIsNullAndLogItAsync()
         {
             // given
             Intern nullIntern = null;
@@ -56,7 +56,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnModifyWhenInternIsInvalidAndLogItAsync(
+        public async Task ShouldThrowValidationExceptionOnModifyIfInternIsInvalidAndLogItAsync(
             string invalidText)
         {
             // given
@@ -287,6 +287,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             actualInternValidationException.Should().BeEquivalentTo(
                 expectedInternValidationException);
 
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(nonExistentIntern.Id),
+                    Times.Once);
+
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once);
@@ -295,11 +299,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
                         Times.Once);
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(nonExistentIntern.Id),
-                    Times.Once);
-
+            
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
@@ -352,8 +352,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 this.internService.ModifyInternAsync(invalidIntern);
 
             InternValidationException actualInternValidationException =
-            await Assert.ThrowsAsync<InternValidationException>(() =>
-                modifyInternTask.AsTask());
+                await Assert.ThrowsAsync<InternValidationException>(() =>
+                    modifyInternTask.AsTask());
 
             // then
             actualInternValidationException.Should().BeEquivalentTo(
@@ -371,10 +371,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(invalidIntern.Id),
                     Times.Once);
-
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+                        
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

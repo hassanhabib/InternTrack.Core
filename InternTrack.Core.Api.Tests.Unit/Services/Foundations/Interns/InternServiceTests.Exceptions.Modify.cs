@@ -68,7 +68,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowDependencyExceptionOnModifyIfDbUpdateConcurrencyExceptionOccursAndLogItAsync()
         {
             // given
-            DateTimeOffset datetime = GetRandomDateTime();
             Intern someIntern = CreateRandomIntern();
             var databaseUpdateConcurrencyException = new DbUpdateConcurrencyException();
 
