@@ -93,7 +93,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
-                values: new String[] { "Date is required", "Date is the same as CreatedDate" });
+                values: new String[] { "Date is required", $"Date is the same as {nameof(Intern.CreatedDate)}" });
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
@@ -258,9 +258,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
         {
-            DateTimeOffset randomDateTimeOffset = GetRandomDateTimeOffset();
+            DateTimeOffset randomDate = GetRandomDateTimeOffset();
             Intern nonExistentIntern = CreateRandomIntern();
-            nonExistentIntern.UpdatedDate = randomDateTimeOffset;
+            nonExistentIntern.UpdatedDate = randomDate;
             Intern noIntern = null;
             var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
 
@@ -273,7 +273,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomDateTimeOffset);
+                    .Returns(randomDate);
                                                 
             // when
             ValueTask<Intern> modifyInternTask =

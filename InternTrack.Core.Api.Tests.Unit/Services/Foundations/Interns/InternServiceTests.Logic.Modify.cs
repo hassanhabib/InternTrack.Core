@@ -22,10 +22,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern();
             Intern inputIntern = randomIntern;
-            Intern storageIntern = inputIntern.DeepClone();            
+            Intern storageIntern = inputIntern.DeepClone();
+            inputIntern.UpdatedDate = randomDateTime;
             Intern updatedIntern = inputIntern;
             Intern expectedIntern = updatedIntern.DeepClone();
-            inputIntern.UpdatedDate = randomDateTime;
             Guid internId = inputIntern.Id;
 
             this.dateTimeBrokerMock.Setup(broker =>
