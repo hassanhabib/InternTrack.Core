@@ -34,7 +34,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
                     .ThrowsAsync(sqlException);
 
-            //when
+            // when
             ValueTask<Intern> removeInternAsync =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
@@ -42,7 +42,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 await Assert.ThrowsAsync<InternDependencyException>(
                     removeInternAsync.AsTask);
 
-            //then
+            // then
             actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInterndependencyException);
 
@@ -174,7 +174,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 await Assert.ThrowsAsync<InternDependencyException>(
                     removeInternTask.AsTask);
 
-            //then
+            // then
             actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInternDependencyValidationException);
 
