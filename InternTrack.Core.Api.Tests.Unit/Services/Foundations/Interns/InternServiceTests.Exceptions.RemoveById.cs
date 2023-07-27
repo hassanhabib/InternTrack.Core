@@ -17,7 +17,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 {
     public partial class InternServiceTests
     {
-
         [Fact]
         public async Task ShouldThrowDependencyExceptionOnRemoveByIdIfSqlExceptionOccursAndLogItAsync()
         {
@@ -42,7 +41,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
                     removeInternAsync.AsTask);
-
 
             //then
             actualInternDependencyException.Should().BeEquivalentTo(
