@@ -258,9 +258,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
         {
+            int randomNumber = GetRandomNumber();
             DateTimeOffset randomDate = GetRandomDateTimeOffset();
-            Intern nonExistentIntern = CreateRandomIntern();
-            nonExistentIntern.UpdatedDate = randomDate;
+            Intern nonExistentIntern = CreateRandomIntern(randomDate);
+            nonExistentIntern.CreatedDate = randomDate.AddDays(randomNumber);
             Intern noIntern = null;
             var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
 
