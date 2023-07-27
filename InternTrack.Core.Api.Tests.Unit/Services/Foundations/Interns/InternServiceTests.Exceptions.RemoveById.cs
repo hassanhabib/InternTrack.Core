@@ -84,9 +84,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
+            InternDependencyException actualInternDepedencyException =
+                await Assert.ThrowsAsync<InternDependencyException>(
+                    removeInternTask.AsTask);
+
             // then
-            await Assert.ThrowsAsync<InternDependencyException>(() =>
-                removeInternTask.AsTask());
+            actualInternDepedencyException.Should().BeEquivalentTo(
+                expectedInternDependencyException );
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -123,9 +127,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
+            InternServiceException actualInternServiceException =
+                await Assert.ThrowsAsync<InternServiceException>(
+                    removeInternTask.AsTask);
+
             // then
-            await Assert.ThrowsAsync<InternServiceException>(() =>
-                removeInternTask.AsTask());
+            actualInternServiceException.Should().BeEquivalentTo(
+                expectedInternServiceException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
