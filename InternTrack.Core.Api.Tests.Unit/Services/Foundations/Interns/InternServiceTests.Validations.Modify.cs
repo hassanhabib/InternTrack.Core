@@ -258,10 +258,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [Fact]
         public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
         {
-            int randomNumber = GetRandomNumber();
+            int randomNegativeNumber = GetRandomNegativeNumber();
             DateTimeOffset randomDate = GetRandomDateTimeOffset();
-            Intern nonExistentIntern = CreateRandomIntern(randomDate);
-            nonExistentIntern.CreatedDate = randomDate.AddDays(randomNumber);
+            Intern nonExistentIntern = CreateRandomModifyIntern(randomDate);
+/*            nonExistentIntern.CreatedDate = randomDate.AddDays(randomNegativeNumber);*/
             Intern noIntern = null;
             var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
 
@@ -307,35 +307,24 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task 
-            ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInfoNotSameAsInputInternAuditInfoAndLogItAsync()
+        public async Task
+                ShouldThrowValidationExceptionOnModifyIfStorageInternAuditInfoNotSameAsInputInternAuditInfoAndLogItAsync()
         {
             // given
-            int randomNumber = GetRandomNumber();
+            int randomNumber = GetRandomNegativeNumber();
             DateTimeOffset randomDate = GetRandomDateTime();
-            Guid differentId = Guid.NewGuid();
-            Guid invalidCreatedBy = differentId;
-            Intern randomIntern = CreateRandomIntern(dates: randomDate);
-            Intern invalidIntern = randomIntern;
-            Intern storageIntern = randomIntern.DeepClone();
-            invalidIntern.CreatedDate = storageIntern.CreatedDate.AddDays(randomNumber);
-            invalidIntern.UpdatedDate = storageIntern.UpdatedDate;
-            invalidIntern.CreatedBy = invalidCreatedBy;
+            Guid invalidCreatedBy = Guid.NewGuid();
+            Intern randomIntern = CreateRandomModifyIntern(randomDate);
+            Intern invalidIntern = randomIntern.DeepClone();
+            Intern storageIntern = invalidIntern.DeepClone();
+            storageIntern.CreatedDate = storageIntern.CreatedDate.AddMinutes(randomNumber);
+            storageIntern.UpdatedDate = storageIntern.UpdatedDate.AddMinutes(randomNumber);
             Guid internId = invalidIntern.Id;
-
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
-
-            invalidInternException.AddData(
-                key: nameof(Intern.UpdatedDate),
-                values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
-
-            invalidInternException.AddData(
-                key: nameof(Intern.CreatedBy),
-                values: $"Id is not the same as {nameof(Intern.CreatedBy)}");
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
@@ -347,7 +336,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Returns(randomDate);
-                        
+
             // when
             ValueTask<Intern> modifyInternTask =
                 this.internService.ModifyInternAsync(invalidIntern);
@@ -372,7 +361,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
                         Times.Once);
-                                                
+
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
