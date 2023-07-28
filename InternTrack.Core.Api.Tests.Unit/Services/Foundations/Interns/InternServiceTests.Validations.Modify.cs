@@ -261,7 +261,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             int randomNegativeNumber = GetRandomNegativeNumber();
             DateTimeOffset randomDate = GetRandomDateTimeOffset();
             Intern nonExistentIntern = CreateRandomModifyIntern(randomDate);
-/*            nonExistentIntern.CreatedDate = randomDate.AddDays(randomNegativeNumber);*/
             Intern noIntern = null;
             var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
 
@@ -313,7 +312,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             int randomNumber = GetRandomNegativeNumber();
             DateTimeOffset randomDate = GetRandomDateTime();
-            Guid invalidCreatedBy = Guid.NewGuid();
             Intern randomIntern = CreateRandomModifyIntern(randomDate);
             Intern invalidIntern = randomIntern.DeepClone();
             Intern storageIntern = invalidIntern.DeepClone();
