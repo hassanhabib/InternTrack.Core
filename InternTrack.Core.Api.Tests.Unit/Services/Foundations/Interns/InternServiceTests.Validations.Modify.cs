@@ -311,18 +311,28 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             int randomNumber = GetRandomNegativeNumber();
+            Guid invalidCreatedByGuid = Guid.NewGuid();
             DateTimeOffset randomDate = GetRandomDateTime();
             Intern randomIntern = CreateRandomModifyIntern(randomDate);
             Intern invalidIntern = randomIntern.DeepClone();
             Intern storageIntern = invalidIntern.DeepClone();
-            storageIntern.CreatedDate = storageIntern.CreatedDate.AddMinutes(randomNumber);
-            storageIntern.UpdatedDate = storageIntern.UpdatedDate.AddMinutes(randomNumber);
+            invalidIntern.CreatedDate = storageIntern.CreatedDate.AddMinutes(randomNumber);
+            invalidIntern.UpdatedDate = storageIntern.UpdatedDate;
+            invalidIntern.CreatedBy = invalidCreatedByGuid;
             Guid internId = invalidIntern.Id;
             var invalidInternException = new InvalidInternException();
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedDate),
+                values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
+
+            invalidInternException.AddData(
+                key: nameof(Intern.CreatedBy),
+                values: $"Id is not the same as {nameof(Intern.CreatedBy)}");
 
             var expectedInternValidationException =
                 new InternValidationException(invalidInternException);
