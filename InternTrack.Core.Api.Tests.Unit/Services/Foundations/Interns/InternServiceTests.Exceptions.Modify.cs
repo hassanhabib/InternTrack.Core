@@ -160,8 +160,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
-        }               
-
+        }
+                
         [Fact]
         public async Task ShouldThrowServiceExceptionOnModifyIfServiceExceptionOccursAndLogItAsync()
         {
