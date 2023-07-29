@@ -366,6 +366,61 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.VerifyNoOtherCalls();           
         }
 
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnModifyIfStorageUpdatedDateSameAsUpdatedDateAndLogItAsync()
+        {
+            //given
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomModifyIntern(randomDateTime);
+            Intern invalidIntern = randomIntern;
+            Intern storageIntern = invalidIntern.DeepClone();
+            invalidIntern.UpdatedDate = storageIntern.UpdatedDate;
+            Guid internId = invalidIntern.Id;
+            var invalidInternException = new InvalidInternException();
+
+            invalidInternException.AddData(
+                key: nameof(Intern.UpdatedDate),
+                values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
+
+            var expectedInternValidationException =
+                new InternValidationException(invalidInternException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectInternByIdAsync(internId))
+                    .ReturnsAsync(storageIntern);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset())
+                    .Returns(randomDateTime);
+
+            //when
+            ValueTask<Intern> modifyInternTask =
+                this.internService.ModifyInternAsync(invalidIntern);
+
+            InternValidationException actualInternValidationException =
+                await Assert.ThrowsAsync<InternValidationException>(
+                    modifyInternTask.AsTask);
+
+            //then
+            actualInternValidationException.Should().BeEquivalentTo(expectedInternValidationException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionsAs(
+                    expectedInternValidationException))),
+                        Times.Once);
+            
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(internId),
+                    Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
 
         [Fact]
         public async Task
