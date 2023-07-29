@@ -3,6 +3,7 @@
 // FREE TO USE FOR THE WORLD
 // -------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
@@ -68,6 +69,35 @@ namespace InternTrack.Core.Api.Controllers
             catch (InternServiceException internServiceException)
             {
                 return Problem(internServiceException.Message);
+            }
+        }
+
+        [HttpGet("{internId}")]
+        public async ValueTask<ActionResult<Intern>> GetInternById(Guid internId) 
+        {
+            try
+            {
+                Intern storageIntern =
+                    await this.internService.RetrieveInternByIdAsync(internId);
+
+                return Ok(storageIntern);
+            }
+            catch(InternValidationException internValidationException)
+                when (internValidationException.InnerException is NotFoundInternException)
+            {
+                return NotFound(internValidationException.InnerException);
+            }
+            catch(InternValidationException internValidationException)
+            {
+                return BadRequest(internValidationException.InnerException);
+            }
+            catch(InternDependencyException internDependencyException)
+            {
+                return InternalServerError(internDependencyException);
+            }
+            catch(InternServiceException internServiceException)
+            {
+                return InternalServerError(internServiceException);
             }
         }
     }
