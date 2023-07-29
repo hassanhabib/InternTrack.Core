@@ -146,7 +146,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfCreatedAndUpdatedDatesAreSameAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnModifyIfUpdatedDateIsSameAsCreatedDateAndLogItAsync()
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTime();
@@ -202,7 +202,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomModifyIntern(dates: randomDateTime);
+            Intern randomIntern = CreateRandomIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
 
