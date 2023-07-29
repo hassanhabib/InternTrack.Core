@@ -149,8 +149,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         public async Task ShouldThrowValidationExceptionOnModifyIfCreatedAndUpdatedDatesAreSameAndLogItAsync()
         {
             // given
-            DateTimeOffset randomDate = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern(randomDate);
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
             var invalidInternException = new InvalidInternException();
 
@@ -163,7 +163,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomDate);
+                    .Returns(randomDateTime);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -202,10 +202,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTime();
-            Intern randomIntern = CreateRandomIntern();
+            Intern randomIntern = CreateRandomModifyIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
-            invalidIntern.UpdatedDate = invalidIntern.UpdatedDate.AddMinutes(minutesBeforeOrAfter);
+
+            invalidIntern.UpdatedDate = 
+                invalidIntern.UpdatedDate
+                    .AddMinutes(minutesBeforeOrAfter);
 
             var invalidInternException =
                 new InvalidInternException();
@@ -220,10 +223,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Returns(randomDateTime);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectInternByIdAsync(invalidIntern.Id))
-                    .ReturnsAsync(invalidIntern);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -256,20 +255,23 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesntExistAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesNotExistAndLogItAsync()
         {
-            int randomNegativeNumber = GetRandomNegativeNumber();
-            DateTimeOffset randomDate = GetRandomDateTimeOffset();
-            Intern nonExistentIntern = CreateRandomModifyIntern(randomDate);
+            DateTimeOffset randomDateTime = GetRandomDateTimeOffset();            
             Intern noIntern = null;
-            var notFoundInternException = new NotFoundInternException(nonExistentIntern.Id);
+
+            Intern nonExistentIntern = 
+                CreateRandomModifyIntern(dates: randomDateTime);
+
+            var notFoundInternException = 
+                new NotFoundInternException(nonExistentIntern.Id);
 
             var expectedInternValidationException =
                 new InternValidationException(notFoundInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomDate);
+                    .Returns(randomDateTime);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(nonExistentIntern.Id))
@@ -298,11 +300,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
-                        Times.Once);
-                        
-            this.loggingBrokerMock.VerifyNoOtherCalls();
+                        Times.Once);        
+            
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -312,8 +314,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             int randomNumber = GetRandomNegativeNumber();
             Guid invalidCreatedByGuid = Guid.NewGuid();
-            DateTimeOffset randomDate = GetRandomDateTime();
-            Intern randomIntern = CreateRandomModifyIntern(randomDate);
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Intern randomIntern = CreateRandomModifyIntern(randomDateTime);
             Intern invalidIntern = randomIntern.DeepClone();
             Intern storageIntern = invalidIntern.DeepClone();
             invalidIntern.CreatedDate = storageIntern.CreatedDate.AddMinutes(randomNumber);
@@ -343,7 +345,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
-                    .Returns(randomDate);
+                    .Returns(randomDateTime);
 
             // when
             ValueTask<Intern> modifyInternTask =

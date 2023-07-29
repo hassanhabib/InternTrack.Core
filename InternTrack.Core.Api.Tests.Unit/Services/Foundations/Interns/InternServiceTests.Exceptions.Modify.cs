@@ -60,8 +60,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     Times.Never);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();            
         }
 
         [Fact]
