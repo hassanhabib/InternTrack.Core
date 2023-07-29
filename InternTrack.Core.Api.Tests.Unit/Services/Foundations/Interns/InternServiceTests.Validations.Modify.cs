@@ -204,7 +204,6 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
-            invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
 
             invalidIntern.UpdatedDate = 
                 invalidIntern.UpdatedDate

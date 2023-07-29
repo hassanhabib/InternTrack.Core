@@ -50,13 +50,17 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.GetCurrentDateTimeOffset(),
                     Times.Once);
 
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectInternByIdAsync(someIntern.Id),
+                    Times.Never);
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
                     expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectInternByIdAsync(someIntern.Id),
+                broker.UpdateInternAsync(someIntern),
                     Times.Never);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
