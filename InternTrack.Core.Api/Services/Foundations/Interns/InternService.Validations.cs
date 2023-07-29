@@ -74,8 +74,6 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
         public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
         {
-            ValidateStorageIntern(storageIntern, inputIntern.Id);
-
             Validate(
                 (Rule: IsNotSame(
                         firstDate: inputIntern.CreatedDate,
