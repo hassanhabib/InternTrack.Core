@@ -299,11 +299,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
-                        Times.Once);        
-            
-            this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+                        Times.Once);
+
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();            
         }
 
         [Fact]
@@ -361,9 +361,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     expectedInternValidationException))),
                         Times.Once);
 
+            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();           
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();                      
         }
 
         [Fact]
@@ -402,7 +402,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     modifyInternTask.AsTask);
 
             //then
-            actualInternValidationException.Should().BeEquivalentTo(expectedInternValidationException);
+            actualInternValidationException.Should()
+                .BeEquivalentTo(
+                    expectedInternValidationException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -417,9 +419,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.SelectInternByIdAsync(internId),
                     Times.Once);
 
-            this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();            
         }
     }
 }

@@ -41,7 +41,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                     .ReturnsAsync(updatedIntern);
 
             // when
-            Intern actualIntern = await this.internService.ModifyInternAsync(inputIntern);
+            Intern actualIntern = 
+                await this.internService.ModifyInternAsync(inputIntern);
 
             // then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
