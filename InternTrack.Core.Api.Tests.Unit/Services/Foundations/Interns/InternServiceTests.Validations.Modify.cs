@@ -300,10 +300,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
                         Times.Once);
-
-            this.loggingBrokerMock.VerifyNoOtherCalls();
+                        
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();            
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -360,10 +360,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 broker.LogError(It.Is(SameExceptionsAs(
                     expectedInternValidationException))),
                         Times.Once);
-
-            this.loggingBrokerMock.VerifyNoOtherCalls();
+                        
             this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();                      
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -418,10 +418,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(internId),
                     Times.Once);
-
-            this.loggingBrokerMock.VerifyNoOtherCalls();
+                        
             this.storageBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();            
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
