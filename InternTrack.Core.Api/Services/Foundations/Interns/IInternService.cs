@@ -15,6 +15,10 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         ValueTask<Intern> AddInternAsync(Intern intern);
         IQueryable<Intern> RetrieveAllInternsAsync();
         ValueTask<Intern> RetrieveInternByIdAsync(Guid internId);
+<<<<<<< HEAD
         ValueTask<Intern> ModifyInternAsync(Intern intern);
+=======
+        ValueTask<Intern> RemoveInternByIdAsync(Guid internId);
+>>>>>>> 358410566640ee894adb123da3beb059fb9c61b9
     }
 }
