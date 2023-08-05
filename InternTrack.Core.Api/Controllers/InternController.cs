@@ -100,5 +100,17 @@ namespace InternTrack.Core.Api.Controllers
                 return InternalServerError(internServiceException);
             }
         }
+
+        [HttpPut]
+        public async ValueTask<ActionResult<Intern>> PutInternAsync(Intern intern)
+        {
+            try
+            {
+                Intern modifiedIntern = 
+                    await this.internService.ModifyInternAsync(intern);
+
+                return Ok(modifiedIntern);
+            }
+        }
     }
 }
