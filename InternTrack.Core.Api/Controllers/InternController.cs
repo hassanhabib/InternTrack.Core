@@ -122,11 +122,11 @@ namespace InternTrack.Core.Api.Controllers
             }
             catch (InternDependencyException internDependencyException)
             {
-                return Problem(internDependencyException.Message);
+                return InternalServerError(internDependencyException.Message);
             }
             catch (InternServiceException internServiceException)
             {
-                return Problem(internServiceException.Message);
+                return InternalServerError(internServiceException.Message);
             }
         }
     }
