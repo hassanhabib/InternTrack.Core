@@ -111,6 +111,23 @@ namespace InternTrack.Core.Api.Controllers
 
                 return Ok(modifiedIntern);
             }
+            catch (InternValidationException internValidationException)
+                when (internValidationException.InnerException is NotFoundInternException)
+            {
+                return NotFound(internValidationException.InnerException);
+            }
+            catch (InternValidationException internValidationException)
+            {
+                return BadRequest(internValidationException.InnerException);
+            }
+            catch (InternDependencyException internDependencyException)
+            {
+                return Problem(internDependencyException.Message);
+            }
+            catch (InternServiceException internServiceException)
+            {
+                return Problem(internServiceException.Message);
+            }
         }
     }
 }
