@@ -73,7 +73,7 @@ namespace InternTrack.Core.Api.Controllers
         }
 
         [HttpGet("{internId}")]
-        public async ValueTask<ActionResult<Intern>> GetInternById(Guid internId) 
+        public async ValueTask<ActionResult<Intern>> GetInternByIdAsync(Guid internId) 
         {
             try
             {
