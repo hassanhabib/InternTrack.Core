@@ -10,15 +10,7 @@ using InternTrack.Core.Api.Models.Interns.Exceptions;
 namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
-    { 
-        private void ValidateStorageIntern(Intern maybeIntern, Guid internId)
-        {
-            if (maybeIntern is null)
-            {
-                throw new NotFoundInternException(internId);
-            }
-        }
-        
+    {        
         private void ValidateInternOnAdd(Intern intern)
         {
             ValidateInternIsNotNull(intern);
@@ -54,6 +46,63 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
                 (Rule: IsNotRecent(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)));
         }
 
+        private void ValidateInternOnModify(Intern intern)
+        {
+            ValidateInternIsNotNull(intern);
+
+            Validate(
+                (Rule: IsInvalid(intern.Id), Parameter: nameof(Intern.Id)),
+                (Rule: IsInvalid(intern.FirstName), Parameter: nameof(Intern.FirstName)),
+                (Rule: IsInvalid(intern.LastName), Parameter: nameof(Intern.LastName)),
+                (Rule: IsInvalid(intern.Email), Parameter: nameof(Intern.Email)),
+                (Rule: IsInvalid(intern.PhoneNumber), Parameter: nameof(Intern.PhoneNumber)),
+                (Rule: IsInvalid(intern.Status), Parameter: nameof(Intern.Status)),
+                (Rule: IsInvalid(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+                (Rule: IsInvalid(intern.CreatedDate), Parameter: nameof(Intern.CreatedDate)),
+                (Rule: IsInvalid(intern.JoinDate), Parameter: nameof(Intern.JoinDate)),
+                (Rule: IsInvalid(intern.CreatedBy), Parameter: nameof(Intern.CreatedBy)),
+                (Rule: IsInvalid(intern.UpdatedBy), Parameter: nameof(Intern.UpdatedBy)),
+                (Rule: IsNotRecent(intern.UpdatedDate), Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsSame(
+                        firstDate: intern.UpdatedDate,
+                        secondDate: intern.CreatedDate,
+                        secondDateName: nameof(Intern.CreatedDate)),
+
+                Parameter: nameof(Intern.UpdatedDate)));
+        }
+
+        public void ValidateAgainstStorageInternOnModify(Intern inputIntern, Intern storageIntern)
+        {
+            Validate(
+                (Rule: IsNotSame(
+                        firstDate: inputIntern.CreatedDate,
+                        secondDate: storageIntern.CreatedDate,
+                        secondDateName: nameof(Intern.CreatedDate)),
+                Parameter: nameof(Intern.CreatedDate)),
+
+                (Rule: IsSame(
+                        firstDate: inputIntern.UpdatedDate,
+                        secondDate: storageIntern.UpdatedDate,
+                        secondDateName: nameof(Intern.UpdatedDate)),
+                Parameter: nameof(Intern.UpdatedDate)),
+
+                (Rule: IsNotSame(
+                        firstId: inputIntern.CreatedBy,
+                        secondId: storageIntern.CreatedBy,
+                        secondIdName: nameof(Intern.CreatedBy)),
+                Parameter: nameof(Intern.CreatedBy))
+            );
+        }
+
+        private static void ValidateStorageIntern(Intern maybeIntern, Guid internId)
+        {
+            if (maybeIntern is null)
+            {
+                throw new NotFoundInternException(internId);
+            }
+        }
+
         private static void ValidateInternIsNotNull(Intern intern)
         {
             if (intern is null)
@@ -62,7 +111,7 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             }
         }
 
-        private void ValidateInternId(Guid internId) =>
+        private static void ValidateInternId(Guid internId) =>
             Validate((Rule: IsInvalid(internId), Parameter: nameof(Intern.Id)));
 
         private static dynamic IsInvalid(Guid id) => new
@@ -82,6 +131,15 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             Condition = String.IsNullOrWhiteSpace(text),
             Message = "Text is required"
         };
+
+        private static dynamic IsSame(
+            DateTimeOffset firstDate,
+            DateTimeOffset secondDate,
+            string secondDateName) => new
+            {
+                Condition = firstDate == secondDate,
+                Message = $"Date is the same as {secondDateName}"
+            };
 
         private static dynamic IsNotSame(
             DateTimeOffset firstDate,

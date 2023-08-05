@@ -89,6 +89,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
+        private static Intern CreateRandomModifyIntern(DateTimeOffset dates)
+        {
+            int randomDaysInPast = GetRandomNegativeNumber();
+            Intern randomIntern = CreateRandomIntern(dates);
+
+            randomIntern.CreatedDate = randomIntern.CreatedDate.AddDays(randomDaysInPast);
+
+            return randomIntern;
+        }
+
         private static Filler<Intern> CreateInternFiller(DateTimeOffset dates)
         {
             var filler = new Filler<Intern>();

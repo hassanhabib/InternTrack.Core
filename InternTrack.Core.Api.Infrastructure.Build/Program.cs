@@ -77,7 +77,7 @@ namespace InternTrack.Core.Api.Infrastructure.Build
             };
 
 
-            client.SerializeAndWriteToFile(adoPipeline: githubPipeline, 
+            client.SerializeAndWriteToFile(adoPipeline: githubPipeline,
                 path: "../../../../.github/workflows/dotnet.yml");
         }
     }

@@ -17,14 +17,14 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 {
     public partial class InternService
     {
-        private delegate ValueTask<Intern> ReturningInternFuction();
+        private delegate ValueTask<Intern> ReturningInternFunction();
         private delegate IQueryable<Intern> ReturningInternsFunction();
 
-        private async ValueTask<Intern> TryCatch(ReturningInternFuction returningInternFuction)
+        private async ValueTask<Intern> TryCatch(ReturningInternFunction returningInternFunction)
         {
             try
             {
-                return await returningInternFuction();
+                return await returningInternFunction();
             }
             catch (NullInternException nullInternException)
             {
@@ -34,16 +34,16 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
             {
                 throw CreateAndLogValidationException(invalidInternException);
             }
+            catch (NotFoundInternException nullInternException)
+            {
+                throw CreateAndLogValidationException(nullInternException);
+            }
             catch (SqlException sqlException)
             {
                 var failedInternStorageException =
                     new FailedInternStorageException(sqlException);
 
                 throw CreateAndLogCriticalDependencyException(failedInternStorageException);
-            }
-            catch (NotFoundInternException NotfoundInternException)
-            {
-                throw CreateAndLogValidationException(NotfoundInternException);
             }
             catch (DuplicateKeyException duplicateKeyException)
             {
@@ -52,9 +52,9 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsInternException);
             }
-            catch (DbUpdateConcurrencyException dbUpdateConcurrrencyException)
+            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
             {
-                var lockedInternException = new LockedInternException(dbUpdateConcurrrencyException);
+                var lockedInternException = new LockedInternException(dbUpdateConcurrencyException);
 
                 throw CreateAndLogDependencyException(lockedInternException);
             }
@@ -110,12 +110,12 @@ namespace InternTrack.Core.Api.Services.Foundations.Interns
         private InternDependencyException CreateAndLogCriticalDependencyException(
             Xeption exception)
         {
-            var internDepencyException =
+            var internDependencyException =
                 new InternDependencyException(exception);
 
-            this.loggingBroker.LogCritical(internDepencyException);
+            this.loggingBroker.LogCritical(internDependencyException);
 
-            return internDepencyException;
+            return internDependencyException;
         }
 
         private InternDependencyValidationException CreateAndLogDependencyValidationException(

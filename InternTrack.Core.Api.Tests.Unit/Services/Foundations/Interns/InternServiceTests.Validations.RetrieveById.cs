@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidatonExceptionOnRetrieveByIdIfIdIsInvalidAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfIdIsInvalidAndLogItAsync()
         {
             // given
             Guid invalidInternId = Guid.Empty;

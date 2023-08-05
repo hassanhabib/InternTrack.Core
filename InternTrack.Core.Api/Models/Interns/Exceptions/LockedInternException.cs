@@ -15,3 +15,4 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         { }
     }
 }
+

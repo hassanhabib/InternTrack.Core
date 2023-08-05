@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDepdnencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
+        public async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -192,7 +192,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var failedInternServiceException =
                 new FailedInternServiceException(serviceException);
 
-            var expectedInternServiceExcetpion =
+            var expectedInternServiceException =
                 new InternServiceException(failedInternServiceException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -213,7 +213,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternServiceException.Should().BeEquivalentTo(
-                expectedInternServiceExcetpion);
+                expectedInternServiceException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -221,7 +221,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-                    expectedInternServiceExcetpion))),
+                    expectedInternServiceException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
