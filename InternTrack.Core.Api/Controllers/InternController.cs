@@ -129,5 +129,43 @@ namespace InternTrack.Core.Api.Controllers
                 return InternalServerError(internServiceException.Message);
             }
         }
+
+        [HttpDelete("{internId}")]
+        public async ValueTask<ActionResult<Intern>> DeleteInternByIdAsync(Guid internId) 
+        {
+            try
+            {
+                Intern deletedIntern =
+                    await this.internService.RemoveInternByIdAsync(internId);
+
+                return Ok(deletedIntern);
+            }
+            catch (InternValidationException internValidationException)
+                when (internValidationException.InnerException is NotFoundInternException)
+            {
+                return NotFound(internValidationException.InnerException);
+            }
+            catch (InternValidationException internValidationException)
+            {
+                return BadRequest(internValidationException.InnerException);
+            }
+            catch (InternDependencyValidationException internDependencyValidationException)
+                when (internDependencyValidationException.InnerException is LockedInternException)
+            {
+                return Locked(internDependencyValidationException.InnerException);
+            }
+            catch (InternDependencyValidationException internDependencyValidationException)
+            {
+                return BadRequest(internDependencyValidationException);
+            }
+            catch (InternDependencyException internDependencyException)
+            {
+                return InternalServerError(internDependencyException.Message);
+            }
+            catch (InternServiceException internServiceException)
+            {
+                return InternalServerError(internServiceException.Message);
+            }
+        }
     }
 }
