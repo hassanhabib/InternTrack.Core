@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="EFxceptions" Version="0.4.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.3.23174.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.3.23174.2">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="RESTFulSense" Version="2.15.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0-preview.3.23174.8" />
   </ItemGroup>
 
 </Project>
