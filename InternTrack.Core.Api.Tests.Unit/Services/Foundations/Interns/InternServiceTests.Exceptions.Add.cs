@@ -72,7 +72,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExsitsAndLogItAsync()
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExistsAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
