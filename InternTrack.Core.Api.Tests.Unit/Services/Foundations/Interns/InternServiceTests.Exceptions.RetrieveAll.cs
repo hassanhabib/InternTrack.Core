@@ -21,7 +21,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    "Failed intern storage error occurred, contact support.",
+                        sqlException);
 
             var expectedInternStorageException =
                 new InternDependencyException(
@@ -68,7 +70,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    "Failed intern service occurred, please contact support",
+                        serviceException);
 
             var expectedInternServiceException =
                 new InternServiceException(

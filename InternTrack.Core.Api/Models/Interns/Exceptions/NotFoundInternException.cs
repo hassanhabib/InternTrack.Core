@@ -13,5 +13,9 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public NotFoundInternException(Guid internId)
             : base(message: $"Couldn't find intern id: {internId}.")
         { }
+
+        public NotFoundInternException(string message,Exception innerException)
+            : base(message, innerException) 
+        { }
     }
 }

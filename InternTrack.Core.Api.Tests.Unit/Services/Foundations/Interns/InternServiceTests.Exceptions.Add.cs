@@ -28,7 +28,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    "Failed intern storage error occurred, contact support.", 
+                        sqlException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
@@ -86,7 +88,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new DuplicateKeyException(randomMessage);
 
             var alreadyExistsInternException =
-                new AlreadyExistsInternException(duplicateKeyException);
+                new AlreadyExistsInternException(
+                    "Intern with the same id already exists.", 
+                    duplicateKeyException);
 
             var expectedInternDependencyValidationException =
                 new InternDependencyValidationException(
@@ -141,7 +145,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var databaseUpdateException = new DbUpdateException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(databaseUpdateException);
+                new FailedInternStorageException(
+                    "Failed intern storage error occurred, contact support.", 
+                        databaseUpdateException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
@@ -196,7 +202,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    "Failed intern service occurred, please contact support", 
+                        serviceException);
 
             var expectedInternServiceException =
                 new InternServiceException(

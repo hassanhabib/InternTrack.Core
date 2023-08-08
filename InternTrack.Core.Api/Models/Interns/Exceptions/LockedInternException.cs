@@ -13,6 +13,10 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public LockedInternException(Exception innerException)
             : base(message: "Locked intern record exception, please try again later.", innerException)
         { }
+
+        public LockedInternException(string message, Exception innerException)
+            : base(message, innerException) 
+        { }
     }
 }
 

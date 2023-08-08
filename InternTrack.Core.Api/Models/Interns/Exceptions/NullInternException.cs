@@ -13,5 +13,9 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public NullInternException()
             : base(message: "Intern is null.")
         { }
+
+        public NullInternException(string message, Exception innerException)
+            : base(message, innerException) 
+        { }
     }
 }

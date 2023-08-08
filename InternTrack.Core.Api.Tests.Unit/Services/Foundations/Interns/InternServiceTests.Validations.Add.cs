@@ -20,9 +20,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             Intern nullIntern = null;
+            var innerException = new Exception();
 
             var nullInternException =
-                new NullInternException();
+                new NullInternException("Intern is null.", innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
@@ -63,6 +64,8 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             string invalidText)
         {
             // given
+            var innerException = new Exception();
+
             var invalidIntern = new Intern
             {
                 FirstName = invalidText,
@@ -74,7 +77,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             };
 
-            var invalidInternException = new InvalidInternException();
+            var invalidInternException = new InvalidInternException(
+                "Invalid intern. Please correct the errors and try again", 
+                    innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.Id),
@@ -168,13 +173,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = randomIntern.CreatedBy;
             invalidIntern.UpdatedDate = GetRandomDateTime();
+            var innerException = new Exception();
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Returns(randomDateTime);
 
             var invalidInternException =
-                new InvalidInternException();
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again", 
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -221,17 +229,18 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             int minutesBeforeOrAfter)
         {
             // given
-            DateTimeOffset randomDateTime =
-                GetRandomDateTime();
-
+            DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(randomDateTime.AddMinutes(minutesBeforeOrAfter));
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
             invalidIntern.CreatedDate = randomDateTime.AddMinutes(minutesBeforeOrAfter);
             invalidIntern.UpdatedDate = invalidIntern.CreatedDate;
+            var innerException = new Exception();
 
             var invalidInternException =
-                new InvalidInternException();
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again",
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),

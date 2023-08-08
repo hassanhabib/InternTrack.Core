@@ -21,7 +21,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             Intern nullIntern = null;
-            var nullInternException = new NullInternException();
+            var innerException = new Exception();
+
+            var nullInternException =
+                new NullInternException("Intern is null.", innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
@@ -62,12 +65,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             string invalidText)
         {
             // given
+            var innerException = new Exception();
+
             var invalidIntern = new Intern
             {
                 FirstName = invalidText
             };
 
-            var invalidInternException = new InvalidInternException();
+            var invalidInternException = new InvalidInternException(
+                "Invalid intern. Please correct the errors and try again",
+                    innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.Id),
@@ -156,7 +163,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
-            var invalidInternException = new InvalidInternException();
+            var innerException = new Exception();
+
+            var invalidInternException =
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again",
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -210,13 +222,16 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(dates: randomDateTime);
             Intern invalidIntern = randomIntern;
+            var innerException = new Exception();
 
             invalidIntern.UpdatedDate = 
                 invalidIntern.UpdatedDate
                     .AddMinutes(minutesBeforeOrAfter);
 
             var invalidInternException =
-                new InvalidInternException();
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again",
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -266,12 +281,15 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();            
             Intern noIntern = null;
+            var innerException = new Exception();
 
             Intern nonExistentIntern = 
                 CreateRandomModifyIntern(dates: randomDateTime);
 
             var notFoundInternException = 
-                new NotFoundInternException(nonExistentIntern.Id);
+                new NotFoundInternException(
+                     $"Couldn't find intern id: {nonExistentIntern.Id}.",
+                        innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
@@ -329,7 +347,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             storageIntern.CreatedDate = storageIntern.CreatedDate.AddMinutes(randomNumber);
             storageIntern.UpdatedDate = storageIntern.UpdatedDate.AddMinutes(randomNumber);
             Guid internId = invalidIntern.Id;
-            var invalidInternException = new InvalidInternException();
+            var innerException = new Exception();
+
+            var invalidInternException = 
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again",
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
@@ -388,7 +411,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern storageIntern = invalidIntern.DeepClone();
             invalidIntern.UpdatedDate = storageIntern.UpdatedDate;
             Guid internId = invalidIntern.Id;
-            var invalidInternException = new InvalidInternException();
+            var innerException = new Exception();
+
+            var invalidInternException =
+                new InvalidInternException(
+                    "Invalid intern. Please correct the errors and try again",
+                        innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),

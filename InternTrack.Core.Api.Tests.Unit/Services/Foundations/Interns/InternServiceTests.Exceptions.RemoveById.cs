@@ -25,7 +25,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    "Failed intern storage error occurred, contact support.",
+                        sqlException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
@@ -73,7 +75,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new DbUpdateConcurrencyException();
 
             var lockedInternException =
-                new LockedInternException(databaseUpdateConcurrencyException);
+                new LockedInternException(
+                    "Locked intern record exception, please try again later.",
+                        databaseUpdateConcurrencyException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
@@ -88,12 +92,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> removeInternTask =
                 this.internService.RemoveInternByIdAsync(someInternId);
 
-            InternDependencyException actualInternDepedencyException =
+            InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
                     removeInternTask.AsTask);
 
             // then
-            actualInternDepedencyException.Should().BeEquivalentTo(
+            actualInternDependencyException.Should().BeEquivalentTo(
                 expectedInternDependencyException );
 
             this.storageBrokerMock.Verify(broker =>
@@ -118,7 +122,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    "Failed intern service occurred, please contact support",
+                        serviceException);
 
             var expectedInternServiceException =
                 new InternServiceException(
@@ -163,7 +169,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var databaseUpdateException = new DbUpdateException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(databaseUpdateException);
+                new FailedInternStorageException(
+                    "Failed intern storage error occurred, contact support.",
+                        databaseUpdateException);
 
             var expectedInternDependencyValidationException =
                 new InternDependencyException(

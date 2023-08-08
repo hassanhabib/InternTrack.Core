@@ -20,7 +20,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         {
             // given
             Guid invalidInternId = Guid.Empty;
-            var invalidInternException = new InvalidInternException();
+            var innerException = new Exception();
+
+            var invalidInternException = new InvalidInternException(
+                "Invalid intern. Please correct the errors and try again",
+                    innerException);
 
             invalidInternException.AddData(
                key: nameof(Intern.Id),
@@ -61,9 +65,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             // given
             Guid someInternId = Guid.NewGuid();
             Intern noIntern = null;
+            var innerException = new Exception();
 
             var notFoundInternValidationException =
-                new NotFoundInternException(someInternId);
+                new NotFoundInternException(
+                     $"Couldn't find intern id: {someInternId}.",
+                        innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(

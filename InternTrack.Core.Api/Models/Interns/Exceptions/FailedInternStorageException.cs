@@ -13,5 +13,9 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public FailedInternStorageException(Exception innerException)
             : base("Failed intern storage error occurred, contact support.", innerException)
         { }
+
+        public FailedInternStorageException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
     }
 }

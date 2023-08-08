@@ -13,5 +13,9 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public AlreadyExistsInternException(Exception innerException)
             : base(message: "Intern with the same id already exists.", innerException)
         { }
+
+        public AlreadyExistsInternException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
     }
 }
