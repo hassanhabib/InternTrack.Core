@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldRetrieveInternByIdAsync()
+        private async Task ShouldRetrieveInternByIdAsync()
         {
             // given
             Guid randomInternId = Guid.NewGuid();

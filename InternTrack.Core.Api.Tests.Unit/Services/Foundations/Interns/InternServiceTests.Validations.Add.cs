@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfInternIsNullAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnAddIfInternIsNullAndLogItAsync()
         {
             // given
             Intern nullIntern = null;
@@ -60,7 +60,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnAddIfInternIsInvalidAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnAddIfInternIsInvalidAndLogItAsync(
             string invalidText)
         {
             // given
@@ -165,7 +165,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
+        private async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
@@ -225,7 +225,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         [Theory]
         [MemberData(nameof(MinutesBeforeOrAfter))]
-        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
             int minutesBeforeOrAfter)
         {
             // given

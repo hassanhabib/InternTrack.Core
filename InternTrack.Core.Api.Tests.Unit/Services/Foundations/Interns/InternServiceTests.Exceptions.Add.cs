@@ -19,7 +19,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
+        private async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -76,7 +76,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExistsAndLogItAsync()
+        private async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExistsAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -136,7 +136,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -193,7 +193,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
+        private async Task ShouldThrowServiceExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();

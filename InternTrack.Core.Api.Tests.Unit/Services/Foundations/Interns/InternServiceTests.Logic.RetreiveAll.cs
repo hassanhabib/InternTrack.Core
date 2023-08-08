@@ -14,7 +14,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public void ShouldRetrieveAllInterns()
+        private void ShouldRetrieveAllInterns()
         {
             // given
             IQueryable<Intern> randomInterns = CreateRandomInterns();

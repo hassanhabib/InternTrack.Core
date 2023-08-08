@@ -16,7 +16,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async void ShouldThrowValidationExceptionOnRemoveByIdIfIdIsInvalidAndLogItAsync()
+        private async void ShouldThrowValidationExceptionOnRemoveByIdIfIdIsInvalidAndLogItAsync()
         {
             // given
             Guid invalidInternId = Guid.Empty;
@@ -61,7 +61,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowNotFoundExceptionOnRemoveIfInternIsNotFoundAndLogitAsync()
+        private async Task ShouldThrowNotFoundExceptionOnRemoveIfInternIsNotFoundAndLogitAsync()
         {
             // given
             Guid randomInternId = Guid.NewGuid();

@@ -18,7 +18,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRemoveByIdIfSqlExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnRemoveByIdIfSqlExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
@@ -66,7 +66,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRemoveByIdIfDbUpdateConcurrencyErrorOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnRemoveByIdIfDbUpdateConcurrencyErrorOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
@@ -115,7 +115,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnRemoveByIdWhenExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowServiceExceptionOnRemoveByIdWhenExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
@@ -162,7 +162,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRemoveByIdIfDatabaseUpdateExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnRemoveByIdIfDatabaseUpdateExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();

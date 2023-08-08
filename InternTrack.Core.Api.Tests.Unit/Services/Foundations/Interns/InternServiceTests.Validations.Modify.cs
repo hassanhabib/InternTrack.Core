@@ -17,7 +17,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfInternIsNullAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnModifyIfInternIsNullAndLogItAsync()
         {
             // given
             Intern nullIntern = null;
@@ -61,7 +61,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnModifyIfInternIsInvalidAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnModifyIfInternIsInvalidAndLogItAsync(
             string invalidText)
         {
             // given
@@ -157,7 +157,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfUpdatedDateIsSameAsCreatedDateAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnModifyIfUpdatedDateIsSameAsCreatedDateAndLogItAsync()
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTime();
@@ -215,7 +215,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         [Theory]
         [MemberData(nameof(MinutesBeforeOrAfter))]
-        public async Task ShouldThrowValidationExceptionOnModifyIfUpdatedDateIsNotRecentAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnModifyIfUpdatedDateIsNotRecentAndLogItAsync(
             int minutesBeforeOrAfter)
         {
             // given
@@ -277,7 +277,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfInternDoesNotExistAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnModifyIfInternDoesNotExistAndLogItAsync()
         {
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();            
             Intern noIntern = null;
@@ -335,7 +335,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfStorageCreatedDateIsNotTheSameAsCreatedDateAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnModifyIfStorageCreatedDateIsNotTheSameAsCreatedDateAndLogItAsync()
         {
             // given
             int randomNumber = GetRandomNegativeNumber();
@@ -402,7 +402,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnModifyIfStorageUpdatedDateSameAsUpdatedDateAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnModifyIfStorageUpdatedDateSameAsUpdatedDateAndLogItAsync()
         {
             //given
             DateTimeOffset randomDateTime = GetRandomDateTime();
