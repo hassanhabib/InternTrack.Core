@@ -31,7 +31,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
-        private async Task<Intern> PostRandomInternAsync()
+        private async ValueTask<Intern> PostRandomInternAsync()
         {
             Intern randomIntern = CreateRandomIntern();
             await this.internTrackApiBroker.PostInternAsync(randomIntern);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Models.Interns;
+using RESTFulSense.Exceptions;
 using Xunit;
 
 namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
@@ -96,6 +97,31 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             //then
             actualIntern.Should().BeEquivalentTo(modifiedIntern);
             await this.internTrackApiBroker.DeleteInternByIdAsync(actualIntern.Id);
-        }        
+        }
+
+        [Fact]
+        public async Task ShouldDeleteInternAsync()
+        {
+            //given
+            Intern randomIntern = await PostRandomInternAsync();
+            Intern inputIntern = randomIntern;
+            Intern expectedIntern = inputIntern;
+
+            //when
+            Intern deletedIntern =
+                await this.internTrackApiBroker
+                    .DeleteInternByIdAsync(inputIntern.Id);
+
+            ValueTask<Intern> getInternByIdTask =
+                this.internTrackApiBroker
+                    .GetInternByIdAsync(inputIntern.Id);
+
+            //then
+            deletedIntern.Should().BeEquivalentTo(expectedIntern);
+
+            await Assert.ThrowsAsync<HttpResponseNotFoundException>(() =>
+                getInternByIdTask.AsTask());
+
+        }
     }
 }
