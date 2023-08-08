@@ -27,8 +27,10 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var failedInternStorageException =
                 new FailedInternStorageException(sqlException);
 
-            var expectedInterndependencyException =
-                new InternDependencyException(failedInternStorageException);
+            var expectedInternDependencyException =
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.",
+                        failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
@@ -44,7 +46,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternDependencyException.Should().BeEquivalentTo(
-                expectedInterndependencyException);
+                expectedInternDependencyException);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()),
@@ -52,7 +54,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
-                    expectedInterndependencyException))),
+                    expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
@@ -74,7 +76,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new LockedInternException(databaseUpdateConcurrencyException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(lockedInternException);
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.",
+                        lockedInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
@@ -117,7 +121,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternServiceException(serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    "Intern service error occurred, contact support",
+                        failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
@@ -150,7 +156,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowdependencyExceptionOnRemoveByIdIfDatabaseUpdateExceptionOccursAndLogItAsync()
+        public async Task ShouldThrowDependencyExceptionOnRemoveByIdIfDatabaseUpdateExceptionOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
@@ -160,7 +166,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternStorageException(databaseUpdateException);
 
             var expectedInternDependencyValidationException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.",
+                        failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))

@@ -25,7 +25,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new NullInternException();
 
             var expectedInternValidationException =
-                new InternValidationException(nullInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.", 
+                        nullInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -123,7 +125,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: "Date is required");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -177,7 +181,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -232,7 +238,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: "Date is not recent");
 
             var expectedInternValidException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

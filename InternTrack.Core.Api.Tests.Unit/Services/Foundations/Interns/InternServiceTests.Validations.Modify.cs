@@ -24,7 +24,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var nullInternException = new NullInternException();
 
             var expectedInternValidationException =
-                new InternValidationException(nullInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        nullInternException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -113,7 +115,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: "Id is required");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -159,7 +163,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: $"Date is the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -217,7 +223,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: "Date is not recent");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -266,7 +274,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new NotFoundInternException(nonExistentIntern.Id);
 
             var expectedInternValidationException =
-                new InternValidationException(notFoundInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        notFoundInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -326,7 +336,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))
@@ -383,7 +395,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: $"Date is the same as {nameof(Intern.UpdatedDate)}");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))

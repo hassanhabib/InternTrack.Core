@@ -26,7 +26,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternStorageException(sqlException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.",
+                        failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
@@ -68,7 +70,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternServiceException(serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    "Intern service error occurred, contact support",
+                        failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(someInternId))

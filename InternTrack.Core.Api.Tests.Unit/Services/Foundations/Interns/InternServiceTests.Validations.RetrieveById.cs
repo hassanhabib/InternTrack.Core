@@ -27,7 +27,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                values: "Id is required");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        invalidInternException);
 
             // when
             ValueTask<Intern> retrieveInternByIdTask =
@@ -64,7 +66,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new NotFoundInternException(someInternId);
 
             var expectedInternValidationException =
-                new InternValidationException(notFoundInternValidationException);
+                new InternValidationException(
+                    "Intern validation error occurred. Please, try again.",
+                        notFoundInternValidationException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))

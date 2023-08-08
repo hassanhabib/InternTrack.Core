@@ -31,7 +31,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternStorageException(sqlException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.",
+                        failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -87,7 +89,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new AlreadyExistsInternException(duplicateKeyException);
 
             var expectedInternDependencyValidationException =
-                new InternDependencyValidationException(alreadyExistsInternException);
+                new InternDependencyValidationException(
+                    "Intern dependency validation occurred, please try again.", 
+                        alreadyExistsInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -140,7 +144,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternStorageException(databaseUpdateException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    "Intern dependency error occurred, contact support.", 
+                        failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -193,7 +199,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new FailedInternServiceException(serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    "Intern service error occurred, contact support", 
+                        failedInternServiceException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
