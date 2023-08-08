@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
-using Microsoft.Data.SqlClient;
 using Tynamix.ObjectFiller;
 using Xunit;
 
