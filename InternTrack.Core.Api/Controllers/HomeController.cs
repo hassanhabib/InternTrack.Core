@@ -1,6 +1,13 @@
-﻿namespace InternTrack.Core.Api.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace InternTrack.Core.Api.Controllers
 {
-    public class HomeController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HomeController : ControllerBase
     {
+        [HttpGet]
+        public ActionResult<string> Get() =>
+            Ok("Thank you Mario! But the princess is in another castle!");
     }
 }
