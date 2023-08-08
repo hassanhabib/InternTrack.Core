@@ -30,7 +30,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var failedInternStorageException =
                 new FailedInternStorageException(sqlException);
 
-            var expectedInternDependencyExcetpion =
+            var expectedInternDependencyException =
                 new InternDependencyException(failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -45,13 +45,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> createIntern =
                 this.internService.AddInternAsync(randomIntern);
 
-            InternDependencyException actualInternDependecyException =
+            InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
                     createIntern.AsTask);
 
             // then
-            actualInternDependecyException.Should().BeEquivalentTo(
-                expectedInternDependencyExcetpion);
+            actualInternDependencyException.Should().BeEquivalentTo(
+                expectedInternDependencyException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -59,7 +59,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
-                    expectedInternDependencyExcetpion))),
+                    expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
@@ -86,7 +86,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var alreadyExistsInternException =
                 new AlreadyExistsInternException(duplicateKeyException);
 
-            var expectedInternDependencyValidationExcetption =
+            var expectedInternDependencyValidationException =
                 new InternDependencyValidationException(alreadyExistsInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -107,7 +107,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternDependencyValidationException.Should()
-                .BeEquivalentTo(expectedInternDependencyValidationExcetption);
+                .BeEquivalentTo(expectedInternDependencyValidationException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -115,7 +115,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-                    expectedInternDependencyValidationExcetption))),
+                    expectedInternDependencyValidationException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
