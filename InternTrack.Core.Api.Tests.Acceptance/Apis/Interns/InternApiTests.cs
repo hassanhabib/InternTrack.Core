@@ -4,9 +4,11 @@
 // -------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
+using Microsoft.Data.SqlClient;
 using Tynamix.ObjectFiller;
 using Xunit;
 
@@ -35,6 +37,19 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             await this.internTrackApiBroker.PostInternAsync(randomIntern);
 
             return randomIntern;
+        }
+
+        private async Task<List<Intern>> CreateRandomPostedInternsAsync()
+        {
+            int randomNumber = GetRandomNumber();
+            var randomInterns = new List<Intern>();
+
+            for (int i = 0; i < randomNumber; i++)
+            {
+                randomInterns.Add(await PostRandomInternAsync());
+            }
+
+            return randomInterns;
         }
 
         private static Filler<Intern> CreateInternFiller()
