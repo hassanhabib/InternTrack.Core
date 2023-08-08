@@ -4,6 +4,7 @@
 // -------------------------------------------------------
 
 using System;
+using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Tynamix.ObjectFiller;
@@ -27,6 +28,14 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private async Task<Intern> PostRandomInternAsync()
+        {
+            Intern randomIntern = CreateRandomIntern();
+            await this.internTrackApiBroker.PostInternAsync(randomIntern);
+
+            return randomIntern;
+        }
 
         private static Filler<Intern> CreateInternFiller()
         {

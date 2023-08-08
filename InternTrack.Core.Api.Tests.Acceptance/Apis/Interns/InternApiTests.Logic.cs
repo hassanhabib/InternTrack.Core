@@ -17,7 +17,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             //given
             Intern randomIntern = CreateRandomIntern();
             Intern inputIntern = randomIntern;
-            Intern expectedIntern = randomIntern;
+            Intern expectedIntern = inputIntern;
 
             //when
             await this.internTrackApiBroker
@@ -33,5 +33,24 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             await this.internTrackApiBroker
                 .DeleteInternByIdAsync(inputIntern.Id);
         }
+
+        [Fact]
+        public async Task ShouldGetInternByIdAsync()
+        {
+            //given
+            Intern randomIntern = await PostRandomInternAsync();
+            Intern expectedIntern = randomIntern;
+
+            //when
+            Intern actualIntern =
+                await this.internTrackApiBroker
+                    .GetInternByIdAsync(randomIntern.Id);
+
+            //then
+            actualIntern.Should().BeEquivalentTo(expectedIntern);
+
+            await this.internTrackApiBroker
+                .DeleteInternByIdAsync(actualIntern.Id);
+        }                
     }
 }
