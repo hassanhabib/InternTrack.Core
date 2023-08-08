@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
 using System.Threading.Tasks;
 
 namespace InternTrack.Core.Api.Tests.Acceptance.Brokers
