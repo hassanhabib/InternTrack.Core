@@ -13,14 +13,14 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
     public partial class InternApiTests
     {
         [Fact]
-        public async Task ShouldPostInternAsync()
+        private async Task ShouldPostInternAsync()
         {
-            //given
+            // given
             Intern randomIntern = CreateRandomIntern();
             Intern inputIntern = randomIntern;
             Intern expectedIntern = inputIntern;
 
-            //when
+            // when
             await this.internTrackApiBroker
                 .PostInternAsync(inputIntern);
 
@@ -28,7 +28,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
                 await this.internTrackApiBroker
                     .GetInternByIdAsync(inputIntern.Id);
 
-            //
+            // then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             await this.internTrackApiBroker
@@ -36,18 +36,18 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
         }
 
         [Fact]
-        public async Task ShouldGetInternByIdAsync()
+        private async Task ShouldGetInternByIdAsync()
         {
-            //given
+            // given
             Intern randomIntern = await PostRandomInternAsync();
             Intern expectedIntern = randomIntern;
 
-            //when
+            // when
             Intern actualIntern =
                 await this.internTrackApiBroker
                     .GetInternByIdAsync(randomIntern.Id);
 
-            //then
+            // then
             actualIntern.Should().BeEquivalentTo(expectedIntern);
 
             await this.internTrackApiBroker
@@ -55,19 +55,19 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
         }
 
         [Fact]
-        public async Task ShouldGetAllInternsAsync()
+        private async Task ShouldGetAllInternsAsync()
         {
-            //given
+            // given
             List<Intern> randomInterns = 
                 await CreateRandomPostedInternsAsync();
 
             List<Intern> expectedInterns = randomInterns;
 
-            //when
+            // when
             List<Intern> actualInterns =
                 await this.internTrackApiBroker.GetAllInternsAsync();
 
-            //then
+            // then
             foreach (Intern expectedIntern in expectedInterns)
             {
                 Intern actualIntern = 
@@ -82,32 +82,32 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
         }
 
         [Fact]
-        public async Task ShouldPutInternAsync()
+        private async Task ShouldPutInternAsync()
         {
-            //given
+            // given
             Intern randomIntern = await PostRandomInternAsync();
             Intern modifiedIntern = UpdateRandomIntern(randomIntern);
 
-            //when
+            // when
             await this.internTrackApiBroker.PutInternAsync(modifiedIntern);
 
             Intern actualIntern =
                 await this.internTrackApiBroker.GetInternByIdAsync(randomIntern.Id);
 
-            //then
+            // then
             actualIntern.Should().BeEquivalentTo(modifiedIntern);
             await this.internTrackApiBroker.DeleteInternByIdAsync(actualIntern.Id);
         }
 
         [Fact]
-        public async Task ShouldDeleteInternAsync()
+        private async Task ShouldDeleteInternAsync()
         {
-            //given
+            // given
             Intern randomIntern = await PostRandomInternAsync();
             Intern inputIntern = randomIntern;
             Intern expectedIntern = inputIntern;
 
-            //when
+            // when
             Intern deletedIntern =
                 await this.internTrackApiBroker
                     .DeleteInternByIdAsync(inputIntern.Id);
@@ -116,7 +116,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
                 this.internTrackApiBroker
                     .GetInternByIdAsync(inputIntern.Id);
 
-            //then
+            // then
             deletedIntern.Should().BeEquivalentTo(expectedIntern);
 
             await Assert.ThrowsAsync<HttpResponseNotFoundException>(() =>
