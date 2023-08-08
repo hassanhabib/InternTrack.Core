@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// -------------------------------------------------------
+// Copyright (c) Coalition of the Good-Hearted Engineers
+// FREE TO USE FOR THE WORLD
+// -------------------------------------------------------
+
 using System.Threading.Tasks;
 using FluentAssertions;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Xunit;
 
-namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
+namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Home
 {
     [Collection(nameof(ApiTestCollection))]
     public class HomeApiTests
@@ -18,7 +19,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             this.apiBroker = apiBroker;
 
         [Fact]
-        public async Task ShouldReturnHomeMessageAsync()
+        private async Task ShouldReturnHomeMessageAsync()
         {
             // given
             string expectedMessage =
@@ -26,7 +27,7 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
 
             // when
             string actualMessage =
-                await this.apiBroker.GetHomeMessage();
+                await apiBroker.GetHomeMessage();
 
             // then
             actualMessage.Should().Be(expectedMessage);
