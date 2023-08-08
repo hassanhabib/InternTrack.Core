@@ -52,6 +52,22 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
             return randomInterns;
         }
 
+        private Intern UpdateRandomIntern(Intern inputIntern)
+        {
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+            var filler = new Filler<Intern>();
+
+            filler.Setup()
+                .OnProperty(intern => intern.Id).Use(inputIntern.Id)
+                .OnProperty(intern => intern.CreatedBy).Use(inputIntern.CreatedBy)
+                .OnProperty(intern => intern.UpdatedBy).Use(inputIntern.UpdatedBy)
+                .OnProperty(intern => intern.CreatedDate).Use(inputIntern.CreatedDate)
+                .OnProperty(intern => intern.UpdatedDate).Use(now)
+                .OnType<DateTimeOffset>().Use(GetRandomDateTime);
+
+            return filler.Create();
+        }
+
         private static Filler<Intern> CreateInternFiller()
         {
             DateTimeOffset now = DateTimeOffset.UtcNow;

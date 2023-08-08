@@ -78,6 +78,24 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
                 await this.internTrackApiBroker
                     .DeleteInternByIdAsync(actualIntern.Id);
             }
+        }
+
+        [Fact]
+        public async Task ShouldPutInternAsync()
+        {
+            //given
+            Intern randomIntern = await PostRandomInternAsync();
+            Intern modifiedIntern = UpdateRandomIntern(randomIntern);
+
+            //when
+            await this.internTrackApiBroker.PutInternAsync(modifiedIntern);
+
+            Intern actualIntern =
+                await this.internTrackApiBroker.GetInternByIdAsync(randomIntern.Id);
+
+            //then
+            actualIntern.Should().BeEquivalentTo(modifiedIntern);
+            await this.internTrackApiBroker.DeleteInternByIdAsync(actualIntern.Id);
         }        
     }
 }
