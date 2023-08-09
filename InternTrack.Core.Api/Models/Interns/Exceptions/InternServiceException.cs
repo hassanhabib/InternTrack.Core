@@ -14,7 +14,7 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
             : base(message: "Intern service error occurred, contact support", innerException)
         { }
 
-        public InternServiceException(string message,Exception innerException) 
+        public InternServiceException(string message, Xeption innerException) 
             : base(message, innerException) 
         { }
     }
