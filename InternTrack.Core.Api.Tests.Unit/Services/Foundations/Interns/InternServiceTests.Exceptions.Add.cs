@@ -203,7 +203,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternServiceException =
                 new FailedInternServiceException(
-                    message: "Failed Intern storage error occurred, contact support.", 
+                    message: "Failed Intern service occurred, please contact support", 
                         serviceException);
 
             var expectedInternServiceException =
