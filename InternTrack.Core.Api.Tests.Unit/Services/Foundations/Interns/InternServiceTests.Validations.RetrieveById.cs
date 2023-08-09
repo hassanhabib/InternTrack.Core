@@ -69,7 +69,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var notFoundInternValidationException =
                 new NotFoundInternException(
-                     $"Couldn't find intern id: {someInternId}.",
+                     message: $"Intern with id: {someInternId} not found, please correct and try again.",
                         innerException);
 
             var expectedInternValidationException =
