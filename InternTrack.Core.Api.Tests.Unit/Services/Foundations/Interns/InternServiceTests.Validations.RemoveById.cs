@@ -25,7 +25,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException =
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.Id),
@@ -34,7 +34,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             // when
             ValueTask<Intern> removeInternByIdTask =
@@ -72,17 +72,17 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var notFoundInternException =
                 new NotFoundInternException(
                      message: $"Intern with id: {inputInternId} not found, please correct and try again.",
-                        innerException);
+                        innerException: innerException);
 
             var invalidInternException =
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        notFoundInternException);
+                        innerException: notFoundInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))

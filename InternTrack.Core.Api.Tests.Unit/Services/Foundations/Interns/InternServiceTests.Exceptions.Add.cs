@@ -11,6 +11,7 @@ using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Xunit;
 
@@ -28,9 +29,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(
-                        "Failed Intern storage error occurred, contact support.", 
-                        sqlException);
+            new FailedInternStorageException(
+                        message: "Failed Intern storage error occurred, contact support.",
+                        innerException: sqlException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
@@ -89,13 +90,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var alreadyExistsInternException =
                 new AlreadyExistsInternException(
-                    message: "Intern with the same id already exists.", 
-                    duplicateKeyException);
+                    message: "Intern with the same id already exists.",
+                    innerException: duplicateKeyException);
 
             var expectedInternDependencyValidationException =
                 new InternDependencyValidationException(
-                    message: "Intern dependency validation occurred, please try again.", 
-                        alreadyExistsInternException);
+                    message: "Intern dependency validation occurred, please try again.",
+                        innerException: alreadyExistsInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -146,13 +147,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternStorageException =
                 new FailedInternStorageException(
-                    message: "Failed Intern storage error occurred, contact support.", 
-                        databaseUpdateException);
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: databaseUpdateException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
-                    message: "Intern dependency error occurred, contact support.", 
-                        failedInternStorageException);
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -203,13 +204,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternServiceException =
                 new FailedInternServiceException(
-                    message: "Failed Intern service occurred, please contact support", 
-                        serviceException);
+                    message: "Failed Intern service occurred, please contact support",
+                        innerException: serviceException);
 
             var expectedInternServiceException =
                 new InternServiceException(
-                    message: "Intern service error occurred, contact support", 
-                        failedInternServiceException);
+                    message: "Intern service error occurred, contact support",
+                        innerException: failedInternServiceException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

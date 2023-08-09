@@ -24,12 +24,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var innerException = new Exception();
 
             var nullInternException =
-                new NullInternException(message: "Intern is null.", innerException);
+                new NullInternException(message: "Intern is null.", innerException: innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        nullInternException);
+                        innerException: nullInternException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -74,7 +74,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException = new InvalidInternException(
                 message: "Invalid Intern. Please correct the errors and try again",
-                    innerException);
+                    innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.Id),
@@ -124,7 +124,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             // when
             ValueTask<Intern> modifyInternTask =
@@ -168,7 +168,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException =
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -177,7 +177,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -231,7 +231,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException =
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -240,7 +240,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -288,13 +288,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var notFoundInternException = 
                 new NotFoundInternException(
-                     $"Intern with id: {nonExistentIntern.Id} not found, please correct and try again.",
-                        innerException);
+                     message: $"Intern with id: {nonExistentIntern.Id} not found, please correct and try again.",
+                        innerException: innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        notFoundInternException);
+                        innerException: notFoundInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -352,7 +352,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException = 
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
@@ -361,7 +361,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))
@@ -416,7 +416,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var invalidInternException =
                 new InvalidInternException(
                     message: "Invalid Intern. Please correct the errors and try again",
-                        innerException);
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
@@ -425,7 +425,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var expectedInternValidationException =
                 new InternValidationException(
                     message: "Intern validation error occurred. Please, try again.",
-                        invalidInternException);
+                        innerException: invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(internId))
