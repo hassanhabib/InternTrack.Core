@@ -26,12 +26,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternStorageException =
                 new FailedInternStorageException(
-                    "Failed intern storage error occurred, contact support.",
+                    message: "Failed intern storage error occurred, contact support.",
                         sqlException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
-                    "Intern dependency error occurred, contact support.",
+                    message: "Intern dependency error occurred, contact support.",
                         failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -76,12 +76,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var lockedInternException =
                 new LockedInternException(
-                    "Locked intern record exception, please try again later.",
+                    message: "Locked intern record exception, please try again later.",
                         databaseUpdateConcurrencyException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
-                    "Intern dependency error occurred, contact support.",
+                    message: "Intern dependency error occurred, contact support.",
                         lockedInternException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -123,12 +123,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternServiceException =
                 new FailedInternServiceException(
-                    "Failed intern service occurred, please contact support",
+                    message: "Failed intern service occurred, please contact support",
                         serviceException);
 
             var expectedInternServiceException =
                 new InternServiceException(
-                    "Intern service error occurred, contact support",
+                    message: "Intern service error occurred, contact support",
                         failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -170,12 +170,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var failedInternStorageException =
                 new FailedInternStorageException(
-                    "Failed intern storage error occurred, contact support.",
+                    message: "Failed intern storage error occurred, contact support.",
                         databaseUpdateException);
 
             var expectedInternDependencyValidationException =
                 new InternDependencyException(
-                    "Intern dependency error occurred, contact support.",
+                    message: "Intern dependency error occurred, contact support.",
                         failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>

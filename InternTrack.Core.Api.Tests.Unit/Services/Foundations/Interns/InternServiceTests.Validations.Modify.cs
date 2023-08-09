@@ -24,11 +24,11 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var innerException = new Exception();
 
             var nullInternException =
-                new NullInternException("Intern is null.", innerException);
+                new NullInternException(message: "Intern is null.", innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         nullInternException);
 
             // when
@@ -73,7 +73,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             };
 
             var invalidInternException = new InvalidInternException(
-                "Invalid intern. Please correct the errors and try again",
+                message: "Invalid intern. Please correct the errors and try again",
                     innerException);
 
             invalidInternException.AddData(
@@ -123,7 +123,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         invalidInternException);
 
             // when
@@ -167,7 +167,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException =
                 new InvalidInternException(
-                    "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid intern. Please correct the errors and try again",
                         innerException);
 
             invalidInternException.AddData(
@@ -176,7 +176,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -230,7 +230,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException =
                 new InvalidInternException(
-                    "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid intern. Please correct the errors and try again",
                         innerException);
 
             invalidInternException.AddData(
@@ -239,7 +239,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -293,7 +293,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         notFoundInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -351,7 +351,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException = 
                 new InvalidInternException(
-                    "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid intern. Please correct the errors and try again",
                         innerException);
 
             invalidInternException.AddData(
@@ -360,7 +360,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -415,7 +415,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException =
                 new InvalidInternException(
-                    "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid intern. Please correct the errors and try again",
                         innerException);
 
             invalidInternException.AddData(
@@ -424,7 +424,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var expectedInternValidationException =
                 new InternValidationException(
-                    "Intern validation error occurred. Please, try again.",
+                    message: "Intern validation error occurred. Please, try again.",
                         invalidInternException);
 
             this.storageBrokerMock.Setup(broker =>
