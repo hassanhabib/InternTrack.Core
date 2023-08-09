@@ -23,7 +23,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var innerException = new Exception();
 
             var invalidInternException = new InvalidInternException(
-                message: "Invalid intern. Please correct the errors and try again",
+                message: "Invalid Intern. Please correct the errors and try again",
                     innerException);
 
             invalidInternException.AddData(

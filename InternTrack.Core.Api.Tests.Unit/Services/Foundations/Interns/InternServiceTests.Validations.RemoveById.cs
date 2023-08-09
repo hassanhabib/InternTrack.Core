@@ -24,7 +24,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException =
                 new InvalidInternException(
-                    message: "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid Intern. Please correct the errors and try again",
                         innerException);
 
             invalidInternException.AddData(
@@ -76,7 +76,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             var invalidInternException =
                 new InvalidInternException(
-                    message: "Invalid intern. Please correct the errors and try again",
+                    message: "Invalid Intern. Please correct the errors and try again",
                         innerException);
 
             var expectedInternValidationException =
