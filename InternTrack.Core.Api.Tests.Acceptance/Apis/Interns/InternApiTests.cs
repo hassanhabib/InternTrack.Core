@@ -4,6 +4,8 @@
 // -------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Tests.Acceptance.Brokers;
 using Tynamix.ObjectFiller;
@@ -27,6 +29,43 @@ namespace InternTrack.Core.Api.Tests.Acceptance.Apis.Interns
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private async ValueTask<Intern> PostRandomInternAsync()
+        {
+            Intern randomIntern = CreateRandomIntern();
+            await this.internTrackApiBroker.PostInternAsync(randomIntern);
+
+            return randomIntern;
+        }
+
+        private async Task<List<Intern>> CreateRandomPostedInternsAsync()
+        {
+            int randomNumber = GetRandomNumber();
+            var randomInterns = new List<Intern>();
+
+            for (int i = 0; i < randomNumber; i++)
+            {
+                randomInterns.Add(await PostRandomInternAsync());
+            }
+
+            return randomInterns;
+        }
+
+        private Intern UpdateRandomIntern(Intern inputIntern)
+        {
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+            var filler = new Filler<Intern>();
+
+            filler.Setup()
+                .OnProperty(intern => intern.Id).Use(inputIntern.Id)
+                .OnProperty(intern => intern.CreatedBy).Use(inputIntern.CreatedBy)
+                .OnProperty(intern => intern.UpdatedBy).Use(inputIntern.UpdatedBy)
+                .OnProperty(intern => intern.CreatedDate).Use(inputIntern.CreatedDate)
+                .OnProperty(intern => intern.UpdatedDate).Use(now)
+                .OnType<DateTimeOffset>().Use(GetRandomDateTime);
+
+            return filler.Create();
+        }
 
         private static Filler<Intern> CreateInternFiller()
         {
