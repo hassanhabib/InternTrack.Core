@@ -29,14 +29,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-            new FailedInternStorageException(
-                        message: "Failed Intern storage error occurred, contact support.",
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
                         innerException: sqlException);
 
             var expectedInternDependencyException =
                 new InternDependencyException(
                     message: "Intern dependency error occurred, contact support.",
-                        failedInternStorageException);
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -91,7 +91,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var alreadyExistsInternException =
                 new AlreadyExistsInternException(
                     message: "Intern with the same id already exists.",
-                    innerException: duplicateKeyException);
+                        innerException: duplicateKeyException);
 
             var expectedInternDependencyValidationException =
                 new InternDependencyValidationException(

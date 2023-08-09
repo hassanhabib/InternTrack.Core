@@ -23,7 +23,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var innerException = new Exception();
 
             var nullInternException =
-                new NullInternException(message: "Intern is null.", innerException: innerException);
+                new NullInternException(
+                    message: "Intern is null.", 
+                        innerException: innerException);
 
             var expectedInternValidationException =
                 new InternValidationException(
