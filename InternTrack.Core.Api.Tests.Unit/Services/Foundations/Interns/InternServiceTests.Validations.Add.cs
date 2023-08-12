@@ -16,16 +16,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfInternIsNullAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnAddIfInternIsNullAndLogItAsync()
         {
             // given
             Intern nullIntern = null;
+            var innerException = new Exception();
 
             var nullInternException =
-                new NullInternException();
+                new NullInternException(
+                    message: "Intern is null.", 
+                        innerException: innerException);
 
             var expectedInternValidationException =
-                new InternValidationException(nullInternException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: nullInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -57,10 +62,12 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnAddIfInternIsInvalidAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnAddIfInternIsInvalidAndLogItAsync(
             string invalidText)
         {
             // given
+            var innerException = new Exception();
+
             var invalidIntern = new Intern
             {
                 FirstName = invalidText,
@@ -72,7 +79,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             };
 
-            var invalidInternException = new InvalidInternException();
+            var invalidInternException = new InvalidInternException(
+                message: "Invalid Intern. Please correct the errors and try again", 
+                    innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.Id),
@@ -123,7 +132,9 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 values: "Date is required");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: invalidInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -156,7 +167,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
+        private async Task ShouldThrowValidationExceptionOnAddIfCreateAndUpdateDatesIsNotSameAndLogitAsync()
         {
             // given
             DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
@@ -164,20 +175,25 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = randomIntern.CreatedBy;
             invalidIntern.UpdatedDate = GetRandomDateTime();
+            var innerException = new Exception();
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
                     .Returns(randomDateTime);
 
             var invalidInternException =
-                new InvalidInternException();
+                new InvalidInternException(
+                    message: "Invalid Intern. Please correct the errors and try again", 
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.UpdatedDate),
                 values: $"Date is not the same as {nameof(Intern.CreatedDate)}");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: invalidInternException);
 
             // when
             ValueTask<Intern> addInternTask =
@@ -211,28 +227,31 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
         [Theory]
         [MemberData(nameof(MinutesBeforeOrAfter))]
-        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+        private async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
             int minutesBeforeOrAfter)
         {
             // given
-            DateTimeOffset randomDateTime =
-                GetRandomDateTime();
-
+            DateTimeOffset randomDateTime = GetRandomDateTime();
             Intern randomIntern = CreateRandomIntern(randomDateTime.AddMinutes(minutesBeforeOrAfter));
             Intern invalidIntern = randomIntern;
             invalidIntern.UpdatedBy = invalidIntern.CreatedBy;
             invalidIntern.CreatedDate = randomDateTime.AddMinutes(minutesBeforeOrAfter);
             invalidIntern.UpdatedDate = invalidIntern.CreatedDate;
+            var innerException = new Exception();
 
             var invalidInternException =
-                new InvalidInternException();
+                new InvalidInternException(
+                    message: "Invalid Intern. Please correct the errors and try again",
+                        innerException: innerException);
 
             invalidInternException.AddData(
                 key: nameof(Intern.CreatedDate),
                 values: "Date is not recent");
 
             var expectedInternValidException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: invalidInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

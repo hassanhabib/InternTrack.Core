@@ -16,18 +16,24 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfIdIsInvalidAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnRetrieveByIdIfIdIsInvalidAndLogItAsync()
         {
             // given
             Guid invalidInternId = Guid.Empty;
-            var invalidInternException = new InvalidInternException();
+            var innerException = new Exception();
+
+            var invalidInternException = new InvalidInternException(
+                message: "Invalid Intern. Please correct the errors and try again",
+                    innerException: innerException);
 
             invalidInternException.AddData(
                key: nameof(Intern.Id),
                values: "Id is required");
 
             var expectedInternValidationException =
-                new InternValidationException(invalidInternException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: invalidInternException);
 
             // when
             ValueTask<Intern> retrieveInternByIdTask =
@@ -54,17 +60,22 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfInternNotFoundAndLogItAsync()
+        private async Task ShouldThrowValidationExceptionOnRetrieveByIdIfInternNotFoundAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
             Intern noIntern = null;
+            var innerException = new Exception();
 
             var notFoundInternValidationException =
-                new NotFoundInternException(someInternId);
+                new NotFoundInternException(
+                     message: $"Intern with id: {someInternId} not found, please correct and try again.",
+                        innerException: innerException);
 
             var expectedInternValidationException =
-                new InternValidationException(notFoundInternValidationException);
+                new InternValidationException(
+                    message: "Intern validation error occurred. Please, try again.",
+                        innerException: notFoundInternValidationException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))

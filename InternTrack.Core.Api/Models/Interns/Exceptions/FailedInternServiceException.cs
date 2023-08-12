@@ -11,7 +11,11 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
     public class FailedInternServiceException : Xeption
     {
         public FailedInternServiceException(Exception innerException)
-            : base("Failed intern service occured, please contact support", innerException)
+            : base("Failed Intern service occurred, please contact support", innerException)
+        { }
+
+        public FailedInternServiceException(string message, Exception innerException)
+            : base(message, innerException) 
         { }
     }
 }

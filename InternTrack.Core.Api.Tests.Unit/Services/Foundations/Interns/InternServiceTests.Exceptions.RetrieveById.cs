@@ -16,17 +16,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveByIdAsyncIfSqlErrorOccursAndLogItAsync()
+        private async Task ShouldThrowCriticalDependencyExceptionOnRetrieveByIdAsyncIfSqlErrorOccursAndLogItAsync()
         {
             // given
             Guid someInternId = Guid.NewGuid();
             var sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: sqlException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(It.IsAny<Guid>()))
@@ -57,7 +61,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnRetrieveIfExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowServiceExceptionOnRetrieveIfExceptionOccursAndLogItAsync()
         {
             // given
             var someInternId = Guid.NewGuid();
@@ -65,10 +69,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    message: "Failed Intern service occurred, please contact support",
+                        innerException: serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    message: "Intern service error occurred, contact support",
+                        innerException: failedInternServiceException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.SelectInternByIdAsync(someInternId))

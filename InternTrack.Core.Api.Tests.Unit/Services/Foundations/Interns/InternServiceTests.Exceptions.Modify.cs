@@ -18,17 +18,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnModifyIfSqlErrorOccursAndLogItAsync()
+        private async Task ShouldThrowCriticalDependencyExceptionOnModifyIfSqlErrorOccursAndLogItAsync()
         {
             // given
             Intern someIntern = CreateRandomIntern();
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: sqlException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -69,17 +73,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnModifyIfDbUpdateConcurrencyExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnModifyIfDbUpdateConcurrencyExceptionOccursAndLogItAsync()
         {
             // given
             Intern someIntern = CreateRandomIntern();
             var databaseUpdateConcurrencyException = new DbUpdateConcurrencyException();
 
             var lockedInternException =
-                new LockedInternException(databaseUpdateConcurrencyException);
+                new LockedInternException(
+                    message: "Locked Intern record exception, please try again later.",
+                        innerException: databaseUpdateConcurrencyException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(lockedInternException);
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: lockedInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -116,17 +124,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnModifyIfDatabaseUpdateExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnModifyIfDatabaseUpdateExceptionOccursAndLogItAsync()
         {
             // given
             Intern someIntern = CreateRandomIntern();
             var databaseUpdateException = new DbUpdateException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(databaseUpdateException);
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: databaseUpdateException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -163,17 +175,21 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
                 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnModifyIfServiceExceptionOccursAndLogItAsync()
+        private async Task ShouldThrowServiceExceptionOnModifyIfServiceExceptionOccursAndLogItAsync()
         {
             // given
             Intern someIntern = CreateRandomIntern();
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    message: "Failed Intern service occurred, please contact support",
+                        innerException: serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    message: "Intern service error occurred, contact support",
+                        innerException: failedInternServiceException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())

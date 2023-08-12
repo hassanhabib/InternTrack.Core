@@ -12,5 +12,9 @@ namespace InternTrack.Core.Api.Models.Interns.Exceptions
         public InternDependencyValidationException(Xeption innerException)
             : base(message: "Intern dependency validation occurred, please try again.", innerException)
         { }
+
+        public InternDependencyValidationException(string message, Xeption innerException)
+            : base(message, innerException)
+        { }
     }
 }

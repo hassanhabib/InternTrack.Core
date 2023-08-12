@@ -20,7 +20,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldRemoveInternByIdAsync()
+        private async Task ShouldRemoveInternByIdAsync()
         {
             // given
             Guid randomId = Guid.NewGuid();

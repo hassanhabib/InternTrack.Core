@@ -11,6 +11,7 @@ using InternTrack.Core.Api.Models.Interns;
 using InternTrack.Core.Api.Models.Interns.Exceptions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
     public partial class InternServiceTests
     {
         [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
+        private async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -28,10 +29,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             SqlException sqlException = GetSqlException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(sqlException);
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: sqlException);
 
-            var expectedInternDependencyExcetpion =
-                new InternDependencyException(failedInternStorageException);
+            var expectedInternDependencyException =
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -45,13 +50,13 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             ValueTask<Intern> createIntern =
                 this.internService.AddInternAsync(randomIntern);
 
-            InternDependencyException actualInternDependecyException =
+            InternDependencyException actualInternDependencyException =
                 await Assert.ThrowsAsync<InternDependencyException>(
                     createIntern.AsTask);
 
             // then
-            actualInternDependecyException.Should().BeEquivalentTo(
-                expectedInternDependencyExcetpion);
+            actualInternDependencyException.Should().BeEquivalentTo(
+                expectedInternDependencyException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -59,7 +64,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionsAs(
-                    expectedInternDependencyExcetpion))),
+                    expectedInternDependencyException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
@@ -72,7 +77,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExsitsAndLogItAsync()
+        private async Task ShouldThrowDependencyValidationExceptionOnAddIfInternAlreadyExistsAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -84,10 +89,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
                 new DuplicateKeyException(randomMessage);
 
             var alreadyExistsInternException =
-                new AlreadyExistsInternException(duplicateKeyException);
+                new AlreadyExistsInternException(
+                    message: "Intern with the same id already exists.",
+                        innerException: duplicateKeyException);
 
-            var expectedInternDependencyValidationExcetption =
-                new InternDependencyValidationException(alreadyExistsInternException);
+            var expectedInternDependencyValidationException =
+                new InternDependencyValidationException(
+                    message: "Intern dependency validation occurred, please try again.",
+                        innerException: alreadyExistsInternException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -107,7 +116,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             // then
             actualInternDependencyValidationException.Should()
-                .BeEquivalentTo(expectedInternDependencyValidationExcetption);
+                .BeEquivalentTo(expectedInternDependencyValidationException);
 
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTimeOffset(),
@@ -115,7 +124,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionsAs(
-                    expectedInternDependencyValidationExcetption))),
+                    expectedInternDependencyValidationException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
@@ -128,7 +137,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
+        private async Task ShouldThrowDependencyExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -137,10 +146,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var databaseUpdateException = new DbUpdateException();
 
             var failedInternStorageException =
-                new FailedInternStorageException(databaseUpdateException);
+                new FailedInternStorageException(
+                    message: "Failed Intern storage error occurred, contact support.",
+                        innerException: databaseUpdateException);
 
             var expectedInternDependencyException =
-                new InternDependencyException(failedInternStorageException);
+                new InternDependencyException(
+                    message: "Intern dependency error occurred, contact support.",
+                        innerException: failedInternStorageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
@@ -181,7 +194,7 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
+        private async Task ShouldThrowServiceExceptionOnAddIfDatabaseUpdateErrorOccursAndLogItAsync()
         {
             // given
             DateTimeOffset datetime = GetRandomDateTime();
@@ -190,10 +203,14 @@ namespace InternTrack.Core.Api.Tests.Unit.Services.Foundations.Interns
             var serviceException = new Exception();
 
             var failedInternServiceException =
-                new FailedInternServiceException(serviceException);
+                new FailedInternServiceException(
+                    message: "Failed Intern service occurred, please contact support",
+                        innerException: serviceException);
 
             var expectedInternServiceException =
-                new InternServiceException(failedInternServiceException);
+                new InternServiceException(
+                    message: "Intern service error occurred, contact support",
+                        innerException: failedInternServiceException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset())
